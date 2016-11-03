@@ -14,4 +14,4 @@ class User {
 
 }
 
-module.exports = Point;
+module.exports = User;

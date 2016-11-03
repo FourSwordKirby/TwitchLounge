@@ -5,9 +5,13 @@ var http = require('http').Server(app);
 var morgan = require('morgan'); // Middleware logging
 var io = require('socket.io')(http);
 var path = require('path');
+var fs = require("fs"); // File System
 
 // Configuring server modules
 app.use(morgan('tiny'));
+
+// Loading in secret keys
+var keys = JSON.parse(fs.readFileSync("../keys.json"));
 
 // Loading models
 var User = require('./models/user.js');
@@ -19,7 +23,7 @@ app.get('/', function(req, res){
 io.on('connection', function(socket){
   console.log('a user connected');
 
-  let user = new User(socket, "test");
+  var user = new User(socket, "test");
 
   socket.on('chat message', function(msg){
     io.emit('chat message', msg);

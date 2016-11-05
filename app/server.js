@@ -13,8 +13,8 @@ app.use(morgan('tiny')); // How the log messages in our terminal appear as stuff
 // Loading in secret keys
 var keys = JSON.parse(fs.readFileSync("keys.json"));
 
-// Loading models
-var User = require('./models/user.js');
+// Loading models and other handlers
+var ServerSocket = require('./serverSocket.js');
 
 // ------------------------------------------------------------------
 // Playing with Twitch API
@@ -41,27 +41,8 @@ app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });
 
-// This is how socket works. An event, called connection, happens when a user connects to our server
-// When this happens, we create a socket object that contains a lot of information and behavior. See socket.io
-// The socket represents one individual user's connection to our server
-io.on('connection', function(socket){
-  console.log('a user connected');
+ServerSocket.handleConnections(io);
 
-  // We imported our class User earlier, and can store information in it.
-  var user = new User(socket, "test");
-
-  // When the user gets a socket event called 'chat message' it expects the request to also have a obj 'msg'
-  socket.on('chat message', function(msg){
-    // When this event happens, we then say we want to emit the event 'chat message' to EVERYONE connected!
-    io.emit('chat message', msg);
-    console.log(user.username);
-  });
-
-  socket.on('disconnect', function(){
-    console.log('user disconnected');
-  });
-
-});
 
 // This literally starts the server
 http.listen(3000, function(){

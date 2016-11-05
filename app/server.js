@@ -16,6 +16,15 @@ var keys = JSON.parse(fs.readFileSync("../keys.json"));
 // Loading models
 var User = require('./models/user.js');
 
+// ------------------------------------------------------------------
+// Playing with Twitch API
+app.get('/test', function(req, res) {
+  res.sendFile(path.join(__dirname, '../public', 'test.html'));
+})
+
+
+// ------------------------------------------------------------------
+// SOCKET STUFF
 app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });
@@ -39,3 +48,4 @@ io.on('connection', function(socket){
 http.listen(3000, function(){
   console.log('listening on *:3000');
 });
+

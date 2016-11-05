@@ -17,12 +17,17 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="index.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="https://ttv-api.s3.amazonaws.com/twitch.min.js"></script>
 
   <body>
     <ul id="messages"></ul>
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
+
+    <button id="twitchsdk">SDK login</button>
+
+
   </body>
 
 
@@ -37,6 +42,25 @@
   socket.on('chat message', function(msg){
     $('#messages').append($('<li>').text(msg));
   });
+
+
+// Twitch SDK
+Twitch.init({clientId: 'oqg26g9cdo8gkqy7puez3370gudujjk'}, function(error, status) {
+
+$('#twitchsdk').click(function() {
+  Twitch.login({
+    redirect_uri:'http://localhost:3000/test',
+    scope: ['user_read', 'channel_read']
+  });
+})
+
+
+});
+
+
+
+
+
 </script>
 
 </html>

@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <title>test</title>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="https://ttv-api.s3.amazonaws.com/twitch.min.js"></script>
+
+  <body>
+    TEST
+
+  </body>
+
+
+<script>
+Twitch.init({clientId: 'oqg26g9cdo8gkqy7puez3370gudujjk'}, function(error, status) {
+
+var token = Twitch.getToken();
+console.log(token);
+
+// TODO: Save access token to a user?
+// Send a request to the server. Create a user, and save twitch username, accesstoken. Etc.
+
+
+});
+
+</script>
+
+</html>

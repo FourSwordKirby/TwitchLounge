@@ -1,5 +1,9 @@
 "use strict";
 
+// Like objects in other programming languages. You can create a new user via 'new User(...);'
+// Note the module.exports on the bottom. This is what allows us to control what comes out
+// when someone else attempts to use the code in here in another file via 'var User = require('./models/user.js');'
+
 class User {
 
     constructor(socket, username) {

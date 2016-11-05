@@ -14,6 +14,9 @@
     </style>
   </head>
 
+<!-- For socket to work, we need to give the client the socket file as well. This enables
+the clientside to respond to socket events and such -->
+
 <script src="/socket.io/socket.io.js"></script>
 <script src="index.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
@@ -33,6 +36,9 @@
 
 <script>
   var socket = io();
+
+/* The clientside can send messages back to the server the same way, via socket.emit and more */
+
   $('form').submit(function(){
     debugger;
     socket.emit('chat message', $('#m').val());

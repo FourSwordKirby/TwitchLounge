@@ -11,11 +11,21 @@ class User {
         this.username = username; // Twitch username
         this.x = 0; // Default position to 0
         this.y = 0;
+        this.accessToken = "";
     }
 
     move(x, y) {
         this.x = x;
         this.y = y;
+    }
+
+    jsonify() { // Used to save into DB as a JSON object
+        return {
+            "username": this.username,
+            "x" : this.x,
+            "y" : this.y,
+            "accessToken" : this.accessToken
+        }
     }
 
 }

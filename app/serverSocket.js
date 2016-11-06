@@ -1,5 +1,6 @@
 
 var User = require('./models/user.js');
+var MongoDB = require('./models/mongo.js');
 
 exports.handleConnections = function(io) {
 
@@ -14,6 +15,7 @@ exports.handleConnections = function(io) {
             // When this event happens, we then say we want to emit the event 'chat message' to EVERYONE connected!
             io.emit('chat message', msg);
             console.log(user.username);
+
         });
 
         socket.on('disconnect', function(){

@@ -44,6 +44,11 @@ app.get('/', function(req, res){
 ServerSocket.handleConnections(io);
 
 
+// ------------------------------------------------------------------
+// Mongo Database testing
+// MongoDB.testConnect();
+
+
 // This literally starts the server
 http.listen(3000, function(){
   console.log('listening on *:3000');

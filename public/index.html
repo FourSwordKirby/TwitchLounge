@@ -17,10 +17,12 @@
 <!-- For socket to work, we need to give the client the socket file as well. This enables
 the clientside to respond to socket events and such -->
 
-<script src="/socket.io/socket.io.js"></script>
-<script src="index.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <script src="https://ttv-api.s3.amazonaws.com/twitch.min.js"></script>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="clientSocket.js"></script>
+
 
   <body>
     <ul id="messages"></ul>
@@ -35,37 +37,44 @@ the clientside to respond to socket events and such -->
 
 
 <script>
-  var socket = io();
+var access_token, twitch_id;
 
-/* The clientside can send messages back to the server the same way, via socket.emit and more */
+if (hasAuthenticated()) {
+    console.log("TODO: Grab user info from DB");
+    findUser();
+} else {
+    Twitch.init({clientId: 'oqg26g9cdo8gkqy7puez3370gudujjk'}, function(error, status) {
+        $('#twitchsdk').click(function() {
+            Twitch.login({
+                redirect_uri:'http://localhost:3000/test',
+                scope: ['user_read', 'channel_read']
+            });
+        })
+    });
+    
+}
 
-  $('form').submit(function(){
-    debugger;
-    socket.emit('chat message', $('#m').val());
-    $('#m').val('');
-    return false;
-  });
-  socket.on('chat message', function(msg){
-    $('#messages').append($('<li>').text(msg));
-  });
+function hasAuthenticated() {
+    access_token = localStorage.getItem('lounge_token');
+    twitch_id = localStorage.getItem('twitch_id');
+    return access_token != null && twitch_id != null;
+}
 
-
-// Twitch SDK
-Twitch.init({clientId: 'oqg26g9cdo8gkqy7puez3370gudujjk'}, function(error, status) {
-
-$('#twitchsdk').click(function() {
-  Twitch.login({
-    redirect_uri:'http://localhost:3000/test',
-    scope: ['user_read', 'channel_read']
-  });
-})
-
-
-});
-
-
-
-
+function findUser() {
+    $.ajax({
+            url: '/findUser',
+            type: 'GET',
+            data: {
+                "twitch_id" : twitch_id,
+                "token" : access_token
+            },
+            success: function(data) {
+                console.log(data);
+            }
+        }).done(function() {
+            
+        })
+}
 
 </script>
 

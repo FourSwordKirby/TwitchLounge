@@ -1,20 +1,31 @@
 
 // Loading server modules
-var app = require('express')(); // Web framework
+var express = require('express'); // Web framework
+var app = express(); // Our actual app running on framework
 var http = require('http').Server(app);
 var morgan = require('morgan'); // Middleware logging
 var io = require('socket.io')(http); // Enables web sockets
 var path = require('path');
 var fs = require("fs"); // File System
+var bodyParser = require('body-parser'); // Enables grabbing PUT/POST query params
 
 // Configuring server modules
 app.use(morgan('tiny')); // How the log messages in our terminal appear as stuff happens to our server
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
 
 // Loading in secret keys
 var keys = JSON.parse(fs.readFileSync("keys.json"));
 
 // Loading models and other handlers
 var ServerSocket = require('./serverSocket.js');
+var MongoRoutes = require('./mongoRoutes.js');
+
+// Handle static files
+app.use(express.static('public'))
+// app.use(express.static(__dirname + '/public'));
 
 // ------------------------------------------------------------------
 // Playing with Twitch API
@@ -45,8 +56,10 @@ ServerSocket.handleConnections(io);
 
 
 // ------------------------------------------------------------------
-// Mongo Database testing
-// MongoDB.testConnect();
+// Mongo Database
+app.put('/saveUser', MongoRoutes.saveUser);
+app.get('/findUser', MongoRoutes.findUser);
+
 
 
 // This literally starts the server

@@ -30,24 +30,20 @@ exports.insertUser = function(user) {
     connect(function(db) {
         db.collection('users').insertOne(user.jsonify(), function(err, result) {
         assert.equal(err, null);
-        console.log("Inserted "+ user.username +" into the DB.");
+        console.log("Inserted "+ user.twitch_username +" into the DB.");
         db.close();
         })
     })
 }
 
-// Returns the first user with a username
-exports.getUser = function(username, callback) {
+// Returns first user that matches the following ID and access token
+exports.getUser = function(twitch_id, access_token, callback) {
     connect(function(db) {
-        var cursor = db.collection('users').find({"username" : username});
-        cursor.each(function(err, doc) {
-            assert.equal(err, null);
-            if (doc != null) {
-                callback(doc);
-            }
-            db.close();
-            return;
-        })
+        db.collection('users').findOne({"twitch_id" : twitch_id, "access_token" : access_token}, function(err, doc) {
+            callback(doc);
+        });
+        db.close();
+
     })
 }
 

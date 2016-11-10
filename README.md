@@ -18,3 +18,19 @@ I would also recommend the following b/c they make development easier:
 
 Finally, ask me for the keys.json file.
 It should run.
+
+
+
+
+
+
+# How to Run
+In your command line, run
+
+	node app/server.js
+
+Then in your browser, type 
+	http://localhost:3000/
+
+This will bring your to the main "page" of the site. 
+You can test multiple people using the site through an incognito window

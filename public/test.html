@@ -15,7 +15,6 @@
 <script>
 Twitch.init({clientId: 'oqg26g9cdo8gkqy7puez3370gudujjk'}, function(error, status) {
     var token = Twitch.getToken();
-
     Twitch.api({method: '/user'}, function(err, result) {
         $.ajax({
             url: '/saveUser',
@@ -25,7 +24,6 @@ Twitch.init({clientId: 'oqg26g9cdo8gkqy7puez3370gudujjk'}, function(error, statu
                 "token" : token
             }
         }).done(function() {
-            debugger;
             localStorage.setItem('lounge_token', token);
             localStorage.setItem('twitch_id', result._id);
         })

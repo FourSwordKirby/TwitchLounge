@@ -63,7 +63,7 @@ function hasAuthenticated() {
 
 function findUser() {
     $.ajax({
-            url: '/findUser',
+            url: '/db/findUser',
             type: 'GET',
             data: {
                 "twitch_id" : twitch_id,

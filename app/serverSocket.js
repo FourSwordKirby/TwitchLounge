@@ -1,7 +1,7 @@
 
 var User = require('./models/user.js');
 
-exports.handleConnections = function(io) {
+exports.handleConnections = function(io, loungename) {
 
     io.on('connection', function(socket){
         console.log('a user connected');
@@ -21,6 +21,27 @@ exports.handleConnections = function(io) {
             console.log('user disconnected');
         });
 
+        // ------------------------------------------------------------
+        // HOST SOCKET EVENTS
+
+        socket.on('make lounge', function() {
+
+        })
+
+
+
+        // ------------------------------------------------------------
+        // USER SOCKET EVENTS
+
     });
 
+    // NAMESPACING - Creating lounge based on URL
+    // Namespace creates a special lounge per streamer
+    var nsp = io.of('/'+loungename);
+    nsp.on('connection', function(socket){
+        console.log('someone connected to a namespaced lounge');
+    });
+
+
 }
+

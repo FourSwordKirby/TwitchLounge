@@ -48,17 +48,26 @@ app.get('/test', function(req, res) { // Given two objects to work with - reques
 // ------------------------------------------------------------------
 // SOCKET STUFF
 
-app.get('/', function(req, res){
-  res.sendFile(path.join(__dirname, '../public', 'index.html'));
-});
 
-ServerSocket.handleConnections(io);
+// Namespacing lounges
+app.get('/:loungename', function (req, res) {
+    if (typeof req.params === undefined) {
+        console.log("No lounge name or code");
+        res.end();
+    } else {
+        console.log(req.params);
+        ServerSocket.handleConnections(io, req.params.loungename);
+        res.sendFile(path.join(__dirname, '../public', 'lounge.html')); // TODO: Possibly send HTML for lounge specific shit
+    }
+})
+
+// ServerSocket.handleConnections(io);
 
 
 // ------------------------------------------------------------------
 // Mongo Database
-app.put('/saveUser', MongoRoutes.saveUser);
-app.get('/findUser', MongoRoutes.findUser);
+app.put('/db/saveUser', MongoRoutes.saveUser);
+app.get('/db/findUser', MongoRoutes.findUser);
 
 
 

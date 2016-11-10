@@ -17,7 +17,7 @@ Twitch.init({clientId: 'oqg26g9cdo8gkqy7puez3370gudujjk'}, function(error, statu
     var token = Twitch.getToken();
     Twitch.api({method: '/user'}, function(err, result) {
         $.ajax({
-            url: '/saveUser',
+            url: '/db/saveUser',
             type: 'PUT',
             data: {
                 "user" : result,

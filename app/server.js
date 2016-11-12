@@ -7,11 +7,13 @@ var morgan = require('morgan'); // Middleware logging
 var io = require('socket.io')(http); // Enables web sockets
 var path = require('path');
 var fs = require("fs"); // File System
+var tmi = require('tmi.js');
 var bodyParser = require('body-parser'); // Enables grabbing PUT/POST query params
+
 
 // Configuring server modules
 app.use(morgan('tiny')); // How the log messages in our terminal appear as stuff happens to our server
-app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use( bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
@@ -26,6 +28,25 @@ var MongoRoutes = require('./mongoRoutes.js');
 // Handle static files
 app.use(express.static('public'))
 // app.use(express.static(__dirname + '/public'));
+
+// Load TMI
+var options = {
+    options: {
+        debut: true
+    },
+    connection: {
+        cluster: "aws",
+        recconect: true
+    },
+    identity: {
+        username: keys["Twitch"]["username"],
+        password: keys["Twitch"]["password"]
+    },
+    channels: ["mossyqualia"]
+};
+
+var client = new tmi.client(options);
+client.connect();
 
 // ------------------------------------------------------------------
 // Playing with Twitch API
@@ -70,6 +91,17 @@ app.put('/db/saveUser', MongoRoutes.saveUser);
 app.get('/db/findUser', MongoRoutes.findUser);
 
 
+// ------------------------------------------------------------------
+// Ralph's IRC Twitch chat code
+    // Send chat messages to socket
+  client.on('chat', function(channel, user, message, self) {
+    io.emit('twitch message', ["color:" + user['@color'], user['display-name'], ": " + message]);
+  });
+    
+  client.on('connected', function(address, port) {
+    io.emit('chat message', "My nipples look like milk duds");
+  });
+});
 
 // This literally starts the server
 http.listen(3000, function(){

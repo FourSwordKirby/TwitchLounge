@@ -6,16 +6,36 @@
 
 class User {
 
-    constructor(socket, username) {
-        this.socket = socket; // SIO socket obj
-        this.username = username; // Twitch username
+    // Users are made after authentication with Twitch and then are mainly gotten and created
+    // via database calls
+    constructor(twitch_id, twitch_username, twitch_avatar, twitch_bio, access_token) {
+        this.twitch_id = twitch_id;
+        this.twitch_username = twitch_username;
+        this.twitch_avatar = twitch_avatar;
+        this.twitch_bio = twitch_bio;
+        this.access_token = access_token;
+
         this.x = 0; // Default position to 0
         this.y = 0;
+        this.sockets = {}; // Socket connection IDs, key = room, value = socket ID
     }
 
     move(x, y) {
         this.x = x;
         this.y = y;
+    }
+
+    jsonify() { // Used to save into DB as a JSON object
+        return {
+            "twitch_id" : this.twitch_id,
+            "twitch_username" : this.twitch_username,
+            "twitch_avatar" : this.twitch_avatar,
+            "twitch_bio" : this.twitch_bio,
+            "access_token" : this.access_token,
+            "x" : this.x,
+            "y" : this.y,
+            "sockets" : this.sockets
+        }
     }
 
 }

@@ -16,6 +16,7 @@ I would also recommend the following b/c they make development easier:
 * npm install -g node-inspector (then you can run node-debug server.js and use a browser for debugging. Use 'debugger')
 * npm install -g nodemon (small changes on server code will automatically restart server)
 
+<<<<<<< HEAD
 Finally, ask me for the keys.json file.
 It should run.
 
@@ -34,3 +35,23 @@ Then in your browser, type
 
 This will bring your to the main "page" of the site. 
 You can test multiple people using the site through an incognito window
+=======
+Next, install mongo DB. This is a simple database that lets us save stuff.
+http://treehouse.github.io/installation-guides/mac/mongo-mac.html
+
+Finally, ask me for the keys.json file. Put it in the root.
+
+# To Run
+
+First run the database server
+mongod
+
+Then run our server
+node app/server.js
+
+FYI: To close a process... First you must find it.
+lsof -i:5858
+kill -9 [PID]
+
+http://justintv.github.io/twitch-js-sdk/#section-3-2
+>>>>>>> mongo

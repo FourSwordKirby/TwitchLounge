@@ -17,10 +17,12 @@
 <!-- For socket to work, we need to give the client the socket file as well. This enables
 the clientside to respond to socket events and such -->
 
-<script src="/socket.io/socket.io.js"></script>
-<script src="index.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <script src="https://ttv-api.s3.amazonaws.com/twitch.min.js"></script>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="clientSocket.js"></script>
+
 
   <body>
     <ul id="messages"></ul>
@@ -35,36 +37,56 @@ the clientside to respond to socket events and such -->
 
 
 <script>
-  var socket = io();
+var access_token, twitch_id;
 
-/* The clientside can send messages back to the server the same way, via socket.emit and more */
+Twitch.init({ clientId: 'oqg26g9cdo8gkqy7puez3370gudujjk'}, function(err, status) { console.log('the library is now loaded') });
 
-  $('form').submit(function(){
-    debugger;
-    socket.emit('chat message', $('#m').val());
-    $('#m').val('');
-    return false;
-  });
-  socket.on('chat message', function(msg){
-    $('#messages').append($('<li>').text(msg));
-  });
+if (hasAuthenticated()) {
+    Twitch._config.session = {};
+    Twitch._config.session.token = access_token;
+    Twitch._config.session.scope = ["user_read", "channel_read"];
+    findUser();
+} else {
+    $('#twitchsdk').click(function() {
+        Twitch.login({
+            redirect_uri:'http://localhost:3000/test',
+            scope: ['user_read', 'channel_read']
+        });
+    })
+}
 
+function hasAuthenticated() {
+    access_token = localStorage.getItem('lounge_token');
+    twitch_id = localStorage.getItem('twitch_id');
+    return access_token != null && twitch_id != null;
+}
 
-// Twitch SDK
-Twitch.init({clientId: 'oqg26g9cdo8gkqy7puez3370gudujjk'}, function(error, status) {
+function findUser() {
+    $.ajax({
+            url: '/db/findUser',
+            type: 'GET',
+            data: {
+                "twitch_id" : twitch_id,
+                "token" : access_token
+            },
+            success: function(data) {
+                Twitch.api({method: 'streams/' + data.twitch_username}, function(error, stream) {
+                    if (stream.stream) {
+                        $("body").append("<p>STREAMER!</p>");
+                    } else {
+                        $("body").append("<p>WATCHER!</p>");
+                    }
+                    debugger;
+                })
+            }
+        })
+}
 
-$('#twitchsdk').click(function() {
-  Twitch.login({
-    redirect_uri:'http://localhost:3000/test',
-    scope: ['user_read', 'channel_read']
-  });
-})
-
-
-});
-
-
-
+// TODO: Ask group.. how do I stream lmao
+// Then: Show diff pages based on if streaming or not
+// If streaming, create a room with a unique URL string
+// For users, add a route for probably ... /lounge + said string, see Express Routing to allow that behavior
+// For those people, assign them to a namespace socket room based on that string, which acts as a lounge ID
 
 
 </script>

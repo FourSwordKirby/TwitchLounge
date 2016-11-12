@@ -1,20 +1,31 @@
 
 // Loading server modules
-var app = require('express')(); // Web framework
+var express = require('express'); // Web framework
+var app = express(); // Our actual app running on framework
 var http = require('http').Server(app);
 var morgan = require('morgan'); // Middleware logging
 var io = require('socket.io')(http); // Enables web sockets
 var path = require('path');
 var fs = require("fs"); // File System
+var bodyParser = require('body-parser'); // Enables grabbing PUT/POST query params
 
 // Configuring server modules
 app.use(morgan('tiny')); // How the log messages in our terminal appear as stuff happens to our server
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
 
 // Loading in secret keys
 var keys = JSON.parse(fs.readFileSync("keys.json"));
 
 // Loading models and other handlers
 var ServerSocket = require('./serverSocket.js');
+var MongoRoutes = require('./mongoRoutes.js');
+
+// Handle static files
+app.use(express.static('public'))
+// app.use(express.static(__dirname + '/public'));
 
 // ------------------------------------------------------------------
 // Playing with Twitch API
@@ -37,11 +48,27 @@ app.get('/test', function(req, res) { // Given two objects to work with - reques
 // ------------------------------------------------------------------
 // SOCKET STUFF
 
-app.get('/', function(req, res){
-  res.sendFile(path.join(__dirname, '../public', 'index.html'));
-});
 
-ServerSocket.handleConnections(io);
+// Namespacing lounges
+app.get('/:loungename', function (req, res) {
+    if (typeof req.params === undefined) {
+        console.log("No lounge name or code");
+        res.end();
+    } else {
+        console.log(req.params);
+        ServerSocket.handleConnections(io, req.params.loungename);
+        res.sendFile(path.join(__dirname, '../public', 'lounge.html')); // TODO: Possibly send HTML for lounge specific shit
+    }
+})
+
+// ServerSocket.handleConnections(io);
+
+
+// ------------------------------------------------------------------
+// Mongo Database
+app.put('/db/saveUser', MongoRoutes.saveUser);
+app.get('/db/findUser', MongoRoutes.findUser);
+
 
 
 // This literally starts the server

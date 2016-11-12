@@ -6,6 +6,7 @@ var morgan = require('morgan'); // Middleware logging
 var io = require('socket.io')(http); // Enables web sockets
 var path = require('path');
 var fs = require("fs"); // File System
+var tmi = require('tmi.js');
 
 // Configuring server modules
 app.use(morgan('tiny')); // How the log messages in our terminal appear as stuff happens to our server
@@ -15,6 +16,25 @@ var keys = JSON.parse(fs.readFileSync("keys.json"));
 
 // Loading models
 var User = require('./models/user.js');
+
+// Load TMI
+var options = {
+    options: {
+        debut: true
+    },
+    connection: {
+        cluster: "aws",
+        recconect: true
+    },
+    identity: {
+        username: keys["Twitch"]["username"],
+        password: keys["Twitch"]["password"]
+    },
+    channels: ["mossyqualia"]
+};
+
+var client = new tmi.client(options);
+client.connect();
 
 // ------------------------------------------------------------------
 // Playing with Twitch API
@@ -61,6 +81,14 @@ io.on('connection', function(socket){
     console.log('user disconnected');
   });
 
+    // Send chat messages to socket
+  client.on('chat', function(channel, user, message, self) {
+    io.emit('twitch message', ["color:" + user['@color'], user['display-name'], ": " + message]);
+  });
+    
+  client.on('connected', function(address, port) {
+    io.emit('chat message', "My nipples look like milk duds");
+  });
 });
 
 // This literally starts the server

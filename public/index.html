@@ -48,6 +48,15 @@ the clientside to respond to socket events and such -->
   socket.on('chat message', function(msg){
     $('#messages').append($('<li>').text(msg));
   });
+  socket.on('twitch message', function(msg){
+    $('#messages').append(
+        $('<li>').append(
+            $('<span>').attr('style', msg[0]).text(msg[1]).append(
+                $('<span>').text(msg[2])
+            )
+        )
+    )                      
+  });
 
 
 // Twitch SDK
@@ -55,11 +64,10 @@ Twitch.init({clientId: 'oqg26g9cdo8gkqy7puez3370gudujjk'}, function(error, statu
 
 $('#twitchsdk').click(function() {
   Twitch.login({
-    redirect_uri:'http://localhost:3000/test',
+    redirect_uri:'http://localhost:3000',
     scope: ['user_read', 'channel_read']
   });
 })
-
 
 });
 

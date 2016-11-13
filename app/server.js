@@ -10,7 +10,6 @@ var fs = require("fs"); // File System
 var tmi = require('tmi.js');
 var bodyParser = require('body-parser'); // Enables grabbing PUT/POST query params
 
-
 // Configuring server modules
 app.use(morgan('tiny')); // How the log messages in our terminal appear as stuff happens to our server
 app.use( bodyParser.json());       // to support JSON-encoded bodies
@@ -49,14 +48,7 @@ var client = new tmi.client(options);
 client.connect();
 
 // ------------------------------------------------------------------
-// Playing with Twitch API
 
-// When our server is hit with a GET request at the url /test, we can respond
-app.get('/test', function(req, res) { // Given two objects to work with - request, and response
-    // In this case we didn't get anything in the request
-    // We simply send back a response, which is a file /public/test.html
-    res.sendFile(path.join(__dirname, '../public', 'test.html'));
-})
 
 // If you want to have the site respond to different URLS, simply follow the pattern above.
 // You can also respond to - GET, PUT, POST, DELETE
@@ -69,7 +61,6 @@ app.get('/test', function(req, res) { // Given two objects to work with - reques
 // ------------------------------------------------------------------
 // SOCKET STUFF
 
-
 // Namespacing lounges
 app.get('/:loungename', function (req, res) {
     if (typeof req.params === undefined) {
@@ -78,8 +69,12 @@ app.get('/:loungename', function (req, res) {
     } else {
         console.log(req.params);
         ServerSocket.handleConnections(io, req.params.loungename);
-        res.sendFile(path.join(__dirname, '../public', 'lounge.html')); // TODO: Possibly send HTML for lounge specific shit
+        res.sendFile(path.join(__dirname, '../public', 'lounge.html'));
     }
+})
+
+app.get('/setup/authenticate', function (req, res) {
+    res.sendFile(path.join(__dirname, '../public/setup', 'authenticate.html'))
 })
 
 // ServerSocket.handleConnections(io);
@@ -101,7 +96,6 @@ app.get('/db/findUser', MongoRoutes.findUser);
   client.on('connected', function(address, port) {
     io.emit('chat message', "My nipples look like milk duds");
   });
-});
 
 // This literally starts the server
 http.listen(3000, function(){

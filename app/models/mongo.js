@@ -47,6 +47,10 @@ exports.getUser = function(twitch_id, access_token, callback) {
     })
 }
 
+exports.updateUser = function() {
+    
+}
+
 exports.getAllUsers = function() {
 }
 

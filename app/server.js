@@ -97,6 +97,10 @@ app.get('/db/findUser', MongoRoutes.findUser);
     io.emit('chat message', "My nipples look like milk duds");
   });
 
+app.use(function (req, res, next) {
+    res.status(404).send('404: Sorry cant find that!')
+})
+
 // This literally starts the server
 http.listen(3000, function(){
   console.log('listening on *:3000');

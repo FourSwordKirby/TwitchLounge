@@ -6,7 +6,8 @@ var User = require('./models/user.js');
 exports.saveUser = function(req, res) {
     var user = new User(req.body.user._id, req.body.user.name, req.body.user.logo, req.body.user.bio, req.body.token);
     MongoDB.insertUser(user);
-    res.end("Saved user " + req.body.user.display_name + " to DB, cleared to start session.");
+    res.json(user.jsonify());
+    // res.end("Saved user " + req.body.user.display_name + " to DB, cleared to start session.");
 }
 
 // Assumes GET with two query params: Twitch ID and access token, used together to uniquely

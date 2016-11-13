@@ -12,7 +12,8 @@ $(document).ready(function() {
                 "token" : access_token
             },
             success: function(data) {
-                $("#second-visit").show();
+                $("#first-time").addClass('hide');
+                $("#second-visit").removeClass('hide');
                 $("span#twitch-username").html(data.twitch_username);
             },
             error: showFirstTime()
@@ -30,10 +31,7 @@ function hasAuthenticated() {
 }
 
 function showFirstTime() {
-    localStorage.removeItem('twitch_id');
-    localStorage.removeItem('lounge_token');
     $("#first-time").removeClass("hide");
-
 
     Twitch.init({ clientId: 'oqg26g9cdo8gkqy7puez3370gudujjk'}, function(err, status) { console.log('Loaded Twitch SDK') });
     $('#twitch-auth').click(function() {

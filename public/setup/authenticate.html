@@ -22,11 +22,13 @@
                 data: {
                     "user" : result,
                     "token" : token
+                },
+                success: function(result) {
+                    localStorage.setItem('lounge_token', token);
+                    localStorage.setItem('twitch_id', result.twitch_id);
+                    debugger;
+                    window.location.replace("/");
                 }
-            }).done(function() {
-                localStorage.setItem('lounge_token', token);
-                localStorage.setItem('twitch_id', result._id);
-                window.location.replace("localhost:3000/")
             })
         });
     });

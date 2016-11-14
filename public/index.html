@@ -57,10 +57,9 @@
 
   //when move called from server syncs positions based on passed positions;
   socket.on('move', function(data){
- 
-    console.log(data);
-    document.getElementById('character').style.marginLeft = data.x;
-    document.getElementById('character').style.marginTop = data.y;
+    console.log(data); 
+    document.getElementById('circles').style.marginLeft = data.x;
+    document.getElementById('circles').style.marginTop = data.y;
   });
   var keys = {};
 

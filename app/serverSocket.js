@@ -22,7 +22,9 @@ exports.handleConnections = function(io, loungename) {
 
         //when position moves, pass this data back  ?? ? ? ? ? ?? ?? 
           socket.on('move', function(data){
-            socket.broadcast.emit('move', {number: numUsers, id: socket.id, x:data.posX, y:data.posY});
+            socket.emit('move', {number: numUsers, id: socket.id, x:data.x, y:data.y});
+
+            socket.broadcast.emit('move', {number: numUsers, id: socket.id, x:data.x, y:data.y});
             // console.log(user.username);
 
         });

@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Twitch Lounge</title>
+<script src="/socket.io/socket.io.js"></script>
 
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://ttv-api.s3.amazonaws.com/twitch.min.js"></script>
@@ -25,11 +26,103 @@
         </div>
     </div>
 
+
+
     <div>
         What is twitch lounge
     </div>
 
+ <div id = "circles">
+      <div id = "character">
+        o
+      </div>
+  </div>
 </body>
 
 
 </html>
+
+<script>
+  var socket = io();
+  var id ="";
+
+  socket.on('add circle', function(data){
+     $('#circles').empty();
+    for (i = 0; i < data.number; i ++){
+        $('#circles').append("<div id = character>o</>");
+        $('#character').attr('tag', data.id);
+ 
+    }
+  });
+
+  //when move called from server syncs positions based on passed positions;
+  socket.on('move', function(data){
+ 
+    console.log(data);
+    document.getElementById('character').style.marginLeft = data.x;
+    document.getElementById('character').style.marginTop = data.y;
+  });
+  var keys = {};
+
+
+
+$(window).on('load', (function(){
+  var keys = {};
+  keys.UP = 38;
+  keys.LEFT = 37;
+  keys.RIGHT = 39;
+  keys.DOWN = 40;
+
+    /// store reference to character's position and element
+    var character = {
+      x: 0,
+      y: 0,
+      speedMultiplier: 2,
+      element: document.getElementById("circles")
+        // element: $("[tag=id]")
+    };
+
+    $(document).keydown(function(event){
+
+      if ( event.which==keys.LEFT ) {
+        moveCharacter(-1, 0);
+      }
+      if ( event.which==keys.RIGHT ) {
+        moveCharacter(1, 0);
+      }
+      if ( event.which==keys.UP ) {
+        moveCharacter(0, -1);
+      }
+      if ( event.which==keys.DOWN ) {
+        moveCharacter(0, 1);
+      }
+
+
+
+});
+
+    /// character movement update
+    var moveCharacter = function(dx, dy){
+      character.x += (dx||0) * character.speedMultiplier;
+      character.y += (dy||0) * character.speedMultiplier;
+      // console.log(character.x, character.y);
+      character.element.style.marginLeft = character.x + 'px';
+
+      character.element.style.marginTop = character.y + 'px';
+
+      // console.log( character.element.style.marginTop ,  character.element.style.marginLeft )
+
+      //passes new coordinates to server? 
+  socket.emit('move', {x: character.element.style.marginLeft,y: character.element.style.marginTop});
+
+    };
+
+}));
+
+  </script>
+
+  <style>
+   #character {
+      color:red;
+    }
+</style>

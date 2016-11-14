@@ -23,7 +23,10 @@ var keys = JSON.parse(fs.readFileSync("keys.json"));
 // Loading models and other handlers
 var ServerSocket = require('./serverSocket.js');
 var MongoRoutes = require('./mongoRoutes.js');
-
+var numUsers = 0;
+var posX;
+var posY;
+var players = [];
 // Handle static files
 app.use(express.static('public'))
 // app.use(express.static(__dirname + '/public'));

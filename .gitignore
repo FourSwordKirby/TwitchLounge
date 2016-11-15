@@ -45,4 +45,8 @@ jspm_packages
 # TypeScript stuff
 typings
 
+# art sketches
+ideaSketches/
+
+*.DS_Store
 

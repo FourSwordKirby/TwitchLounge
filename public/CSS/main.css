@@ -5,3 +5,90 @@
 /* Utility */
 
 .hide { display: none; }
+
+body{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background-color: #6441A4;
+	font-family: arial, sans-serif;
+}
+
+a{
+	/*text-decoration: none;*/
+	color: inherit;
+	cursor: pointer;
+}
+
+#top-bar {
+	top: 0;
+	position: fixed;
+	width: 100%;
+	background-color: white;
+	margin: 0;
+	padding: 8px;
+	border: 0;
+	box-shadow: 4px 0 7px black;
+	color: #6441A4;;
+}
+
+#bottom-bar{
+	position: absolute;
+	width: 100%;
+	bottom: 0px;
+	padding: 8px;
+	color: #b094f5;
+}
+
+.center{
+	text-align: center;
+}
+
+.borderedButton {
+	background-color: rgba(0,0,0,0);
+	border: 3px solid #6441A4;
+	margin: 0;
+	padding: 5px 8px;
+
+	color: #6441A4;
+	font-size: 16px;
+
+	-webkit-transition-duration: 0.4s;
+	transition-duration: 0.4s;
+	cursor: pointer;
+	display: inline-block;
+}
+
+.purpleButton {
+	color: #6441A4;
+	border-color: #6441A4;
+}
+
+.purpleButton:hover {
+	background-color: #6441A4;
+	color: white;
+}
+
+.whiteButton {
+	color: white;
+	border-color: white;
+}
+
+.whiteButton:hover {
+	background-color: white;
+	color: #6441A4;
+}
+
+.main-text{
+	margin-top: 150px;
+	margin-left: 150px;
+	margin-right: 150px;
+}
+
+.white-text{
+	color: white;
+}
+
+.half-white-text{
+	color: rgb(1,1,1,0.5);
+}

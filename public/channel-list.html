@@ -1,16 +1,13 @@
 <!doctype html>
 <html>
 <head>
-    <title>Twitch Lounge</title>
-
-    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-    <script src="https://ttv-api.s3.amazonaws.com/twitch.min.js"></script>
+    <title>Channel list</title>
 
     <link rel="stylesheet" href="CSS/main.css">
-    <link rel="stylesheet" href="CSS/index.css">
+    <link rel="stylesheet" href="CSS/channel-list.css">
     <link rel="icon" href="assets/favicon.ico">
 
-    <script src="JS/index.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script >
     $(function(){
         $('#bottom-bar').load('bottom-bar.html');
@@ -38,19 +35,28 @@
     </div>
 
     <!-- the big chunk of stuff in the middle -->
-    <div>
-        <div id = "big-logo">
-            <img src="assets/logo_screen_white_184_153.png" alt="twitch lounge logo" >
-            <span id="big-title">twitch Lounge</span>
-        </div>
-        <div class = "center">
-        <form action="channel-list.html">
-            <button id="channel-list" class="borderedButton whiteButton" action = "submit">channel list &#62;&#62;</button>
-        </form>
-        </div>
+    <div class = "white-text main-text">
+    <ul id="channel-list">
+    <li>
+    <button id="channel-1" class="squareButton" title = "Click to join the channel">
+        Nba 2k17 SS4 Grind 
+        <div class = "username-viewing">3,534 viewers on whoever</div>
+    </button>
+    </li>
+    <li>
+    <button id="channel-2" class="squareButton" title = "Click to join the channel">
+        Presidental Debate
+        <div class = "username-viewing">6014,949 viewers on WhiteHouseNews</div>
+    </button>
+    </li>
+    <li>
+    <button id="channel-3" class="squareButton" title = "Click to join the channel">
+        The greatest escape ever on GTAV
+        <div class = "username-viewing">19 viewers on TrevorPhillips</div>
+    </button>
+    </li>
+    </ul>
     </div>
-
-    
 
     <div id="bottom-bar">
     </div>

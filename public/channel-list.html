@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+    <title>Channel list</title>
+
+    <link rel="stylesheet" href="CSS/main.css">
+    <link rel="stylesheet" href="CSS/channel-list.css">
+    <link rel="icon" href="assets/favicon.ico">
+
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script >
+    $(function(){
+        $('#bottom-bar').load('bottom-bar.html');
+    });
+    </script>
+
+</head>
+
+<body>
+
+    <div id="top-bar">
+        <a href="index.html"><img src="assets/logo_title_purple_45_38.png" alt="twitch lounge" ></a>
+
+        <span id="welcome">
+            <span id="first-time" class="hide">
+                <button id="twitch-auth" class="borderedButton purpleButton" title = "authenticate through your twitch account!">log in with twitch</button>
+            </span>
+
+            <span id="second-visit" class="hide">
+                <span> Welcome back, <span id="twitch-username"></span>! </span>
+                <button class="borderedButton purpleButton">Setup lounge</button>
+            </span>
+        </span>
+
+    </div>
+
+    <!-- the big chunk of stuff in the middle -->
+    <div class = "white-text main-text">
+    <span>
+    <ul id="channel-list">
+    <li>
+    <button id="channel-1" class="squareButton" title = "Click to join the channel">
+        Nba 2k17 SS4 Grind 
+        <div class = "username-viewing">3,534 viewers on whoever</div>
+    </button>
+    </li>
+    <li>
+    <button id="channel-2" class="squareButton" title = "Click to join the channel">
+        Presidental Debate
+        <div class = "username-viewing">6014,949 viewers on WhiteHouseNews</div>
+    </button>
+    </li>
+    <li>
+    <button id="channel-3" class="squareButton" title = "Click to join the channel">
+        The greatest escape ever on GTAV
+        <div class = "username-viewing">19 viewers on TrevorPhillips</div>
+    </button>
+    </li>
+    <li>
+    <button id="channel-4" class="squareButton" title = "Click to join the channel">
+        Again top 1 or musoroprovod i pizza Kappa
+        <div class = "username-viewing">18,890 viewers on SilverName</div>
+    </button>
+    </li>
+    <li>
+    <button id="channel-5" class="squareButton" title = "Click to join the channel">
+        click this and receive good luck 4 8 seconds
+        <div class = "username-viewing">12,246 viewers on TimTheTatman</div>
+    </button>
+    </li>
+    <li>
+    <button id="channel-6" class="squareButton" title = "Click to join the channel">
+        Nba 2k17 SS4 Grind 
+        <div class = "username-viewing">120 viewers on silkyhg</div>
+    </button>
+    </li>
+    </ul>
+    <p class="introductionText">Hellooooooo!</p>
+    </span>
+    </div>
+
+    <div id="bottom-bar">
+    </div>
+
+</body>
+
+
+</html>

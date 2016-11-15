@@ -27,16 +27,18 @@ a{
 	background-color: white;
 	margin: 0;
 	padding: 8px;
-	border: 0;
-	box-shadow: 4px 0 7px black;
+	border-width: 0px;
+	box-shadow: 0px 2px 10px black;
 	color: #6441A4;;
 }
 
 #bottom-bar{
 	width: 100%;
+	position: relative;
 	bottom: 0px;
 	padding: 8px;
 	color: #b094f5;
+	clear: left;
 }
 
 .center{
@@ -80,8 +82,8 @@ a{
 
 .main-text{
 	margin-top: 150px;
-	margin-left: 150px;
-	margin-right: 150px;
+	margin-left: 180px;
+	margin-right: 180px;
 }
 
 .white-text{

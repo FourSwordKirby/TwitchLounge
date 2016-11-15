@@ -1,0 +1,24 @@
+
+/* specifically related to the styling of index page */
+
+#welcome {
+	position: absolute;
+	right: 25px;
+	padding: 3px;
+}
+
+#big-logo{
+
+	display: block;
+	margin: auto;
+	width: 830px;
+	color: white;
+	padding-top: 200px;
+	font: 100px arial, sans-serif;
+}
+
+#channel-list{
+	display: block;
+	margin: auto;
+	width: 90;
+}

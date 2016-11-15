@@ -1,4 +1,5 @@
 
+// Get the lounge code from URL and register socket to namespace
 var namespace = window.location.pathname;
 var socket = io(namespace);
 
@@ -35,13 +36,22 @@ $(document).ready(function() {
         return false;
     });
 
+    socket.on('player: get all', function(otherUsers) {
+    debugger;
 })
 
-socket.on('player: add', function(user) {
+})
+
+socket.on('player: add self', function(user) {
     user = user;
+    $("#"+user.twitch_id).remove();
     playerAvatar = $("<div id=\'"+user.twitch_id+"\' class=\'player\' style=\'x:"+user.x+"; y:"+user.y+";\'></div>");
     $("#players").append(playerAvatar);
 })
+
+// socket.on('player: get all', function(otherUsers) {
+//     debugger;
+// })
 
 
 function lurk() {} // TODO

@@ -62,23 +62,27 @@ client.connect();
 // SOCKET STUFF
 
 // Namespacing lounges
+var lounges = [];
 app.get('/:loungename', function (req, res) {
     if (typeof req.params === undefined) {
         console.log("No lounge name or code");
         res.end();
     } else {
         console.log(req.params);
-        ServerSocket.handleConnections(io, req.params.loungename);
-        res.sendFile(path.join(__dirname, '../public', 'lounge.html'));
+        if (path.extname(req.params.loungename).length <= 1) { // Don't make lounge for .ico, etc
+            if (lounges.indexOf(req.params.loungename) === -1) { // Prevent duplication of lounge code initialization
+                ServerSocket.handleConnections(io, req.params.loungename);
+                lounges.push(req.params.loungename);
+                // TODO: Close the room functionality
+            }
+            res.sendFile(path.join(__dirname, '../public', 'lounge.html'));
+        }
     }
 })
 
 app.get('/setup/authenticate', function (req, res) {
     res.sendFile(path.join(__dirname, '../public/setup', 'authenticate.html'))
 })
-
-// ServerSocket.handleConnections(io);
-
 
 // ------------------------------------------------------------------
 // Mongo Database

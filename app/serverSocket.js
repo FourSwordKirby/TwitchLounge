@@ -2,29 +2,33 @@
 var User = require('./models/user.js');
 var posX = 0;
 var posY = 0;
-var numUsers = 0;
 
 exports.handleConnections = function(io, loungename) {
+var numUsers = 0;
 
     io.on('connection', function(socket){
 
         // We imported our class User earlier, and can store information in it.
         // // var user = new User(socket, "test");
-
+  //       socket.on('connect', function(){
+  // console.log("user connected");
+  //         numUsers++;
+  //         // console.log(numUsers);
+  //         var user = new User(socket, "test");
+  //       });
+        console.log("user connected");
           numUsers++;
+
           console.log(numUsers);
           var user = new User(socket, "test");
 
-          // socket.emit('add circle', {number: numUsers});
-          socket.emit('add circle', {number: numUsers, id: socket.id, x:posX, y:posY});
-          socket.broadcast.emit('add circle', {number: numUsers, id: socket.id, x:posX, y:posY});
+        io.emit('add circle', {number: numUsers});
 
+        // when position moves, pass this data back  ?? ? ? ? ? ?? ?? 
+        socket.on('movechar', function(data){
+            // socket.emit('move', {number: numUsers, id: socket.id, x:data.x, y:data.y});
 
-        //when position moves, pass this data back  ?? ? ? ? ? ?? ?? 
-          socket.on('move', function(data){
-            socket.emit('move', {number: numUsers, id: socket.id, x:data.x, y:data.y});
-
-            socket.broadcast.emit('move', {number: numUsers, id: socket.id, x:data.x, y:data.y});
+            io.emit('move', {number: numUsers, id: socket.id, x:data.x, y:data.y});
             // console.log(user.username);
 
         });
@@ -40,6 +44,10 @@ exports.handleConnections = function(io, loungename) {
         socket.on('disconnect', function(){
             console.log('user disconnected');
             numUsers--;
+        io.emit('add circle', {number: numUsers});
+
+
+
         });
 
         // ------------------------------------------------------------
@@ -61,6 +69,7 @@ exports.handleConnections = function(io, loungename) {
     var nsp = io.of('/'+loungename);
     nsp.on('connection', function(socket){
         console.log('someone connected to a namespaced lounge');
+
     });
 
 

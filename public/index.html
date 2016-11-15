@@ -33,9 +33,9 @@
     </div>
 
  <div id = "circles">
-      <div id = "character">
+      <!-- <div id = "character">
         o
-      </div>
+      </div> -->
   </div>
 </body>
 
@@ -47,7 +47,8 @@
   var id ="";
 
   socket.on('add circle', function(data){
-     $('#circles').empty();
+    console.log(data.number);
+     $('#circle').empty();
     for (i = 0; i < data.number; i ++){
         $('#circles').append("<div id = character>o</>");
         $('#character').attr('tag', data.id);
@@ -57,7 +58,7 @@
 
   //when move called from server syncs positions based on passed positions;
   socket.on('move', function(data){
-    console.log(data); 
+    // (console.log(data.x, data.y));
     document.getElementById('circles').style.marginLeft = data.x;
     document.getElementById('circles').style.marginTop = data.y;
   });
@@ -112,7 +113,8 @@ $(window).on('load', (function(){
       // console.log( character.element.style.marginTop ,  character.element.style.marginLeft )
 
       //passes new coordinates to server? 
-  socket.emit('move', {x: character.element.style.marginLeft,y: character.element.style.marginTop});
+        console.log("yeah");
+    socket.emit('movechar', {x: character.element.style.marginLeft,y: character.element.style.marginTop});
 
     };
 

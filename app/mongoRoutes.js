@@ -14,7 +14,12 @@ exports.saveUser = function(req, res) {
 // identify a user and give then a 'session' (not really but essentially...)
 exports.findUser = function(req, res) {
     MongoDB.getUser(req.query.twitch_id, req.query.token, function(row) {
-        var user = new User(row.twitch_id, row.twitch_username, row.twitch_avatar, row.twitch_bio, row.access_token);
-        res.json(user.jsonify());
+        if (row !== null) {
+            var user = new User(row.twitch_id, row.twitch_username, row.twitch_avatar, row.twitch_bio, row.access_token);
+            res.json(user.jsonify());
+        } else { // No row found, send back error
+            res.status(500);
+            res.end("No user found");
+        }
     })
 }

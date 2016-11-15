@@ -26,7 +26,6 @@
                 success: function(result) {
                     localStorage.setItem('lounge_token', token);
                     localStorage.setItem('twitch_id', result.twitch_id);
-                    debugger;
                     window.location.replace("/");
                 }
             })

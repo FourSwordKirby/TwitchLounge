@@ -48,3 +48,5 @@ typings
 # art sketches
 ideaSketches/
 
+*.DS_Store
+

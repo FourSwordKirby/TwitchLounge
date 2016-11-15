@@ -50,3 +50,6 @@ ideaSketches/
 
 *.DS_Store
 
+# test layout
+testAssets/
+

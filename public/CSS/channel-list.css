@@ -3,7 +3,7 @@ ul#channel-list{
     margin: 0;
     padding: 0; 
     border-width: 0px;
-    width: 500px;
+    width: 45%;
     float: left;
 }
 
@@ -41,7 +41,9 @@ article {
     /*border: 1px solid gray;*/
     padding: 1em;
     overflow: hidden;
-    margin-left: 520px;
+    margin-left: 35%;
     margin-right: 180px;
     text-align: justify;
+    height: 60%;
+    overflow: scroll;
 }

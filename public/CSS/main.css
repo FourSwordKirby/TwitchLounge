@@ -28,7 +28,7 @@ a{
 	margin: 0;
 	padding: 8px;
 	border: 0;
-	box-shadow: 4px 0 7px #000000;
+	box-shadow: 4px 0 7px black;
 	color: #6441A4;;
 }
 
@@ -46,12 +46,12 @@ a{
 
 .borderedButton {
 	background-color: rgba(0,0,0,0);
-	border: 4px solid #6441A4;
+	border: 3px solid #6441A4;
 	margin: 0;
 	padding: 5px 8px;
 
 	color: #6441A4;
-	font-size: 15px;
+	font-size: 16px;
 
 	-webkit-transition-duration: 0.4s;
 	transition-duration: 0.4s;
@@ -87,4 +87,8 @@ a{
 
 .white-text{
 	color: white;
+}
+
+.half-white-text{
+	color: rgb(1,1,1,0.5);
 }

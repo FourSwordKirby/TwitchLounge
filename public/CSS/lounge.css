@@ -9,9 +9,7 @@ form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 
 #messages li:nth-child(odd) { background: #eee; }
 
 
-
-/* WIP below */
-.player {
+.player { /* Todo: Make this not bad */
     width: 50px;
     height: 50px;
     background-color: green;

@@ -14,9 +14,6 @@ nsp.on('connection', function(socket){
 
     var user;
 
-    // ------------------------------
-    // Emitters
-
     socket.emit('player: get all', getPublicPlayersInfo());
 
     // ------------------------------
@@ -34,15 +31,14 @@ nsp.on('connection', function(socket){
     })
 
     socket.on('disconnect', function() {
-        // TODO: Remove user from array. Initial concern with potential race conditions...
+        var userIndex = loungeUsers.indexOf(user);
+        loungeUsers.splice(userIndex, 1); // Node is single threaded so no worry of race conditions
         console.log('user disconnected from lounge ' + loungename);
     })
 
     socket.on('chat message', function(msg){
         io.emit('chat message', msg);
     });
-
-    // ------------------------------
 
 }); // Close namespace lounge socket
 

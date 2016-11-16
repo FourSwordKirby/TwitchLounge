@@ -3,12 +3,12 @@
 
 #welcome {
 	position: absolute;
-	right: 25px;
+	right: 10px;
 	padding: 3px;
 }
 
 #big-logo{
-
+	box-sizing: border-box;
 	display: block;
 	margin: auto;
 	width: 830px;

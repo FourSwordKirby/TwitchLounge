@@ -45,5 +45,5 @@ article {
     margin-right: 180px;
     text-align: justify;
     height: 60%;
-    overflow: scroll;
+    overflow: auto;
 }

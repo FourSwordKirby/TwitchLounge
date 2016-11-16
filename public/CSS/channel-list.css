@@ -1,8 +1,10 @@
-#channel-list{
+ul#channel-list{
 	list-style-type: none;
     margin: 0;
     padding: 0; 
-    width: 50%;
+    border-width: 0px;
+    width: 45%;
+    float: left;
 }
 
 li button {
@@ -33,6 +35,15 @@ li button {
 	color: rgba(0,0,0,0.5);
 }
 
-.introductionText{
-	display: inline-block;
+article {
+	display: block;
+	position: fixed;
+    /*border: 1px solid gray;*/
+    padding: 1em;
+    overflow: hidden;
+    margin-left: 35%;
+    margin-right: 180px;
+    text-align: justify;
+    height: 60%;
+    overflow: scroll;
 }

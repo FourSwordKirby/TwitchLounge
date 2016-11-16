@@ -39,10 +39,11 @@ exports.insertUser = function(user) {
     })
 }
 
-// Returns first user that matches the following ID and access token
-exports.getUser = function(twitch_id, access_token, callback) {
+// Returns first user that matches
+// Search params in format of {"twitch_id" : value, ... }
+exports.getUser = function(searchParams, callback) {
     connect(function(db) {
-        db.collection('users').findOne({"twitch_id" : twitch_id, "access_token" : access_token}, function(err, doc) {
+        db.collection('users').findOne(searchParams, function(err, doc) {
             assert.equal(err, null);
             callback(doc);
         });

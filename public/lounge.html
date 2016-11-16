@@ -7,6 +7,7 @@
 
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://ttv-api.s3.amazonaws.com/twitch.min.js"></script>
+    <script src= "http://player.twitch.tv/js/embed/v1.js"></script>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="JS/clientSocket.js"></script>
@@ -21,14 +22,27 @@
 
 
 <body class="body-lounge">
-  <h1>LOUNGE</h1>
-  <div style="display: inline-block" class="triangle-right">Content</div> 
-  <ul id="messages"></ul>
-  <form action="">
-    <input id="m" autocomplete="off" /><button>Send</button>
-  </form>
+    <h1>LOUNGE</h1>
+    <div style="display: inline-block" class="triangle-right">Content</div>
+
+    <ul id="messages"></ul>
+    <form id="chat" action="">
+        <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
 
     <div id="players">
     </div>
+
+    <div id="twitch-stream"></div>
+
+    <div id="setup">
+        <a href="#">x</a>
+        <form>
+            <label>TMI Keys</label>
+            <input type="text"></input>
+            <button>Save</button>
+        </form>
+    </div>
+
 </body>
 </html>

@@ -1,6 +1,7 @@
 
 var MongoDB = require('./models/mongo.js');
 var User = require('./models/user.js');
+var Lounge = require('./models/lounge.js');
 
 // Assumes twitch user OBJ in req as user
 exports.saveUser = function(req, res) {
@@ -9,9 +10,10 @@ exports.saveUser = function(req, res) {
         res.end("No user found");
     } else {
         MongoDB.getUser({"twitch_id" : req.body.user._id}, function(row) {
-            if (row !== null) { // Update
+            debugger;
+            if (row !== null) { // Update. Note: $set used to allow adding of new cols
                 MongoDB.updateUser(req.body.user._id, {$set: {"twitch_username" : req.body.user.name, "twitch_avatar" : req.body.user.logo, "twitch_bio" : req.body.user.bio, "access_token": req.body.token}});
-                res.send("Update");
+                res.send({"type" : "Update", "twitch_id" : row.twitch_id});
             } else { // Insert
                 var user = new User(req.body.user._id, req.body.user.name, req.body.user.logo, req.body.user.bio, req.body.token);
                 MongoDB.insertUser(user);
@@ -31,6 +33,43 @@ exports.findUser = function(req, res) {
         } else { // No row found, send back error
             res.status(500);
             res.end("No user found");
+        }
+    })
+}
+
+// First checks twitch ID and access token validity before updating
+exports.saveLounge = function(req, res) {
+    if (typeof req.body.twitch_id === "undefined") {
+        res.status(500);
+        res.end("No user found, failed to save lounge");
+    } else {
+        MongoDB.getUser({"twitch_id" : req.body.twitch_id, "access_token" : req.body.access_token}, function(user) {
+            if (user !== null) {
+                MongoDB.getLounge({"twitch_id" : req.body.twitch_id}, function(lounge) {
+                    if (lounge !== null) { // Update
+                        MongoDB.updateLounge(req.body.twitch_id, {$set: {"twitch_username": user.twitch_username, "tmi_apikey" : req.body.tmikey} });
+                        res.send("Update");
+                    } else { // Insert
+                        var lounge = new Lounge(req.body.twitch_id, user.twitch_username, req.body.tmikey);
+                        MongoDB.insertLounge(lounge);
+                        res.json(lounge.jsonify());
+                    }
+                })
+            }
+        })
+    }
+}
+
+// Given the host streamer's username, tries to find the room for a user
+exports.findLounge = function(req, res) {
+    debugger;
+    MongoDB.getLounge({"twitch_username" : req.query.streamer_username}, function(lounge) {
+        if (lounge !== null) {
+            var lounge = new Lounge(lounge.twitch_id, lounge.twitch_username, lounge.tmi_apikey);
+            res.json(lounge.jsonify());
+        } else {
+            res.status(500);
+            res.end("No lounge found");
         }
     })
 }

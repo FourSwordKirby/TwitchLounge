@@ -25,9 +25,7 @@
                 },
                 success: function(result) {
                     localStorage.setItem('lounge_token', token);
-                    if (result !== "Update") {
-                        localStorage.setItem('twitch_id', result.twitch_id);
-                    }
+                    localStorage.setItem('twitch_id', result.twitch_id);
                     window.location.replace("/");
                 }
             })

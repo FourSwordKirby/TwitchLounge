@@ -38,8 +38,9 @@ socket.on('twitch message', function(msg){
 });
 
 socket.on('player: get all', function(otherUsers) {
-    // This is where you loop over all the other users
-    // and display their x, y position and avatar on thes screen
+    $.each(otherUsers, function(index, user) {
+        $("#players").append($("<div id=\'"+user.twitch_id+"\' class=\'player\' style=\'x:"+user.x+"; y:"+user.y+";\'></div>"));
+    })
 })
 
 socket.on('player: add self', function(user) {

@@ -8,13 +8,6 @@ if (hasAuthenticated()) {
     Twitch._config.session = {};
     Twitch._config.session.token = access_token;
     Twitch._config.session.scope = ["user_read", "channel_read"];
-} else {
-    $('#twitchsdk').click(function() {
-    Twitch.login({
-        redirect_uri:'http://localhost:3000/test',
-        scope: ['user_read', 'channel_read']
-        });
-    })
 }
 
 function hasAuthenticated() {

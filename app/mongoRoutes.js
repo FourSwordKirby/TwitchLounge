@@ -10,7 +10,7 @@ exports.saveUser = function(req, res) {
     } else {
         MongoDB.getUser({"twitch_id" : req.body.user._id}, function(row) {
             if (row !== null) { // Update
-                MongoDB.updateUser(req.body.user._id, {"twitch_username" : req.body.user.name, "twitch_avatar" : req.body.user.logo, "twitch_bio" : req.body.user.bio, "access_token": req.body.token});
+                MongoDB.updateUser(req.body.user._id, {$set: {"twitch_username" : req.body.user.name, "twitch_avatar" : req.body.user.logo, "twitch_bio" : req.body.user.bio, "access_token": req.body.token}});
                 res.send("Update");
             } else { // Insert
                 var user = new User(req.body.user._id, req.body.user.name, req.body.user.logo, req.body.user.bio, req.body.token);

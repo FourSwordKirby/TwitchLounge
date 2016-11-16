@@ -20,7 +20,7 @@ nsp.on('connection', function(socket){
     // Listeners
 
     socket.on('player: start', function(req) { // Authenticated user connected, try get user obj
-        MongoDB.getUser(req.twitch_id, req.access_token, function(row) {
+        MongoDB.getUser({"twitch_id" : req.twitch_id, "access_token" : req.access_token}, function(row) {
             if (row !== null) {
                 user = new User(row.twitch_id, row.twitch_username, row.twitch_avatar, row.twitch_bio, row.access_token);
                 user.socket_id = socket.id;

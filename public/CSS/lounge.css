@@ -6,7 +6,7 @@ body.body-lounge {
 	background-image: url("../assets/scrshot.png");
 	background-color: #222;
 }
-form { padding: 3px; position: absolute; top: 0; width: 100%; }
+form { padding: 3px; position: absolute; bottom: 15px; width: 100%; }
 form input { border: 0; padding: 10px; width: 80%; margin-right: .5%; }
 form button { width: 18.5%; background: rgb(130, 224, 255); border: none; padding: 10px; }
 #messages { list-style-type: none; margin: 0; padding: 0; }

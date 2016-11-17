@@ -92,12 +92,38 @@ app.get('/db/findUser', MongoRoutes.findUser);
 
 // ------------------------------------------------------------------
 // Ralph's IRC Twitch chat code
-    // Send chat messages to socket
-  client.on('chat', function(channel, user, message, self) {
-    io.emit('twitch message', ["color:" + user['@color'], user['display-name'], ": " + message]);
-  });
-    
-  client.on('connected', function(address, port) {
+// Send chat messages to socket
+
+var defaultColors = [
+        '#FF0000','#0000FF','#008000','#B22222','#FF7F50',
+        '#9ACD32','#FF4500','#2E8B57','#DAA520','#D2691E',
+        '#5F9EA0','#1E90FF','#FF69B4','#8A2BE2','#00FF7F'
+    ]
+var randomColorsChosen = {};
+
+function resolveColor(chan, name, color) {
+    if(color !== null) {
+        return color;
+    }
+    if(!(chan in randomColorsChosen)) {
+        randomColorsChosen[chan] = {};
+    }
+    if(name in randomColorsChosen[chan]) {
+        color = randomColorsChosen[chan][name];
+    }
+    else {
+        color = defaultColors[Math.floor(Math.random()*defaultColors.length)];
+        randomColorsChosen[chan][name] = color;
+    }
+    return color;
+}
+
+client.on('chat', function(channel, user, message, self) {
+    var color = resolveColor(channel, user['display-name'], user['color']);
+    io.emit('twitch message', ["color:" + color, user['display-name'], ": " + message]);
+});
+
+client.on('connected', function(address, port) {
     io.emit('chat message', "My nipples look like milk duds");
   });
 

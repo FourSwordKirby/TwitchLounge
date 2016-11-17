@@ -1,7 +1,7 @@
 
 // Get the lounge code from URL and register socket to namespace
 var namespace = window.location.pathname;
-var socket = io(namespace);
+var socket = io();
 
 // Variables
 var twitch_id, access_token;
@@ -22,16 +22,11 @@ $(document).ready(function() {
 
 })
 
-
-socket.on('chat message', function(msg){
-    $('#messages').append($('<li>').text(msg));
-});
-
 socket.on('twitch message', function(msg){
     $('#messages').append(
         $('<li>').append(
             $('<span>').attr('style', msg[0]).text(msg[1]).append(
-                $('<span>').text(msg[2])
+                $('<span>').attr('style', "color:black").text(msg[2])
             )
         )
     )
@@ -60,5 +55,3 @@ function hasAuthenticated() {
     twitch_id = localStorage.getItem('twitch_id');
     return access_token != null && twitch_id != null;
 }
-
-

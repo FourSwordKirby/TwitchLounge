@@ -1,5 +1,6 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
 body.body-lounge { 
 	font: 13px Helvetica, Arial; 
 	color: white; 
@@ -9,16 +10,19 @@ body.body-lounge {
 form { padding: 3px; position: absolute; bottom: 15px; width: 100%; }
 form input { border: 0; padding: 10px; width: 80%; margin-right: .5%; }
 form button { width: 18.5%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+
 #messages { list-style-type: none; margin: 0; padding: 0; }
 #messages li { padding: 5px 10px; }
 #messages li:nth-child(odd) { background: #eee; }
 
-
-#player { /* Todo: Make this not bad */
-	/* I changed the selector from .player to #player */
+#players {
+    position: relative;
+}
+.player { /* Todo: Make this not bad */
     width: 50px;
     height: 50px;
     background-color: green;
+    position:absolute;
 }
 
 #left{

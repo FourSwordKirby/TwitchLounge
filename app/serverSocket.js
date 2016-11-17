@@ -14,8 +14,6 @@ nsp.on('connection', function(socket){
 
     var user;
 
-    socket.emit('player: get all', getPublicPlayersInfo());
-
     // ------------------------------
     // Listeners
 
@@ -24,8 +22,9 @@ nsp.on('connection', function(socket){
             if (row !== null) {
                 user = new User(row.twitch_id, row.twitch_username, row.twitch_avatar, row.twitch_bio, row.access_token);
                 user.socket_id = socket.id;
-                loungeUsers.push(user);
                 socket.emit('player: add self', user.jsonify());
+                socket.emit('player: get all', getPublicPlayersInfo());
+                loungeUsers.push(user);
             }
         })
     })

@@ -8,6 +8,7 @@ var socket = io(namespace);
 // Variables
 var twitch_id, access_token;
 var user, playerAvatar;
+var framerate = 100; // In milliseconds, how often we poll for 'frame updates' from server
 
 $(document).ready(function() {
     if (hasAuthenticated()) {
@@ -29,27 +30,23 @@ socket.on('player: add self', function(row) {
     playerAvatar = $("<div id=\'"+user.twitch_id+"\' class=\'player\' style=\'left:"+user.x+"; top:"+user.y+";\'></div>");
     $("#players").append(playerAvatar);
 
-    addUserSocketEvents();
-    addPlayerListeners();
+    addPlayerEvents();
 
 })
 
-
 // ------------------------------------------------------------
-// SOCKET EVENT HANDLING
+// USER EVENT HANDLING
 
-// *** For socket event listeners that HAVE to be initialized AFTER an authenticated user is made *** //
-function addUserSocketEvents() {
-    socket.on('player: get all', getAllUsers);
-    socket.on('twitch message', appendTwitchMessage);
-}
+// *** For event listeners that HAVE to be initialized AFTER an authenticated user is made *** //
+function addPlayerEvents() {
 
+socket.on('player: get all', getAllUsers);
 function getAllUsers(otherUsers) {
     $.each(otherUsers, function(index, otherUser) {
         $("#players").append($("<div id=\'"+otherUser.twitch_id+"\' class=\'player\' style=\'left:"+otherUser.x+"; top:"+otherUser.y+";\'></div>"));
     })
 }
-
+socket.on('twitch message', appendTwitchMessage);
 function appendTwitchMessage(msg) {
     $('#messages').append(
         $('<li>').append(
@@ -60,15 +57,7 @@ function appendTwitchMessage(msg) {
     )
 }
 
-
-// ------------------------------------------------------------
-// OTHER JS EVENT HANDLING
-
-// *** For JS listeners that HAVE to be initialized AFTER an authenticated user is made *** //
-function addPlayerListeners() {
-    handleMovement();
-}
-
+handleMovement();
 var KEYCODES = {
     "LEFT" : 37,
     "UP" : 38,
@@ -84,9 +73,39 @@ function handleMovement() {
         if (event.keyCode === KEYCODES.DOWN) { user.y = user.y + userMoveDefault; }
         playerAvatar.css("left", user.x);
         playerAvatar.css("top", user.y);
+        socket.emit('player: move', {"x": user.x, "y": user.y});
     })
 }
 
+} // Close addPlayerEvents()
+
+
+// ------------------------------------------------------------
+// ANON/USER EVENT HANDLING
+// *** For event listeners that happen whenever, and everyone can enjoy its effects *** //
+
+window.setInterval(updateFrame, framerate);
+
+function updateFrame() {
+    console.log("UPDATE");
+    socket.emit('update frame');
+}
+
+socket.on('players: move all', moveAllUsers);
+function moveAllUsers(otherUsers) { // Moves all users to updated positions gotten from server
+    $.each(otherUsers, function(index, otherUser) {
+        $("#"+otherUser.twitch_id).css("left", otherUser.x);
+        $("#"+otherUser.twitch_id).css("top", otherUser.y);
+    })
+}
+
+socket.on('player: add newcomer', function(otherUser) {
+    $("#players").append($("<div id=\'"+otherUser.twitch_id+"\' class=\'player\' style=\'left:"+otherUser.x+"; top:"+otherUser.y+";\'></div>"));
+})
+
+socket.on('player: leave', function(otherUser) {
+    $("#"+otherUser.twitch_id).remove();
+})
 
 // ------------------------------------------------------------
 // UTILITY FUNCTIONS

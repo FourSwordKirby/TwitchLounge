@@ -12,6 +12,7 @@ body{
 	border: 0;
 	background-color: #6441A4;
 	font-family: arial, sans-serif;
+	box-sizing: border-box;
 }
 
 a{
@@ -29,10 +30,12 @@ a{
 	padding: 8px;
 	border-width: 0px;
 	box-shadow: 0px 2px 10px black;
-	color: #6441A4;;
+	color: #6441A4;
+	box-sizing: border-box;
 }
 
 #bottom-bar{
+	box-sizing: border-box;
 	width: 100%;
 	position: relative;
 	bottom: 0px;

@@ -38,11 +38,12 @@ li button {
 article {
 	display: block;
 	position: fixed;
+    /*border: 1px solid gray;*/
     padding: 1em;
-    overflow: auto;
+    overflow: hidden;
     margin-left: 35%;
     margin-right: 180px;
     text-align: justify;
     height: 60%;
-    overflow: scroll;
+    overflow: auto;
 }

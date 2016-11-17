@@ -25,43 +25,54 @@ exports.testConnect = function() {
     });
 }
 
+// --------------------------------------------------
+// USER
+
 // Pass it a user object and it will save it
 exports.insertUser = function(user) {
     connect(function(db) {
         db.collection('users').insertOne(user.jsonify(), function(err, result) {
-        assert.equal(err, null);
-        console.log("Inserted "+ user.twitch_username +" into the DB.");
-        db.close();
+            assert.equal(err, null);
+            console.log("Inserted "+ user.twitch_username +" into the DB.");
+            db.close();
         })
     })
 }
 
-// Returns first user that matches the following ID and access token
-exports.getUser = function(twitch_id, access_token, callback) {
+// Returns first user that matches
+// Search params in format of {"twitch_id" : value, ... }
+exports.getUser = function(searchParams, callback) {
     connect(function(db) {
-        db.collection('users').findOne({"twitch_id" : twitch_id, "access_token" : access_token}, function(err, doc) {
+        db.collection('users').findOne(searchParams, function(err, doc) {
+            assert.equal(err, null);
             callback(doc);
         });
         db.close();
-
     })
 }
 
-exports.updateUser = function() {
-    
-}
-
-exports.getAllUsers = function() {
+// Given twitch ID, updates a user obj based on update_data. You can put whatever you want in update_data so long it is
+// a dictionary {} but only the keys listed in user will actually be used in model functionality
+exports.updateUser = function(twitch_id, update_data) {
+    connect(function(db) {
+        db.collection('users').update({"twitch_id" : twitch_id}, update_data, {upsert: false, multi: false}, function(err, doc) {
+            assert.equal(err, null);
+            console.log("Updated " + doc.twitch_username + " in the DB.");
+            db.close();
+        })
+    })
 }
 
 // Deletes all users, probably used just for testing purposes
 exports.deleteAllUsers = function(callback) {
     connect(function(db) {
         db.collection('users').deleteMany( {}, function(err, results) {
-            db.close;
+            db.close();
             callback(results);
         })
     })
 }
 
+// --------------------------------------------------
+// LOUNGE
  

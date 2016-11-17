@@ -1,10 +1,5 @@
 // TODO: authenticate user for twitch requests.
 
-// Get the lounge code from URL and register socket to namespace
-var namespace = window.location.pathname;
-var socket = io(namespace);
-
-
 var access_token, twitch_id;
 
 Twitch.init({ clientId: 'oqg26g9cdo8gkqy7puez3370gudujjk'}, function(err, status) { console.log('the library is now loaded') });
@@ -13,14 +8,6 @@ if (hasAuthenticated()) {
     Twitch._config.session = {};
     Twitch._config.session.token = access_token;
     Twitch._config.session.scope = ["user_read", "channel_read"];
-    findUser();
-} else {
-    $('#twitchsdk').click(function() {
-    Twitch.login({
-        redirect_uri:'http://localhost:3000/test',
-        scope: ['user_read', 'channel_read']
-        });
-    })
 }
 
 function hasAuthenticated() {
@@ -29,26 +16,26 @@ function hasAuthenticated() {
     return access_token != null && twitch_id != null;
 }
 
-function findUser() {
-    $.ajax({
-        url: '/db/findUser',
-        type: 'GET',
-        data: {
-        "twitch_id" : twitch_id,
-        "token" : access_token
-        },
-        success: function(data) {
-            Twitch.api({method: 'streams/' + data.twitch_username}, function(error, stream) {
-                if (stream.stream) {
-                    $("body").append("<p>STREAMER!</p>");
-                } else {
-                    $("body").append("<p>WATCHER!</p>");
-                }
-                debugger;
-            })
-        }
-    })
-}
+// function findUser() {
+//     $.ajax({
+//         url: '/db/findUser',
+//         type: 'GET',
+//         data: {
+//         "twitch_id" : twitch_id,
+//         "token" : access_token
+//         },
+//         success: function(data) {
+//             Twitch.api({method: 'streams/' + data.twitch_username}, function(error, stream) {
+//                 if (stream.stream) {
+//                     $("body").append("<p>STREAMER!</p>");
+//                 } else {
+//                     $("body").append("<p>WATCHER!</p>");
+//                 }
+//                 debugger;
+//             })
+//         }
+//     })
+// }
 
 // TODO: Ask group.. how do I stream lmao
 // Then: Show diff pages based on if streaming or not

@@ -17,7 +17,7 @@ class User {
 
         this.x = 0; // Default position to 0
         this.y = 0;
-        this.sockets = {}; // Socket connection IDs, key = room, value = socket ID
+        this.socket = ""; // Socket connection IDs, key = room, value = socket ID
     }
 
     move(x, y) {
@@ -34,7 +34,18 @@ class User {
             "access_token" : this.access_token,
             "x" : this.x,
             "y" : this.y,
-            "sockets" : this.sockets
+            "socket" : this.socket
+        }
+    }
+
+    siojsonify () { // Used to pass public information between sockets
+        return {
+            "twitch_id" : this.twitch_id,
+            "twitch_username" : this.twitch_username,
+            "twitch_avatar" : this.twitch_avatar,
+            "twitch_bio" : this.twitch_bio,
+            "x" : this.x,
+            "y" : this.y
         }
     }
 

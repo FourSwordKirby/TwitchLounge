@@ -45,7 +45,7 @@ form button { width: 18.5%; background: rgb(130, 224, 255); border: none; paddin
 }
 
 #video{
-	/*position: relative;*/
+	position: relative;
 	margin: 5px;
 	margin-bottom: 2.5px;
 	background: rgba(255,255,255,0.5);

@@ -32,18 +32,13 @@ socket.on('player: add self', function(row) {
     addUserSocketEvents();
     addPlayerListeners();
 
-    $(document).keydown(function(e) {
-        if (event.which === 39) {
-            detectKeys();
-        }
-    })
 })
 
 
 // ------------------------------------------------------------
 // SOCKET EVENT HANDLING
 
-// *** For socket events that HAVE to be called AFTER an authenticated user is initialized *** //
+// *** For socket event listeners that HAVE to be initialized AFTER an authenticated user is made *** //
 function addUserSocketEvents() {
     socket.on('player: get all', getAllUsers);
     socket.on('twitch message', appendTwitchMessage);
@@ -69,7 +64,7 @@ function appendTwitchMessage(msg) {
 // ------------------------------------------------------------
 // OTHER JS EVENT HANDLING
 
-// *** For JS listeners that HAVE to be called AFTER an authenticated user is initialized *** //
+// *** For JS listeners that HAVE to be initialized AFTER an authenticated user is made *** //
 function addPlayerListeners() {
     handleMovement();
 }

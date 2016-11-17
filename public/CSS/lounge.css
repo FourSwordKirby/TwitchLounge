@@ -21,6 +21,15 @@ form button { width: 18.5%; background: rgb(130, 224, 255); border: none; paddin
     background-color: green;
 }
 
+#left{
+	position: relative;
+	width: 75vw;
+	height: 100vh;
+	margin: 0;
+	left: 0;
+	top: 0;
+}
+
 #right{
 	position: fixed;
 	width: 25%;
@@ -41,12 +50,13 @@ form button { width: 18.5%; background: rgb(130, 224, 255); border: none; paddin
 	margin-bottom: 2.5px;
 	background: rgba(255,255,255,0.5);
 	border:0;
-	width: 100%;
+	width: 95%;
 	height: 40%;
 	right: 0;
 	top: 0;
 	/*resize: both;*/
 	overflow: auto;
+	box-sizing: border-box;
 }
 
 #chatroom{
@@ -55,9 +65,9 @@ form button { width: 18.5%; background: rgb(130, 224, 255); border: none; paddin
 	margin-top: 2.5px;
 	background: rgba(255,255,255,0.5);
 	border:0;
-	width: 100%;
+	width: 95%;
 	height: 60%;
-	right: 0;
+	/*right: 0;*/
 	bottom: 0;
 	/*resize: both;*/
 	overflow: auto;
@@ -67,4 +77,11 @@ form button { width: 18.5%; background: rgb(130, 224, 255); border: none; paddin
 	position: fixed;
 	margin: 8px;
 	z-index: 2;
+}
+
+#instructionText{
+	position: absolute;
+	bottom: 7vh;
+	width:100%;
+	font-size: 14px;
 }

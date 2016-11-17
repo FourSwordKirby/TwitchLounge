@@ -36,8 +36,8 @@ socket.on('player: add self', function(row) {
 
 // ------------------------------------------------------------
 // USER EVENT HANDLING
+// For event listeners that HAVE to be initialized AFTER an authenticated user is made
 
-// *** For event listeners that HAVE to be initialized AFTER an authenticated user is made *** //
 function addPlayerEvents() {
 
 socket.on('player: get all', getAllUsers);
@@ -65,7 +65,7 @@ var KEYCODES = {
     "DOWN" : 40
 }
 var userMoveDefault = 5;
-function handleMovement() {
+function handleMovement() { // Handles arrow key movement, updates in DOM and server
     $(document).keydown(function(event) { // TODO: Detect diagonal movement
         if (event.keyCode === KEYCODES.LEFT) { user.x = user.x - userMoveDefault; }
         if (event.keyCode === KEYCODES.RIGHT) { user.x = user.x + userMoveDefault; }
@@ -73,23 +73,31 @@ function handleMovement() {
         if (event.keyCode === KEYCODES.DOWN) { user.y = user.y + userMoveDefault; }
         playerAvatar.css("left", user.x);
         playerAvatar.css("top", user.y);
-        socket.emit('player: move', {"x": user.x, "y": user.y});
+        socket.emit('player: move', {x: user.x, y: user.y});
     })
 }
+
+// *** Add your own socket listeners in this block, below this line *** //
+
+
 
 } // Close addPlayerEvents()
 
 
 // ------------------------------------------------------------
 // ANON/USER EVENT HANDLING
-// *** For event listeners that happen whenever, and everyone can enjoy its effects *** //
+// For event listeners that happen whenever, and everyone can enjoy its effects
 
 window.setInterval(updateFrame, framerate);
-
 function updateFrame() {
-    console.log("UPDATE");
+    // To prevent one client sending a shit ton of requests for small things, we submit the
+    // 'update frame' event every so often, which causes server to send update events in batches.
+    // We additionally send in the user to update it on the server here, since other users only
+    // see changes based on this frame update anyway.
     socket.emit('update frame');
 }
+
+// *** Add your own socket listeners below *** //
 
 socket.on('players: move all', moveAllUsers);
 function moveAllUsers(otherUsers) { // Moves all users to updated positions gotten from server

@@ -19,10 +19,12 @@ form button { width: 18.5%; background: rgb(130, 224, 255); border: none; paddin
     position: relative;
 }
 .player { /* Todo: Make this not bad */
-    width: 50px;
-    height: 50px;
-    background-color: green;
+    width: 15px;
+    height: 15px;
+    background-color: gold;
     position:absolute;
+    border-radius:30px;
+    box-shadow: 0 0 70px 20px gold;
 }
 
 #left{
@@ -88,4 +90,6 @@ form button { width: 18.5%; background: rgb(130, 224, 255); border: none; paddin
 	bottom: 7vh;
 	width:100%;
 	font-size: 14px;
+	z-index: 2;
+	text-shadow: 0 0 10px black;
 }

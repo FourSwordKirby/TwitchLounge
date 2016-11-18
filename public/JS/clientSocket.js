@@ -64,15 +64,24 @@ var KEYCODES = {
     "RIGHT": 39,
     "DOWN" : 40
 }
+
 var userMoveDefault = 5;
 function handleMovement() { // Handles arrow key movement, updates in DOM and server
     $(document).keydown(function(event) { // TODO: Detect diagonal movement
-        if (event.keyCode === KEYCODES.LEFT) { user.x = user.x - userMoveDefault; }
-        if (event.keyCode === KEYCODES.RIGHT) { user.x = user.x + userMoveDefault; }
-        if (event.keyCode === KEYCODES.UP) { user.y = user.y - userMoveDefault; }
-        if (event.keyCode === KEYCODES.DOWN) { user.y = user.y + userMoveDefault; }
-        playerAvatar.css("left", user.x);
-        playerAvatar.css("top", user.y);
+        var newX = user.x;
+        var newY = user.y;
+        if (event.keyCode === KEYCODES.LEFT) { newX = user.x - userMoveDefault; newY = user.y;}
+        if (event.keyCode === KEYCODES.RIGHT) { newX = user.x + userMoveDefault; newY = user.y;}
+        if (event.keyCode === KEYCODES.UP) { newY = user.y - userMoveDefault; newX = user.x;}
+        if (event.keyCode === KEYCODES.DOWN) { newY = user.y + userMoveDefault; newX = user.x;}
+        playerAvatar.animate({
+            left: newX,
+            top: newY
+        });
+        user.x = newX;
+        user.y = newY;
+        // playerAvatar.css("left", user.x);
+        // playerAvatar.css("top", user.y);
         socket.emit('player: move', {x: user.x, y: user.y});
     })
 }

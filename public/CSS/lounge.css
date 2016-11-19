@@ -9,14 +9,14 @@ body.body-lounge {
 }
 #chatroom form { padding: 3px; position: absolute; bottom: 15px; width: 100%; }
 #chatroom form input { border: 0; padding: 10px; width: 80%; margin-right: .5%; }
-#chatroom form button { width: 18.5%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+#chatroom form button { width: 18.5%; background: rgb(130, 224, 255); border: none; padding: 10px; text-align: center;}
 
 #messages { list-style-type: none; margin: 0; padding: 0; }
 #messages li { padding: 5px 10px; }
 #messages li:nth-child(odd) { background: #eee; }
 
 #players {
-    position: relative;
+    position: absolute;
 }
 .player { /* Todo: Make this not bad */
     width: 15px;
@@ -50,13 +50,21 @@ body.body-lounge {
 	left: 200px;
 }
 
+#player-info{
+	position: absolute;
+	background-color: rgba(255,255,255,0.2);
+	border: 0;
+	padding: 10px;
+	z-index: 98;
+}
+
 #video{
 	position: relative;
 	margin: 5px;
 	margin-bottom: 2.5px;
 	background: rgba(255,255,255,0.5);
 	border:0;
-	width: 95%;
+	width: 100% - 5px;
 	height: 40%;
 	right: 0;
 	top: 0;
@@ -71,7 +79,7 @@ body.body-lounge {
 	margin-top: 2.5px;
 	background: rgba(255,255,255,0.5);
 	border:0;
-	width: 95%;
+	width: 100% - 5px;
 	height: 60%;
 	/*right: 0;*/
 	bottom: 0;
@@ -80,9 +88,9 @@ body.body-lounge {
 }
 
 #logo {
-	position: fixed;
+	position: absolute;
 	margin: 8px;
-	z-index: 2;
+	z-index: 99;
 }
 
 #instructionText{

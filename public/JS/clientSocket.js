@@ -29,6 +29,19 @@ socket.on('player: add self', function(row) {
     $("#"+user.twitch_id).remove(); // Just in case of refresh duplication
     playerAvatar = $("<div id=\'"+user.twitch_id+"\' class=\'player\' style=\'left:"+user.x+"; top:"+user.y+";\'></div>");
     $("#players").append(playerAvatar);
+    $("#"+user.twitch_id).hover(function(){
+        playerInfoHtml = ("<b>ID: </b> " + user.twitch_id +"<br><b>username: </b>iDontKnow" + 
+            "<br><b>last seen: </b> 5 sec ago<br><b>tags: </b>LOL DotA2 GTAV")
+        $("#player-info").html(playerInfoHtml);
+        $("#player-info").css({
+            left: user.x + 25,
+            top:  user.y
+        });
+
+        $("#player-info").show();
+    }, function(){
+        $("#player-info").hide();
+    });
 
     addPlayerEvents();
 
@@ -106,16 +119,17 @@ function handleMovement() {
     user.x+=velX;
 
     //edges detected
-    if (user.x >= width) {
-        user.x = width;
-    }else if (user.x <= 5) {
-        user.x = 5;
+    var m = 5
+    if (user.x >= width - m) {
+        user.x = width - m;
+    }else if (user.x <= m) {
+        user.x = m;
     }
 
-    if (user.y > height) {
-        user.y = height;
-    } else if (user.y <= 5) {
-        user.y = 5;
+    if (user.y > height - m) {
+        user.y = height - m;
+    } else if (user.y <= m) {
+        user.y = m;
     }
     
     socket.emit('player: move', {x: user.x, y: user.y});

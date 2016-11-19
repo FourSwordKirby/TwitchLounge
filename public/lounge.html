@@ -53,16 +53,23 @@
     </div>
   </div> <!-- Close right div -->
 
-<!-- FROM LOUNGE BRANCH -->
 
-    <div id="setup" class="hide">
-        <a href="#">x</a>
-        <form>
-            <label>TMI Keys</label>
-            <input type="text"></input>
-            <button>Save</button>
-        </form>
-    </div>
+<!-- Streamer setup options -->
+<button id="show-setup">Setup</button>
+<div id="setup" class="hide">
+    <a href="" id="close-setup">x</a>
+    <form>
+        <h3>Lounge Setup</h3>
+        <hr />
+        <label>TMI Key</label>
+        <input name="tmi" type="password" size="40"></input>
+        <p>
+            Entering your TMI key enables lounge viewers to view the Twitch chat. <a href="https://twitchapps.com/tmi/" target="_blank">Get one here.</a>
+        </p>
+
+        <button id="save-setup">Save</button>
+    </form>
+</div>
 
 </body>
 </html>

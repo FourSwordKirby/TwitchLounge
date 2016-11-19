@@ -29,6 +29,16 @@ $(document).ready(function() {
     // var player = new Twitch.Player("twitch-stream", options);
     // player.setVolume(0.5);
 
+
+    // Streamer setup listeners
+    $("#setup #close-setup").click(function() {
+        $("#setup").addClass("hide");
+        return false;
+    })
+    $("#show-setup").click(function() {
+        $("#setup").toggleClass("hide");
+        return false;
+    })
     $("#setup form").submit(function() {
         saveLounge();
         return false;
@@ -44,14 +54,18 @@ function hasAuthenticated() {
     return access_token != null && twitch_id != null;
 }
 
+// ------------------------
+// Streamer lounge setup
+
 function saveLounge() {
+    var tmikey = $("#setup input[name=tmi]").val();
     $.ajax({
         url: '/db/saveLounge',
         type: 'PUT',
         data: {
             "access_token" : access_token,
             "twitch_id" : twitch_id,
-            "tmikey" : "TODO"
+            "tmikey" : tmikey
         },
         success: function(result) {
             if (result === "Update") {
@@ -61,6 +75,7 @@ function saveLounge() {
             }
         }
     }).done(function() {
+        $("#setup").addClass("hide");
     })
 }
 
@@ -73,6 +88,7 @@ function getLounge() {
         },
         success: function(result) {
             lounge = result;
+            $("#setup input[name=tmi]").val(result.tmi_apikey);
         },
         error: function() {
 

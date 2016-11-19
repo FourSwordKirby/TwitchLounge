@@ -7,9 +7,9 @@ body.body-lounge {
 	background-image: url("../assets/scrshot.png");
 	background-color: #222;
 }
-form { padding: 3px; position: absolute; bottom: 15px; width: 100%; }
-form input { border: 0; padding: 10px; width: 80%; margin-right: .5%; }
-form button { width: 18.5%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+#chatroom form { padding: 3px; position: absolute; bottom: 15px; width: 100%; }
+#chatroom form input { border: 0; padding: 10px; width: 80%; margin-right: .5%; }
+#chatroom form button { width: 18.5%; background: rgb(130, 224, 255); border: none; padding: 10px; }
 
 #messages { list-style-type: none; margin: 0; padding: 0; }
 #messages li { padding: 5px 10px; }
@@ -92,4 +92,50 @@ form button { width: 18.5%; background: rgb(130, 224, 255); border: none; paddin
 	font-size: 14px;
 	z-index: 2;
 	text-shadow: 0 0 10px black;
+}
+
+/* Streamer Setup CSS*/
+#setup {
+    color: black;
+    background: white;
+    position: absolute;
+    padding: 10px;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 150px;
+    width: 350px;
+}
+#setup p {
+    font-size:11px;
+    color: #797979;
+    padding-top: 3px;
+    padding-bottom: 5px;
+}
+#setup hr {
+    border: none;
+    border-bottom: 1px solid #cacaca;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+#setup #close-setup {
+    float: right;
+    color: #20adc7;
+    text-decoration: none;
+}
+button#save-setup {
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    left: 0;
+    background: rgb(130, 224, 255);
+    border: none;
+    padding: 10px;
+}
+button#show-setup {
+    top: 15px;
+    left: 70px;
+    position: absolute;
 }

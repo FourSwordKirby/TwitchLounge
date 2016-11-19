@@ -57,7 +57,15 @@ function appendTwitchMessage(msg) {
     )
 }
 
-handleMovement();
+
+var velX = 0,
+    velY = 0,
+    speed = 2,
+    friction = .9,
+    keys = [],
+    width = window.innerWidth,
+    height=window.innerHeight;
+
 var KEYCODES = {
     "LEFT" : 37,
     "UP" : 38,
@@ -65,30 +73,58 @@ var KEYCODES = {
     "DOWN" : 40
 }
 
-var userMoveDefault = 5;
-function handleMovement() { // Handles arrow key movement, updates in DOM and server
-    $(document).keydown(function(event) { // TODO: Detect diagonal movement
-        var newX = user.x;
-        var newY = user.y;
-        if (event.keyCode === KEYCODES.LEFT) { newX = user.x - userMoveDefault; newY = user.y;}
-        if (event.keyCode === KEYCODES.RIGHT) { newX = user.x + userMoveDefault; newY = user.y;}
-        if (event.keyCode === KEYCODES.UP) { newY = user.y - userMoveDefault; newX = user.x;}
-        if (event.keyCode === KEYCODES.DOWN) { newY = user.y + userMoveDefault; newX = user.x;}
-        // playerAvatar.animate({
-        //     left: newX,
-        //     top: newY
-        // });
-        user.x = newX;
-        user.y = newY;
-        playerAvatar.css("left", user.x);
-        playerAvatar.css("top", user.y);
-        socket.emit('player: move', {x: user.x, y: user.y});
-    })
+$(document).keydown(function(event){
+    keys[event.keyCode] = true;
+});
+
+$(document).keyup(function(event){
+    keys[event.keyCode] = false;
+});
+
+// Handles arrow key movement, updates in DOM and server
+function handleMovement() {
+
+    requestAnimationFrame(handleMovement); 
+
+    if (keys[KEYCODES.LEFT]) { 
+        if (velX > -speed) velX--;
+    }
+    if (keys[KEYCODES.RIGHT]) { 
+        if (velX < speed) velX++;
+    }
+    if (keys[KEYCODES.UP]) { 
+        if (velY > -speed) velY--; 
+    }
+    if (keys[KEYCODES.DOWN]) { 
+        if (velY < speed) velY++;
+    }
+
+    //acceleration and friction
+    velY*=friction;
+    user.y+=velY;
+    velX*=friction;
+    user.x+=velX;
+
+    //edges detected
+    if (user.x >= width) {
+        user.x = width;
+    }else if (user.x <= 5) {
+        user.x = 5;
+    }
+
+    if (user.y > height) {
+        user.y = height;
+    } else if (user.y <= 5) {
+        user.y = 5;
+    }
+    
+    socket.emit('player: move', {x: user.x, y: user.y});
+// })
 }
 
+handleMovement();
+
 // *** Add your own socket listeners in this block, below this line *** //
-
-
 
 } // Close addPlayerEvents()
 

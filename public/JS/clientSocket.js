@@ -30,7 +30,7 @@ socket.on('player: add self', function(row) {
     playerAvatar = $("<div id=\'"+user.twitch_id+"\' class=\'player\' style=\'left:"+user.x+"; top:"+user.y+";\'></div>");
     $("#players").append(playerAvatar);
     $("#"+user.twitch_id).hover(function(){
-        playerInfoHtml = ("<b>ID: </b> " + user.twitch_id +"<br><b>username: </b>iDontKnow" + 
+        playerInfoHtml = ("<b>ID: </b> " + user.twitch_id +"<br><b>username: </b>" + user.twitch_username +
             "<br><b>last seen: </b> 5 sec ago<br><b>tags: </b>LOL DotA2 GTAV")
         $("#player-info").html(playerInfoHtml);
         $("#player-info").css({

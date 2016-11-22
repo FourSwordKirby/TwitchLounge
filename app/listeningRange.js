@@ -1,27 +1,29 @@
-var coord = [{x:45, y:64}, {x:56, y:98}, {x:23, y:44}, {x:33, y:44}, {x:53, y:44}];
-var dist = 15;
 
-function getListenObjects(coordinates, listenRange) {
+// Returns an array of arrays, with each array containing which user indexes that user
+// is in range of
+exports.getListenObjects = function(users, listenRange) {
+    var sortedUsers = [];
 
     //Initializes our final return, augments the coordinates with their actual positions
-    var listenDict = []
-    for (var i = 0; i < coordinates.length; i++) 
+    var listenDict = [];
+    for (var i = 0; i < users.length; i++) 
     {
         listenDict.push([]);
-        coordinates[i].idx = i
+        users[i].idx = i;
+        sortedUsers.push(users[i]);
     }
 
-    coordinates = coordinates.sort(function(c1, c2){return c1.x - c2.x})
-    coordinates = getXOverlap(coordinates, listenRange);
+    sortedUsers = sortedUsers.sort(function(c1, c2){return c1.x - c2.x})
+    sortedUsers = getXOverlap(sortedUsers, listenRange);
 
-    coordinates = coordinates.sort(function(c1, c2){return c1.y - c2.y})
-    coordinates = getYOverlap(coordinates, listenRange);
-    for (var i = 0; i < coordinates.length-1; i++) 
+    sortedUsers = sortedUsers.sort(function(c1, c2){return c1.y - c2.y})
+    sortedUsers = getYOverlap(sortedUsers, listenRange);
+    for (var i = 0; i < sortedUsers.length-1; i++) 
     {
-        for(var j = i+1; j < coordinates.length;j++)
+        for(var j = i+1; j < sortedUsers.length;j++)
         {
-            coord1 = coordinates[i];
-            coord2 = coordinates[j];
+            coord1 = sortedUsers[i];
+            coord2 = sortedUsers[j];
 
             if(coord2.x <= coord1.x  + listenRange)
             {
@@ -40,16 +42,16 @@ function getListenObjects(coordinates, listenRange) {
     return listenDict
 }
 
-function getXOverlap(coordinates, listenRange)
+function getXOverlap(users, listenRange)
 {
     var filteredCoord = []
 
-    for (var i = 0; i < coordinates.length-1; i++) 
+    for (var i = 0; i < users.length-1; i++) 
     {
-        for(var j = i+1; j < coordinates.length;j++)
+        for(var j = i+1; j < users.length;j++)
         {
-            coord1 = coordinates[i];
-            coord2 = coordinates[j];
+            coord1 = users[i];
+            coord2 = users[j];
 
             if(coord2.x <= coord1.x  + listenRange)
             {
@@ -65,16 +67,16 @@ function getXOverlap(coordinates, listenRange)
     return filteredCoord
 }
 
-function getYOverlap(coordinates, listenRange)
+function getYOverlap(users, listenRange)
 {
     var filteredCoord = []
 
-    for (var i = 0; i < coordinates.length-1; i++) 
+    for (var i = 0; i < users.length-1; i++) 
     {
-        for(var j = i+1; j < coordinates.length;j++)
+        for(var j = i+1; j < users.length;j++)
         {
-            coord1 = coordinates[i];
-            coord2 = coordinates[j];
+            coord1 = users[i];
+            coord2 = users[j];
 
             if(coord2.y <= coord1.y  + listenRange)
             {
@@ -90,4 +92,20 @@ function getYOverlap(coordinates, listenRange)
     return filteredCoord
 }
 
-console.log(getListenObjects(coord, dist))
+// ----------------------------------------
+// Tests
+
+// var User = require('./models/user.js');
+
+// var user1 = new User(); user1.move(45, 64);
+// var user2 = new User(); user2.move(56, 98);
+// var user3 = new User(); user3.move(23, 44);
+// var user4 = new User(); user4.move(33, 44);
+// var user5 = new User(); user5.move(53, 44);
+// var users = [user1, user2, user3, user4, user5]
+
+// var dist = 15;
+
+// console.log(users);
+// console.log(getListenObjects(users, dist))
+// console.log(users);

@@ -17,7 +17,7 @@ class User {
 
         this.x = 0; // Default position to 0
         this.y = 0;
-        this.socket = ""; // Socket connection IDs, key = room, value = socket ID
+        this.socket = ""; // Socket ID used to target events to user
     }
 
     move(x, y) {

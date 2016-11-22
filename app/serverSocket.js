@@ -1,10 +1,17 @@
 
 var User = require('./models/user.js');
 var MongoDB = require('./models/mongo.js');
+var ListeningRange = require('./listeningRange.js');
 
 exports.handleConnections = function(io, loungename) {
 
+// Namespace specific variables
 var loungeUsers = [];
+var listeningRanges = [];
+var refreshIntervalId = "";
+var refreshRate = 50; // milliseconds between interval related calls
+
+var listenRange = 50; // Could be moved into lounge one day... and changed to whatever value
 
 // --------------------------------------------------------------------------
 
@@ -24,24 +31,31 @@ nsp.on('connection', function(socket){
         MongoDB.getUser({"twitch_id" : req.twitch_id, "access_token" : req.access_token}, function(row) {
             if (row !== null) {
                 user = new User(row.twitch_id, row.twitch_username, row.twitch_avatar, row.twitch_bio, row.access_token);
-                user.socket_id = socket.id;
+                user.socket = socket.id;
+                // socket.client.id is without the namespace starter....
                 socket.emit('player: add self', user.jsonify()); // Add yourself to your screen
                 socket.emit('player: get all', getPublicPlayersInfo()); // Grab all other users, add to your screen
                 loungeUsers.push(user);
 
                 // *** Put any other emitters that need to go AFTER player intialization here *** //
+                manageInterval(nsp); // Check if intervals need to be started, if off currently
                 socket.broadcast.emit('player: add newcomer', user.siojsonify()); // Tell other users you entered, add your dot to other people's screen
             }
         })
     })
 
     socket.on('player: move', function(req) {
-        user.x = req.x;
-        user.y = req.y;
+        if (typeof user !== "undefined") { user.move(req.x, req.y) };
     })
 
-    socket.on('update frame', function() { // Handles all events fired to update frame for users
-        socket.emit('players: move all', getPublicPlayersInfo());
+    socket.on('player: local chat', function(msg) { // Local chat msg goes to nearby ppl only, and yourself
+        var userIndex = loungeUsers.indexOf(user);
+        var nearbyUserIndexes = listeningRanges[userIndex];
+        for (var i=0; i<nearbyUserIndexes.length; i++) {
+            var nearbyUser = loungeUsers[nearbyUserIndexes[i]];
+            socket.broadcast.to(nearbyUser.socket).emit('player: local chat', {"sourceUser": user.siojsonify(), "msg" : msg});
+        }
+        socket.emit('player: local chat', {"sourceUser": user.siojsonify(), "msg" : msg});
     })
 
     socket.on('chat message', function(msg){
@@ -50,8 +64,11 @@ nsp.on('connection', function(socket){
 
     socket.on('disconnect', function() {
         var userIndex = loungeUsers.indexOf(user);
-        loungeUsers.splice(userIndex, 1); // Node is single threaded so no worry of race conditions
-        socket.broadcast.emit('player: leave', user.siojsonify()); // Tell other users you left, remove your dot from other people's screen
+        if (userIndex >= 0) {
+            loungeUsers.splice(userIndex, 1); // Node is single threaded so no worry of race conditions
+            socket.broadcast.emit('player: leave', user.siojsonify()); // Tell other users you left, remove your dot from other people's screen
+            manageInterval(nsp); // Check if intervals need to be stopped
+        }
         console.log('user disconnected from lounge ' + loungename);
     })
 
@@ -65,6 +82,20 @@ function getPublicPlayersInfo() {
     return loungeUsers.map(function(user) { return user.siojsonify(); });
 }
 
+function manageInterval(nsp) { // Sets up or turns off the interval, which is hooked up to certain events
+    if (loungeUsers.length === 1) { // Start it up when 1st user enters
+        refreshIntervalId = setInterval(function() {
+            // Recalculate listening ranges of users
+            listeningRanges = ListeningRange.getListenObjects(loungeUsers, listenRange);
+
+            // Push a frame update to everyone in namespace
+            nsp.emit('players: move all', getPublicPlayersInfo());
+        }, refreshRate);
+    }
+    if (loungeUsers.length === 0) { // Turn it off when last user leaves
+        clearInterval(refreshIntervalId);
+    }
+}
 
 } // Close serverSocket export, don't put anything below
 

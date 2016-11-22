@@ -53,5 +53,9 @@ FYI: To close a process... First you must find it.
 lsof -i:5858
 kill -9 [PID]
 
+For help debugging socket:
+Clientside- localStorage.debug = '*';
+Serverside- DEBUG=* node yourfile.js
+
 http://justintv.github.io/twitch-js-sdk/#section-3-2
 >>>>>>> mongo

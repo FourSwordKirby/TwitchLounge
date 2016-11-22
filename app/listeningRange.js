@@ -1,7 +1,7 @@
 
 // Returns an array of arrays, with each array containing which user indexes that user
 // is in range of
-function getListenObjects(users, listenRange) {
+exports.getListenObjects = function(users, listenRange) {
     var sortedUsers = [];
 
     //Initializes our final return, augments the coordinates with their actual positions
@@ -95,17 +95,17 @@ function getYOverlap(users, listenRange)
 // ----------------------------------------
 // Tests
 
-var User = require('./models/user.js');
+// var User = require('./models/user.js');
 
-var user1 = new User(); user1.move(45, 64);
-var user2 = new User(); user2.move(56, 98);
-var user3 = new User(); user3.move(23, 44);
-var user4 = new User(); user4.move(33, 44);
-var user5 = new User(); user5.move(53, 44);
-var users = [user1, user2, user3, user4, user5]
+// var user1 = new User(); user1.move(45, 64);
+// var user2 = new User(); user2.move(56, 98);
+// var user3 = new User(); user3.move(23, 44);
+// var user4 = new User(); user4.move(33, 44);
+// var user5 = new User(); user5.move(53, 44);
+// var users = [user1, user2, user3, user4, user5]
 
-var dist = 15;
+// var dist = 15;
 
-console.log(users);
-console.log(getListenObjects(users, dist))
-console.log(users);
+// console.log(users);
+// console.log(getListenObjects(users, dist))
+// console.log(users);

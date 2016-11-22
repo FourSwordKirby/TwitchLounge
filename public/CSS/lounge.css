@@ -7,13 +7,6 @@ body.body-lounge {
 	background-image: url("../assets/scrshot.png");
 	background-color: #222;
 }
-#chatroom form { padding: 3px; position: absolute; bottom: 15px; width: 100%; }
-#chatroom form input { border: 0; padding: 10px; width: 80%; margin-right: .5%; }
-#chatroom form button { width: 18.5%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-
-#messages { list-style-type: none; margin: 0; padding: 0; }
-#messages li { padding: 5px 10px; }
-#messages li:nth-child(odd) { background: #eee; }
 
 #players {
     position: relative;
@@ -42,6 +35,21 @@ body.body-lounge {
 	height: 100%;
 	right: 0;
 	top:0;
+}
+
+#logo {
+    position: fixed;
+    margin: 8px;
+    z-index: 2;
+}
+
+#instructionText{
+    position: absolute;
+    bottom: 7vh;
+    width:100%;
+    font-size: 14px;
+    z-index: 2;
+    text-shadow: 0 0 10px black;
 }
 
 #temp{
@@ -78,20 +86,45 @@ body.body-lounge {
 	/*resize: both;*/
 	overflow: auto;
 }
+#chatroom form { padding: 3px; position: absolute; bottom: 15px; width: 100%; }
+#chatroom form input { border: 0; padding: 10px; width: 80%; margin-right: .5%; }
+#chatroom form button { width: 18.5%; background: rgb(130, 224, 255); border: none; padding: 10px; }
 
-#logo {
-	position: fixed;
-	margin: 8px;
-	z-index: 2;
+#messages { list-style-type: none; margin: 0; padding: 0; }
+#messages li { padding: 5px 10px; }
+#messages li:nth-child(odd) { background: #eee; }
+
+#local-chatroom form {
+    width: 100%;
+    display: table;
+    position: absolute;
+    bottom: 10px;
+    z-index: 3; /* TODO: In future we need to box off a 'player pen' and have this at the bottom */
 }
-
-#instructionText{
-	position: absolute;
-	bottom: 7vh;
-	width:100%;
-	font-size: 14px;
-	z-index: 2;
-	text-shadow: 0 0 10px black;
+#local-chatroom form input[type="text"] {
+    display: table-cell;
+    width: 90%;
+    padding: 10px;
+    border: none;
+}
+#local-chatroom form input[type="submit"] {
+    display: table-cell;
+    width: 10%;
+    border: none;
+    padding: 10px;
+    background: rgb(130, 224, 255);
+    min-width: 100px;
+}
+ul.localmsgs {
+    position: absolute;
+    top: 20px;
+    list-style: none;
+    color: black;
+}
+.localmsgs li { /* Might need to move local messages somewhere else ... but for now it'll be janky */
+    background: white;
+    padding: 5px;
+    width: 150px;
 }
 
 /* Streamer Setup CSS*/

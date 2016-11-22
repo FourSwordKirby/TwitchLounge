@@ -1,14 +1,52 @@
 // TODO: authenticate user for twitch requests.
 
 var access_token, twitch_id;
+var namespace = window.location.pathname;
+var lounge;
 
 Twitch.init({ clientId: 'oqg26g9cdo8gkqy7puez3370gudujjk'}, function(err, status) { console.log('the library is now loaded') });
+
+getLounge();
 
 if (hasAuthenticated()) {
     Twitch._config.session = {};
     Twitch._config.session.token = access_token;
     Twitch._config.session.scope = ["user_read", "channel_read"];
+} else {
+    // Lurk
 }
+
+
+$(document).ready(function() {
+
+    // Embed twitch stream
+    var options = {
+            width: 854,
+            height: 480,
+            channel: namespace.slice(1)
+    };
+    // Commented out for now just because it causes our debug log to be noisy af
+    // var player = new Twitch.Player("twitch-stream", options);
+    // player.setVolume(0.5);
+
+
+    // Streamer setup listeners
+    $("#setup #close-setup").click(function() {
+        $("#setup").addClass("hide");
+        return false;
+    })
+    $("#show-setup").click(function() {
+        $("#setup").toggleClass("hide");
+        return false;
+    })
+    $("#setup form").submit(function() {
+        saveLounge();
+        return false;
+    })
+
+})
+
+// ------------------------
 
 function hasAuthenticated() {
     access_token = localStorage.getItem('lounge_token');
@@ -16,31 +54,52 @@ function hasAuthenticated() {
     return access_token != null && twitch_id != null;
 }
 
-// function findUser() {
-//     $.ajax({
-//         url: '/db/findUser',
-//         type: 'GET',
-//         data: {
-//         "twitch_id" : twitch_id,
-//         "token" : access_token
-//         },
-//         success: function(data) {
-//             Twitch.api({method: 'streams/' + data.twitch_username}, function(error, stream) {
-//                 if (stream.stream) {
-//                     $("body").append("<p>STREAMER!</p>");
-//                 } else {
-//                     $("body").append("<p>WATCHER!</p>");
-//                 }
-//                 debugger;
-//             })
-//         }
-//     })
-// }
+// ------------------------
+// Streamer lounge setup
 
-// TODO: Ask group.. how do I stream lmao
-// Then: Show diff pages based on if streaming or not
-// If streaming, create a room with a unique URL string
-// For users, add a route for probably ... /lounge + said string, see Express Routing to allow that behavior
-// For those people, assign them to a namespace socket room based on that string, which acts as a lounge ID
+function saveLounge() {
+    var tmikey = $("#setup input[name=tmi]").val();
+    $.ajax({
+        url: '/db/saveLounge',
+        type: 'PUT',
+        data: {
+            "access_token" : access_token,
+            "twitch_id" : twitch_id,
+            "tmikey" : tmikey
+        },
+        success: function(result) {
+            if (result === "Update") {
 
+            } else {
 
+            }
+        }
+    }).done(function() {
+        $("#setup").addClass("hide");
+    })
+}
+
+function getLounge() {
+    $.ajax({
+        url: '/db/findLounge',
+        type: 'GET',
+        data: {
+            "streamer_username" : namespace.slice(1)
+        },
+        success: function(result) {
+            lounge = result;
+            $("#setup input[name=tmi]").val(result.tmi_apikey);
+        },
+        error: function() {
+
+        }
+    })
+}
+
+// Twitch.api({method: 'streams/' + data.twitch_username}, function(error, stream) {
+//     if (stream.stream) {
+//         $("body").append("<p>STREAMER!</p>");
+//     } else {
+//         $("body").append("<p>WATCHER!</p>");
+//     }
+// })

@@ -76,3 +76,34 @@ exports.deleteAllUsers = function(callback) {
 // --------------------------------------------------
 // LOUNGE
  
+ // Pass it a lounge object and it will save it
+exports.insertLounge = function(lounge) {
+    connect(function(db) {
+        db.collection('lounges').insertOne(lounge.jsonify(), function(err, result) {
+            console.log("Inserted lounge into the DB.");
+            db.close();
+        })
+    })
+}
+
+// Using the twitch id and access token to authenticate a user's identity, updates a lounge
+exports.updateLounge = function(twitch_id, update_data) {
+    connect(function(db) {
+        db.collection('lounges').update({"twitch_id" : twitch_id}, update_data, function(err, doc) {
+            console.log("Updated lounge in DB");
+        })
+        db.close();
+    })
+}
+
+// Returns first lounge that matches
+// Search params in format of {"twitch_id" : value, ... }
+exports.getLounge = function(searchParams, callback) {
+    connect(function(db) {
+        db.collection('lounges').findOne(searchParams, function(err, doc) {
+            assert.equal(err, null);
+            callback(doc);
+        });
+        db.close();
+    })
+}

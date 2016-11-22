@@ -1,24 +1,30 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
 body.body-lounge { 
 	font: 13px Helvetica, Arial; 
 	color: white; 
 	background-image: url("../assets/scrshot.png");
 	background-color: #222;
 }
-form { padding: 3px; position: absolute; bottom: 15px; width: 100%; }
-form input { border: 0; padding: 10px; width: 80%; margin-right: .5%; }
-form button { width: 18.5%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+#chatroom form { padding: 3px; position: absolute; bottom: 15px; width: 100%; }
+#chatroom form input { border: 0; padding: 10px; width: 80%; margin-right: .5%; }
+#chatroom form button { width: 18.5%; background: rgb(130, 224, 255); border: none; padding: 10px; text-align: center;}
+
 #messages { list-style-type: none; margin: 0; padding: 0; }
 #messages li { padding: 5px 10px; }
 #messages li:nth-child(odd) { background: #eee; }
 
-
-#player { /* Todo: Make this not bad */
-	/* I changed the selector from .player to #player */
-    width: 50px;
-    height: 50px;
-    background-color: green;
+#players {
+    position: absolute;
+}
+.player { /* Todo: Make this not bad */
+    width: 15px;
+    height: 15px;
+    background-color: gold;
+    position:absolute;
+    border-radius:30px;
+    box-shadow: 0 0 70px 20px gold;
 }
 
 #left{
@@ -44,13 +50,21 @@ form button { width: 18.5%; background: rgb(130, 224, 255); border: none; paddin
 	left: 200px;
 }
 
+#player-info{
+	position: absolute;
+	background-color: rgba(255,255,255,0.2);
+	border: 0;
+	padding: 10px;
+	z-index: 98;
+}
+
 #video{
 	position: relative;
 	margin: 5px;
 	margin-bottom: 2.5px;
 	background: rgba(255,255,255,0.5);
 	border:0;
-	width: 95%;
+	width: 100% - 5px;
 	height: 40%;
 	right: 0;
 	top: 0;
@@ -65,7 +79,7 @@ form button { width: 18.5%; background: rgb(130, 224, 255); border: none; paddin
 	margin-top: 2.5px;
 	background: rgba(255,255,255,0.5);
 	border:0;
-	width: 95%;
+	width: 100% - 5px;
 	height: 60%;
 	/*right: 0;*/
 	bottom: 0;
@@ -74,9 +88,9 @@ form button { width: 18.5%; background: rgb(130, 224, 255); border: none; paddin
 }
 
 #logo {
-	position: fixed;
+	position: absolute;
 	margin: 8px;
-	z-index: 2;
+	z-index: 99;
 }
 
 #instructionText{
@@ -84,4 +98,52 @@ form button { width: 18.5%; background: rgb(130, 224, 255); border: none; paddin
 	bottom: 7vh;
 	width:100%;
 	font-size: 14px;
+	z-index: 2;
+	text-shadow: 0 0 10px black;
+}
+
+/* Streamer Setup CSS*/
+#setup {
+    color: black;
+    background: white;
+    position: absolute;
+    padding: 10px;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 150px;
+    width: 350px;
+}
+#setup p {
+    font-size:11px;
+    color: #797979;
+    padding-top: 3px;
+    padding-bottom: 5px;
+}
+#setup hr {
+    border: none;
+    border-bottom: 1px solid #cacaca;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+#setup #close-setup {
+    float: right;
+    color: #20adc7;
+    text-decoration: none;
+}
+button#save-setup {
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    left: 0;
+    background: rgb(130, 224, 255);
+    border: none;
+    padding: 10px;
+}
+button#show-setup {
+    top: 15px;
+    left: 70px;
+    position: absolute;
 }

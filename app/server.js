@@ -69,6 +69,8 @@ app.get('/setup/authenticate', function (req, res) {
 // Mongo Database
 app.put('/db/saveUser', MongoRoutes.saveUser);
 app.get('/db/findUser', MongoRoutes.findUser);
+app.put('/db/saveLounge', MongoRoutes.saveLounge);
+app.get('/db/findLounge', MongoRoutes.findLounge);
 
 app.use(function (req, res, next) {
     res.status(404).send('404: Sorry cant find that!')

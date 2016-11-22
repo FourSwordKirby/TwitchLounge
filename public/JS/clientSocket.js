@@ -8,7 +8,7 @@ var socket = io(namespace);
 // Variables
 var twitch_id, access_token;
 var user, playerAvatar;
-<<<<<<< HEAD
+
 
 // Load TMI
 var options = {
@@ -28,9 +28,6 @@ var options = {
 
 var client = new tmi.client(options);
 client.connect();
-=======
-var framerate = 100; // In milliseconds, how often we poll for 'frame updates' from server
->>>>>>> origin/master
 
 $(document).ready(function() {
     if (hasAuthenticated()) {

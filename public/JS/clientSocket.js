@@ -18,6 +18,7 @@ $(document).ready(function() {
     // TODO: Move later as we refactor this demo code into our own
     $('form').submit(function(){
         socket.emit('chat message', $('#m').val());
+        console.log($('#m').val())
         $('#m').val('');
         return false;
     });
@@ -29,14 +30,21 @@ socket.on('player: add self', function(row) {
     $("#"+user.twitch_id).remove(); // Just in case of refresh duplication
     playerAvatar = $("<div id=\'"+user.twitch_id+"\' class=\'player\' style=\'left:"+user.x+"; top:"+user.y+";\'></div>");
     $("#players").append(playerAvatar);
+    addUserInfo();
+
+    addPlayerEvents();
+
+})
+
+function addUserInfo(){
     $("#"+user.twitch_id).hover(function(){
-        playerInfoHtml = ("<b>ID: </b> " + user.twitch_id +"<br><b>username: </b>" + user.twitch_username +
-            "<br><b>last seen: </b> 5 sec ago<br><b>tags: </b>LOL DotA2 GTAV")
-        $("#player-info").html(playerInfoHtml);
-        $("#player-info").css({
-            left: user.x + 25,
-            top:  user.y
-        });
+    playerInfoHtml = ("<b>ID: </b> " + user.twitch_id +"<br><b>username: </b>" + user.twitch_username +
+        "<br><b>last seen: </b> 5 sec ago<br><b>tags: </b>LOL DotA2 GTAV")
+    $("#player-info").html(playerInfoHtml);
+    $("#player-info").css({
+        left: user.x + 25,
+        top:  user.y
+    });
 
         $("#player-info").show();
     }, function(){
@@ -44,8 +52,8 @@ socket.on('player: add self', function(row) {
     });
 
     addPlayerEvents();
+}
 
-})
 
 // ------------------------------------------------------------
 // USER EVENT HANDLING
@@ -60,6 +68,9 @@ function getAllUsers(otherUsers) {
     })
 }
 socket.on('twitch message', appendTwitchMessage);
+        
+socket.on('chat message', appendTwitchMessage);
+
 function appendTwitchMessage(msg) {
     $('#messages').append(
         $('<li>').append(

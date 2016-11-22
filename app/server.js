@@ -125,8 +125,16 @@ client.on('chat', function(channel, user, message, self) {
     io.emit('twitch message', ["color:" + color, user['display-name'], ": " + message]);
 });
 
+// from the demo code
+io.on('connection', function(socket){
+  socket.on('chat message', function(msg){
+    console.log(msg);
+    io.emit('chat message', msg);
+  });
+});
+
 client.on('connected', function(address, port) {
-    io.emit('chat message', "My nipples look like milk duds");
+    io.emit('chat message', "My nipples look like milk duds"); // wtf
   });
 
 app.use(function (req, res, next) {

@@ -5,11 +5,13 @@
     <!-- For socket to work, we need to give the client the socket file as well. This enables
     the clientside to respond to socket events and such -->
 
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://ttv-api.s3.amazonaws.com/twitch.min.js"></script>
     <script src= "http://player.twitch.tv/js/embed/v1.js"></script>
 
-    <script src="/socket.io/socket.io.js"></script>
+    <!-- <script src="/socket.io/socket.io.js"></script> -->
+    
     <script src="JS/clientSocket.js"></script>
     <script src="JS/lounge.js"></script>
 
@@ -35,7 +37,9 @@
 
     <br />
     <div style="display: inline-block" class="triangle-right" id="temp">Content</div> 
-    <ul id="messages"></ul>    
+    <ul id="messages">
+        <!-- <li>here is a message</li> -->
+    </ul>    
 
     <div id="instructionText" class = "center half-white-text">- this is only a screenshot -</div>
 

@@ -73,7 +73,7 @@ body.body-lounge {
 	background: rgba(255,255,255,0.5);
 	border:0;
 	width: 100% - 5px;
-	height: 40%;
+	height: auto;
 	right: 0;
 	top: 0;
 	/*resize: both;*/
@@ -88,7 +88,7 @@ body.body-lounge {
 	background: rgba(255,255,255,0.5);
 	border:0;
 	width: 100% - 5px;
-	height: 60%;
+	height: 80%;
 	/*right: 0;*/
 	bottom: 0;
 	/*resize: both;*/

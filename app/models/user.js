@@ -19,7 +19,7 @@ class User {
         this.y = 0;
         this.socket = ""; // Socket ID used to target events to user
     }
-
+    
     move(x, y) {
         this.x = x;
         this.y = y;

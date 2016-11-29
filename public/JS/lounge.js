@@ -4,7 +4,7 @@ var access_token, twitch_id;
 var namespace = window.location.pathname;
 
 // lounge replaced when lounge loads, but set width and height to prevent errors with initial edge detection
-var lounge = {"width" : 1000, "height" : 1000};
+var lounge = {"width" : 500, "height" : 500};
 
 Twitch.init({ clientId: 'oqg26g9cdo8gkqy7puez3370gudujjk'}, function(err, status) { console.log('the library is now loaded') });
 
@@ -103,6 +103,7 @@ function getLounge() {
             "streamer_username" : namespace.slice(1)
         },
         success: function(result) {
+            debugger;
             lounge = result;
             $("#setup input[name=tmi]").val(result.tmi_apikey);
             $("#setup input[name=width]").val(result.width);
@@ -112,7 +113,8 @@ function getLounge() {
             $("#floor").css("height", result.height);
         },
         error: function() {
-
+            $("#floor").css("width", 500);
+            $("#floor").css("height", 500);
         }
     })
 }

@@ -237,5 +237,5 @@ function randomColor() {
 function createPlayerEl(user) { // Element appended when a new player enters
     var color = randomColor();
     // <div id="player-info" class = "hide">Some information to be displayed.</div>
-    return $("<div id=\'"+user.twitch_id+"\' class=\'player\' data-x=\'"+user.x+"\' data-y=\'"+user.y+"\' style=\'left:"+ (user.x*zoom) +"; top:"+ (user.y*zoom) +"; background-color: "+color+"\'><ul class=\'localmsgs\'></ul></div>");
+    return $("<div id=\'"+user.twitch_id+"\' class=\'player\' data-x=\'"+user.x+"\' data-y=\'"+user.y+"\' style=\'left:"+ (user.x*zoom) +"px; top:"+ (user.y*zoom) +"px; background-color: "+color+"\'><ul class=\'localmsgs\'></ul></div>");
 }

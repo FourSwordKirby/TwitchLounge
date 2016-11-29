@@ -21,8 +21,8 @@ class Dummy {
     constructor(name)
     {
         this.twitch_username = name;
-        this.x = Math.random() * 500;
-        this.y = Math.random() * 500;
+        this.x = Math.random() * lounge.width;
+        this.y = Math.random() * lounge.height;
     }
 }
 
@@ -76,12 +76,12 @@ function receiveTwitchMessage(channel, userstate, message, self) {
     }
 }
 
-function createDummyEl(dummy) { // Element appended when a new dummy enters
+// Zoom is a global, is taken from clientSocket.js
+function createDummyEl(dummy) { // Element appended when a new player enters
     var color = randomColor();
-    // <div id="player-info" class = "hide">Some information to be displayed.</div>
-    return $("<div id=\'"+dummy.twitch_username+"\' class=\'player\' style=\'left: "+dummy.x+"px; top: "+dummy.y+"px; background-color: "+color+"\'><ul class=\'localmsgs\'></ul></div>");
+    return $("<div id=\'"+dummy.twitch_username+"\' class=\'player\' data-x=\'"+dummy.x+"\' data-y=\'"+dummy.y+"\' style=\'left:"+ (dummy.x*zoom) +"px; top:"+ (dummy.y*zoom) +"px; background-color: "+color+"\'><ul class=\'localmsgs\'></ul></div>");
 }
-    
+
 function getPublicPlayersInfo() {
     return loungeUsers.map(function(user) { return user.siojsonify(); });
 }

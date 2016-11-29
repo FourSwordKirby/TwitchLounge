@@ -171,14 +171,22 @@ function appendLocalchat(res) {
     var sourceUser = res.sourceUser;
     var msg = res.msg;
     var msgLi = $("<li>"+sourceUser.twitch_username + ": " + msg+"</li>");
-    var fadeTime = (msg.length/20)*1000; // Assuming people read at an average of 15 characters per second...
-    $("#"+sourceUser.twitch_id+" .localmsgs").append(msgLi);
-    setTimeout(function(){
-        msgLi.fadeOut(400, function() {
-            msgLi.remove();
-        })
-    }, 1500 + fadeTime);
+
+    // Old code that had message appear near user's avatar.
+    // Could be reworked into an emote when chat sent
+    // var fadeTime = (msg.length/20)*1000; // Assuming people read at an average of 15 characters per second...
+    // $("#"+sourceUser.twitch_id+" .localmsgs").append(msgLi);
+    // setTimeout(function(){
+    //     msgLi.fadeOut(400, function() {
+    //         msgLi.remove();
+    //     })
+    // }, 1500 + fadeTime);
+
+    var localChatBox = $("#local-chatroom ul#local-messages");
+    localChatBox.append(msgLi);
+    localChatBox.animate({scrollTop: localChatBox[0].scrollHeight}, 200); // Scroll to bottom
 }
+
 
 } // Close addPlayerEvents()
 
@@ -237,5 +245,5 @@ function randomColor() {
 function createPlayerEl(user) { // Element appended when a new player enters
     var color = randomColor();
     // <div id="player-info" class = "hide">Some information to be displayed.</div>
-    return $("<div id=\'"+user.twitch_id+"\' class=\'player\' data-x=\'"+user.x+"\' data-y=\'"+user.y+"\' style=\'left:"+ (user.x*zoom) +"px; top:"+ (user.y*zoom) +"px; background-color: "+color+"\'><ul class=\'localmsgs\'></ul></div>");
+    return $("<div id=\'"+user.twitch_id+"\' class=\'player\' data-x=\'"+user.x+"\' data-y=\'"+user.y+"\' style=\'left:"+ (user.x*zoom) +"px; top:"+ (user.y*zoom) +"px; background-color: "+color+"\'></div>");
 }

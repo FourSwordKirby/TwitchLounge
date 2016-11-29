@@ -103,7 +103,6 @@ function getLounge() {
             "streamer_username" : namespace.slice(1)
         },
         success: function(result) {
-            debugger;
             lounge = result;
             $("#setup input[name=tmi]").val(result.tmi_apikey);
             $("#setup input[name=width]").val(result.width);

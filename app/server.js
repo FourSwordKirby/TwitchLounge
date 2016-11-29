@@ -7,7 +7,7 @@ var morgan = require('morgan'); // Middleware logging
 var io = require('socket.io')(http); // Enables web sockets
 var path = require('path');
 var fs = require("fs"); // File System
-var tmi = require('tmi.js');
+var tmi = require('tmi.js'); // Twitch IRC
 var bodyParser = require('body-parser'); // Enables grabbing PUT/POST query params
 
 // Configuring server modules
@@ -16,9 +16,6 @@ app.use( bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
-
-// Loading in secret keys
-var keys = JSON.parse(fs.readFileSync("keys.json"));
 
 // Loading models and other handlers
 var ServerSocket = require('./serverSocket.js');

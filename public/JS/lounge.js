@@ -23,14 +23,24 @@ $(document).ready(function() {
 
     // Embed twitch stream
     var options = {
-            width: 854,
-            height: 480,
+            width: "100%",
+            height: "100%",
             channel: namespace.slice(1)
     };
+    
     // Commented out for now just because it causes our debug log to be noisy af
-    // var player = new Twitch.Player("twitch-stream", options);
-    // player.setVolume(0.5);
-
+    var player = new Twitch.Player("twitch-stream", options);
+    player.setVolume(0);
+    
+    var chatFrame = document.createElement('iframe');
+    chatFrame.setAttribute("src", "http://www.twitch.tv/" + namespace.slice(1) + "/chat");
+    chatFrame.setAttribute("id", "chat_embed");
+    chatFrame.setAttribute("frameborder", "0");
+    chatFrame.style.height = "99%";
+    chatFrame.style.width = "100%";        
+    
+    //Embed twitch chat
+    document.getElementById("chatroom").appendChild(chatFrame);
 
     // Streamer setup listeners
     $("#setup #close-setup").click(function() {

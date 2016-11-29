@@ -9,26 +9,6 @@ var socket = io(namespace);
 var twitch_id, access_token;
 var user, playerAvatar;
 
-// Load TMI
-// var options = {
-//     options: {
-//         debut: true
-//     },
-//     connection: {
-//         cluster: "aws",
-//         recconect: true
-//     },
-//     identity: {
-//         username: keys["Twitch"]["username"],
-//         password: keys["Twitch"]["password"]
-//     },
-//     channels: ["mossyqualia"]
-// };
-
-// var client = new tmi.client(options);
-// client.connect();
-
-
 $(document).ready(function() {
     if (hasAuthenticated()) {
         socket.emit('player: start', {access_token: access_token, twitch_id: twitch_id})
@@ -43,34 +23,6 @@ $(document).ready(function() {
     });
 
 })
-
-// ------------------------------------------------------------------
-// Ralph's IRC Twitch chat code
-// Send chat messages to socket
-
-var defaultColors = [
-        '#FF0000','#0000FF','#008000','#B22222','#FF7F50',
-        '#9ACD32','#FF4500','#2E8B57','#DAA520','#D2691E',
-        '#5F9EA0','#1E90FF','#FF69B4','#8A2BE2','#00FF7F'
-    ]
-var randomColorsChosen = {};
-
-function resolveColor(chan, name, color) {
-    if(color !== null) {
-        return color;
-    }
-    if(!(chan in randomColorsChosen)) {
-        randomColorsChosen[chan] = {};
-    }
-    if(name in randomColorsChosen[chan]) {
-        color = randomColorsChosen[chan][name];
-    }
-    else {
-        color = defaultColors[Math.floor(Math.random()*defaultColors.length)];
-        randomColorsChosen[chan][name] = color;
-    }
-    return color;
-}
 
 socket.on('player: add self', function(row) {
     user = row; // Server sends us our full user obj
@@ -95,27 +47,6 @@ function getAllUsers(otherUsers) {
         $("#players").append(createPlayerEl(otherUser));
     })
 }
-
-socket.on('twitch message', appendTwitchMessage); // Needs better naming...
-socket.on('chat message', appendTwitchMessage);
-
-// client has to be initialized with streamer's oauth!
-// client.on('chat', receiveTwitchMessage);
-
-function appendTwitchMessage(msg) {
-    $('#messages').append(
-        $('<li>').append(
-            $('<span>').attr('style', msg[0]).text(msg[1]).append(
-                $('<span>').attr('style', "color:black").text(msg[2])
-            )
-        )
-    )
-}
-
-// function receiveTwitchMessage(channel, user, message, self) {
-//     var color = resolveColor(channel, user['display-name'], user['color']);
-//     io.emit('twitch message', ["color:" + color, user['display-name'], ": " + message]);    
-// }
 
 var velX = 0,
     velY = 0,
@@ -252,6 +183,10 @@ socket.on('player: leave', function(otherUser) {
 
 // ------------------------------------------------------------
 // UTILITY FUNCTIONS
+
+function getUser() {
+    return user;
+}
 
 function lurk() {} // TODO
 

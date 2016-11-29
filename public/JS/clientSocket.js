@@ -9,6 +9,8 @@ var socket = io(namespace);
 var twitch_id, access_token;
 var user, playerAvatar;
 
+var zoom = 1; // Zoom level, min 1 (100%), goes up to 4 (400%)
+
 $(document).ready(function() {
     if (hasAuthenticated()) {
         socket.emit('player: start', {access_token: access_token, twitch_id: twitch_id})
@@ -87,11 +89,11 @@ function handleMovement() {
         if (velY < speed) velY++;
     }
 
-    //acceleration and friction
-    velY*=friction;
-    user.y+=velY;
-    velX*=friction;
-    user.x+=velX;
+    // acceleration and friction and zoom
+    velY *= friction;
+    user.y += velY;
+    velX *= friction;
+    user.x += velX;
 
     //edges detected
     var m = 5
@@ -128,6 +130,29 @@ function addUserInfo(){
     });
 }
 
+
+function handleZoom() {
+    zoom = parseFloat($(this).val());
+
+    $("#floor").css("width", lounge.width * zoom);
+    $("#floor").css("height", lounge.height * zoom);
+
+    // Players are 15x15 when 100%
+    $(".player").each(function() {
+        $(this).css("width", (15 * zoom) + "px");
+        $(this).css("height", (15 * zoom) + "px");
+
+        var prevx = $(this).attr("data-x");
+        var prevy = $(this).attr("data-y");
+        $(this).css("left", prevx * zoom);
+        $(this).css("top", prevy * zoom);
+    })
+
+    $(this).blur(); // Remove focus so arrow keys don't change zoom value
+}
+$("#zoomer").change(handleZoom);
+
+
 // *** Add your own socket listeners in this block, below this line *** //
 
 // Local chat - Entering message
@@ -138,6 +163,7 @@ $("#local-chatroom form").submit(function() {
     socket.emit('player: local chat', localmsg);
     return false;
 })
+
 
 // // Local chat - recieving messages
 socket.on('player: local chat', appendLocalchat);
@@ -167,8 +193,11 @@ function appendLocalchat(res) {
 socket.on('players: move all', moveAllUsers);
 function moveAllUsers(otherUsers) { // Moves all users to updated positions gotten from server
     $.each(otherUsers, function(index, otherUser) {
-        $("#"+otherUser.twitch_id).css("left", otherUser.x);
-        $("#"+otherUser.twitch_id).css("top", otherUser.y);
+        $("#"+otherUser.twitch_id).attr("data-x", otherUser.x);
+        $("#"+otherUser.twitch_id).attr("data-y", otherUser.y);
+
+        $("#"+otherUser.twitch_id).css("left", otherUser.x * zoom);
+        $("#"+otherUser.twitch_id).css("top", otherUser.y * zoom);
     })
 }
 
@@ -208,5 +237,5 @@ function randomColor() {
 function createPlayerEl(user) { // Element appended when a new player enters
     var color = randomColor();
     // <div id="player-info" class = "hide">Some information to be displayed.</div>
-    return $("<div id=\'"+user.twitch_id+"\' class=\'player\' style=\'left:"+user.x+"; top:"+user.y+"; background-color: "+color+"\'><ul class=\'localmsgs\'></ul></div>");
+    return $("<div id=\'"+user.twitch_id+"\' class=\'player\' data-x=\'"+user.x+"\' data-y=\'"+user.y+"\' style=\'left:"+ (user.x*zoom) +"; top:"+ (user.y*zoom) +"; background-color: "+color+"\'><ul class=\'localmsgs\'></ul></div>");
 }

@@ -3,14 +3,14 @@
 
 body.body-lounge { 
 	font: 13px Helvetica, Arial; 
-	color: white; 
-	/*background-image: url("../assets/scrshot.png");*/
+	color: white;
 	background-color: #222;
 }
 
 #floor {
     background-color: red;
     position: fixed;
+    background-image: url("../assets/scrshot.png");
 }
 #players {
     position: absolute;
@@ -45,6 +45,12 @@ body.body-lounge {
     position: absolute;
     margin: 8px;
     z-index: 99;
+}
+
+#zoomer {
+    position: absolute;
+    right: 0;
+    z-index: 10;
 }
 
 #instructionText{

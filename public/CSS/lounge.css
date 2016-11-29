@@ -4,10 +4,14 @@
 body.body-lounge { 
 	font: 13px Helvetica, Arial; 
 	color: white; 
-	background-image: url("../assets/scrshot.png");
+	/*background-image: url("../assets/scrshot.png");*/
 	background-color: #222;
 }
 
+#floor {
+    background-color: red;
+    position: fixed;
+}
 #players {
     position: absolute;
 }
@@ -147,7 +151,7 @@ ul.localmsgs {
     left: 0;
     bottom: 0;
     right: 0;
-    height: 150px;
+    height: 200px;
     width: 350px;
 }
 #setup p {

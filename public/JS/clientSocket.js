@@ -121,9 +121,7 @@ var velX = 0,
     velY = 0,
     speed = 2,
     friction = .9,
-    keys = [],
-    width = window.innerWidth,
-    height=window.innerHeight;
+    keys = [];
 
 var KEYCODES = {
     "LEFT" : 37,
@@ -166,14 +164,14 @@ function handleMovement() {
 
     //edges detected
     var m = 5
-    if (user.x >= width - m) {
-        user.x = width - m;
+    if (user.x >= lounge.width - m) {
+        user.x = lounge.width - m;
     }else if (user.x <= m) {
         user.x = m;
     }
 
-    if (user.y > height - m) {
-        user.y = height - m;
+    if (user.y > lounge.height - m) {
+        user.y = lounge.height - m;
     } else if (user.y <= m) {
         user.y = m;
     }

@@ -46,10 +46,11 @@ exports.saveLounge = function(req, res) {
             if (user !== null) {
                 MongoDB.getLounge({"twitch_id" : req.body.twitch_id}, function(lounge) {
                     if (lounge !== null) { // Update
-                        MongoDB.updateLounge(req.body.twitch_id, {$set: {"twitch_username": user.twitch_username, "tmi_apikey" : req.body.tmikey} });
+                        MongoDB.updateLounge(req.body.twitch_id, {$set: {"twitch_username": user.twitch_username, "tmi_apikey" : req.body.tmikey, "width" : req.body.width, "height" : req.body.height} });
                         res.send("Update");
                     } else { // Insert
                         var lounge = new Lounge(req.body.twitch_id, user.twitch_username, req.body.tmikey);
+                        lounge.resize(req.body.width, req.body.height);
                         MongoDB.insertLounge(lounge);
                         res.json(lounge.jsonify());
                     }
@@ -63,8 +64,9 @@ exports.saveLounge = function(req, res) {
 exports.findLounge = function(req, res) {
     MongoDB.getLounge({"twitch_username" : req.query.streamer_username}, function(lounge) {
         if (lounge !== null) {
-            var lounge = new Lounge(lounge.twitch_id, lounge.twitch_username, lounge.tmi_apikey);
-            res.json(lounge.jsonify());
+            var found_lounge = new Lounge(lounge.twitch_id, lounge.twitch_username, lounge.tmi_apikey);
+            found_lounge.resize(lounge.width, lounge.height);
+            res.json(found_lounge.jsonify());
         } else {
             res.status(500);
             res.end("No lounge found");

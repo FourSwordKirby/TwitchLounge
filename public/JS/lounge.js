@@ -2,7 +2,9 @@
 
 var access_token, twitch_id;
 var namespace = window.location.pathname;
-var lounge;
+
+// lounge replaced when lounge loads, but set width and height to prevent errors with initial edge detection
+var lounge = {"width" : 1000, "height" : 1000};
 
 Twitch.init({ clientId: 'oqg26g9cdo8gkqy7puez3370gudujjk'}, function(err, status) { console.log('the library is now loaded') });
 
@@ -59,13 +61,17 @@ function hasAuthenticated() {
 
 function saveLounge() {
     var tmikey = $("#setup input[name=tmi]").val();
+    var width = $("#setup input[name=width]").val();
+    var height = $("#setup input[name=height]").val();
     $.ajax({
         url: '/db/saveLounge',
         type: 'PUT',
         data: {
             "access_token" : access_token,
             "twitch_id" : twitch_id,
-            "tmikey" : tmikey
+            "tmikey" : tmikey,
+            "width" : width,
+            "height" : height
         },
         success: function(result) {
             if (result === "Update") {
@@ -89,6 +95,11 @@ function getLounge() {
         success: function(result) {
             lounge = result;
             $("#setup input[name=tmi]").val(result.tmi_apikey);
+            $("#setup input[name=width]").val(result.width);
+            $("#setup input[name=height]").val(result.height);
+
+            $("#floor").css("width", result.width);
+            $("#floor").css("height", result.height);
         },
         error: function() {
 

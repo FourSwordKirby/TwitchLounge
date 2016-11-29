@@ -35,9 +35,10 @@
         <!-- <li>here is a message</li> -->
     </ul>    
 
-
-    <div id="players">
+    <div id="floor">
+        <div id="players"></div>
     </div>
+
     <div id="local-chatroom" class="hide">
         <form>
             <input type="text" name="localchat"/>
@@ -74,7 +75,10 @@
         <input name="tmi" type="password" size="40"></input>
         <p>
             Entering your TMI key enables lounge viewers to view the Twitch chat. <a href="https://twitchapps.com/tmi/" target="_blank">Get one here.</a>
-        </p>
+        </p><br />
+
+        <label>Height</label> <input name="height" type="number" min="500" max="5000"></input><br />
+        <label>Width</label> <input name="width" type="number" min="500" max="5000"></input>
 
         <button id="save-setup">Save</button>
     </form>

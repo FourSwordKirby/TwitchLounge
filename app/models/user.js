@@ -18,6 +18,7 @@ class User {
         this.x = 0; // Default position to 0
         this.y = 0;
         this.socket = ""; // Socket ID used to target events to user
+        this.color = "#707070"; // Color code, defaults to grey
     }
     
     move(x, y) {
@@ -34,7 +35,8 @@ class User {
             "access_token" : this.access_token,
             "x" : this.x,
             "y" : this.y,
-            "socket" : this.socket
+            "socket" : this.socket,
+            "color" : this.color
         }
     }
 
@@ -45,7 +47,8 @@ class User {
             "twitch_avatar" : this.twitch_avatar,
             "twitch_bio" : this.twitch_bio,
             "x" : this.x,
-            "y" : this.y
+            "y" : this.y,
+            "color" : this.color
         }
     }
 

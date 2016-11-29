@@ -167,8 +167,8 @@ ul.localmsgs {
 }
 
 
-/* Streamer Setup CSS*/
-#setup {
+/* Setup forms for user and streamer */
+.setup-form {
     color: black;
     background: white;
     position: absolute;
@@ -181,24 +181,24 @@ ul.localmsgs {
     height: 200px;
     width: 350px;
 }
-#setup p {
+.setup-form p {
     font-size:11px;
     color: #797979;
     padding-top: 3px;
     padding-bottom: 5px;
 }
-#setup hr {
+.setup-form hr {
     border: none;
     border-bottom: 1px solid #cacaca;
     margin-top: 8px;
     margin-bottom: 8px;
 }
-#setup #close-setup {
+.setup-form .close-setup {
     float: right;
     color: #20adc7;
     text-decoration: none;
 }
-button#save-setup {
+button.save-setup {
     width: 100%;
     bottom: 0;
     position: absolute;
@@ -207,8 +207,15 @@ button#save-setup {
     border: none;
     padding: 10px;
 }
+/* Streamer Setup CSS*/
 button#show-setup {
     top: 15px;
     left: 70px;
+    position: absolute;
+}
+/* User Setup CSS */
+button#show-user-setup {
+    top: 15px;
+    left: 200px;
     position: absolute;
 }

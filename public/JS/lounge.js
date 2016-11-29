@@ -42,9 +42,9 @@ $(document).ready(function() {
     //Embed twitch chat
     document.getElementById("chatroom").appendChild(chatFrame);
 
-    // Streamer setup listeners
-    $("#setup #close-setup").click(function() {
-        $("#setup").addClass("hide");
+    // Streamer setup listeners (close-setup reused for user setup forms)
+    $(".close-setup").click(function() {
+        $(this).parent().addClass("hide");
         return false;
     })
     $("#show-setup").click(function() {

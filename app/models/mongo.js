@@ -57,7 +57,7 @@ exports.updateUser = function(twitch_id, update_data) {
     connect(function(db) {
         db.collection('users').update({"twitch_id" : twitch_id}, update_data, {upsert: false, multi: false}, function(err, doc) {
             assert.equal(err, null);
-            console.log("Updated " + doc.twitch_username + " in the DB.");
+            console.log("Updated user in the DB.");
             db.close();
         })
     })

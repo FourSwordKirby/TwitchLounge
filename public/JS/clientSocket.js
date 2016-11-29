@@ -16,13 +16,10 @@ $(document).ready(function() {
         socket.emit('player: start', {access_token: access_token, twitch_id: twitch_id})
     } else { lurk(); }
 
-    // TODO: Move later as we refactor this demo code into our own
-    $('form').submit(function(){
-        socket.emit('chat message', $('#m').val());
-        console.log($('#m').val())
-        $('#m').val('');
-        return false;
-    });
+
+    $("#show-user-setup").click(function() {
+        $("#user-setup").toggleClass("hide");
+    })
 
 })
 
@@ -33,6 +30,7 @@ socket.on('player: add self', function(row) {
     $("#players").append(playerAvatar);
 
     addPlayerEvents();
+    loadStreamerOptions();
 })
 
 
@@ -42,13 +40,6 @@ socket.on('player: add self', function(row) {
 // For event listeners that HAVE to be initialized AFTER an authenticated user is made
 
 function addPlayerEvents() {
-
-socket.on('player: get all', getAllUsers);
-function getAllUsers(otherUsers) {
-    $.each(otherUsers, function(index, otherUser) {
-        $("#players").append(createPlayerEl(otherUser));
-    })
-}
 
 var velX = 0,
     velY = 0,
@@ -130,7 +121,6 @@ function addUserInfo(){
     });
 }
 
-
 function handleZoom() {
     zoom = parseFloat($(this).val());
 
@@ -152,6 +142,34 @@ function handleZoom() {
 }
 $("#zoomer").change(handleZoom);
 
+function handleUserSetup() {
+    $("#user-setup .not-logged-in").remove();
+    $("#user-setup input[name=color]").val(user.color);
+
+    $("#user-setup form").submit(function() {
+        quickSaveUser();
+        return false;
+    })
+    function quickSaveUser() {
+        var color = $("#user-setup input[name=color]").val();
+        $.ajax({
+            url: '/db/quickSaveUser',
+            type: 'PUT',
+            data: {
+                "twitch_id" : user.twitch_id,
+                "access_token" : user.access_token,
+                "color" : color
+            },
+            success: function(result) {
+                $("#user-setup").addClass("hide");
+                playerAvatar.css("background-color", "#" + color);
+                // EMIT COLOR CHANGE TO EVERYONE?
+            },
+            error: function() { alert("Error saving player"); }
+        })
+    }
+}
+handleUserSetup();
 
 // *** Add your own socket listeners in this block, below this line *** //
 
@@ -196,7 +214,20 @@ function appendLocalchat(res) {
 // ANON/USER EVENT HANDLING
 // For event listeners that happen whenever, and everyone can enjoy its effects
 
+function lurk() {
+    $("#user-setup .logged-in").remove();
+    socket.emit('anon: get all');
+    debugger;
+}
+
 // *** Add your own socket listeners below *** //
+
+socket.on('player: get all', getAllUsers);
+function getAllUsers(otherUsers) {
+    $.each(otherUsers, function(index, otherUser) {
+        $("#players").append(createPlayerEl(otherUser));
+    })
+}
 
 socket.on('players: move all', moveAllUsers);
 function moveAllUsers(otherUsers) { // Moves all users to updated positions gotten from server
@@ -218,14 +249,28 @@ socket.on('player: leave', function(otherUser) {
 })
 
 
+
+// ------------------------------------------------------------
+// STREAMER USER EVENT HANDLING
+// Remove and hide things only streamers need
+
+function loadStreamerOptions() {
+    if ("/" + user.twitch_username === namespace) {
+        $("#show-setup").show();
+    } else {
+        $("#show-setup").remove();
+        $("#setup").remove();
+    }
+}
+
+
+
 // ------------------------------------------------------------
 // UTILITY FUNCTIONS
 
 function getUser() {
     return user;
 }
-
-function lurk() {} // TODO
 
 function hasAuthenticated() {
     access_token = localStorage.getItem('lounge_token');
@@ -243,7 +288,8 @@ function randomColor() {
 }
 
 function createPlayerEl(user) { // Element appended when a new player enters
-    var color = randomColor();
-    // <div id="player-info" class = "hide">Some information to be displayed.</div>
-    return $("<div id=\'"+user.twitch_id+"\' class=\'player\' data-x=\'"+user.x+"\' data-y=\'"+user.y+"\' style=\'left:"+ (user.x*zoom) +"px; top:"+ (user.y*zoom) +"px; background-color: "+color+"\'></div>");
+    if (typeof user.color === "undefined") { // Here temporarily to deal w/ legacy users in DB...
+        user.color = randomColor();
+    }
+    return $("<div id=\'"+user.twitch_id+"\' class=\'player\' data-x=\'"+user.x+"\' data-y=\'"+user.y+"\' style=\'left:"+ (user.x*zoom) +"px; top:"+ (user.y*zoom) +"px; background-color: #"+user.color+"\'></div>");
 }

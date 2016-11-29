@@ -3,7 +3,7 @@ var MongoDB = require('./models/mongo.js');
 var User = require('./models/user.js');
 var Lounge = require('./models/lounge.js');
 
-// Assumes twitch user OBJ in req as user
+// Assumes twitch user OBJ in req as user. Used when first authenticating
 exports.saveUser = function(req, res) {
     if (typeof req.body.user._id === "undefined") {
         res.status(500);
@@ -28,6 +28,7 @@ exports.findUser = function(req, res) {
     MongoDB.getUser({"twitch_id" : req.query.twitch_id, "access_token" : req.query.token}, function(row) {
         if (row !== null) {
             var user = new User(row.twitch_id, row.twitch_username, row.twitch_avatar, row.twitch_bio, row.access_token);
+            user.color = row.color;
             res.json(user.jsonify());
         } else { // No row found, send back error
             res.status(500);
@@ -35,6 +36,20 @@ exports.findUser = function(req, res) {
         }
     })
 }
+
+// A more flexible save that assumes authentication. Used to save sprite, color, etc
+exports.quickSaveUser = function(req, res) {
+    MongoDB.getUser({"twitch_id" : req.body.twitch_id, "access_token" : req.body.access_token}, function(row) {
+        if (row !== null) {
+            MongoDB.updateUser(req.body.twitch_id, {$set: {"color" : req.body.color} });
+            res.send({"type" : "Update", "twitch_id" : row.twitch_id});
+        } else {
+            res.status(500);
+            res.end("Could not find a user to update");
+        }
+    })
+}
+
 
 // First checks twitch ID and access token validity before updating
 exports.saveLounge = function(req, res) {

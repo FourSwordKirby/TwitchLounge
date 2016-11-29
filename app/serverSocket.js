@@ -31,6 +31,7 @@ nsp.on('connection', function(socket){
         MongoDB.getUser({"twitch_id" : req.twitch_id, "access_token" : req.access_token}, function(row) {
             if (row !== null) {
                 user = new User(row.twitch_id, row.twitch_username, row.twitch_avatar, row.twitch_bio, row.access_token);
+                user.color = row.color;
                 user.socket = socket.id;
                 // socket.client.id is without the namespace starter....
                 socket.emit('player: add self', user.jsonify()); // Add yourself to your screen
@@ -58,9 +59,13 @@ nsp.on('connection', function(socket){
         socket.emit('player: local chat', {"sourceUser": user.siojsonify(), "msg" : msg});
     })
 
-    socket.on('chat message', function(msg){
-        io.emit('chat message', msg);
-    });
+    socket.on('player: update appearance', function(req) {
+        // TODO!
+    })
+
+    socket.on('anon: get all', function(req) { // A way for anons to grab all users initially, to watch
+        socket.emit('player: get all', getPublicPlayersInfo()); // Grab all other users, add to your screen
+    })
 
     socket.on('disconnect', function() {
         var userIndex = loungeUsers.indexOf(user);

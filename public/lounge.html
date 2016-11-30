@@ -63,7 +63,7 @@
 
 
 <!-- User setup options -->
-<button id="show-user-setup">User Settings</button>
+<button id="show-user-setup" class = "borderedButton top-button">User Settings</button>
 <div id="user-setup" class="hide setup-form">
     <a href="" class="close-setup">x</a>
     <form>
@@ -75,14 +75,14 @@
         </div>
 
         <div class="logged-in">
-            <label>Color</label> #<input name="color" type="text" maxlength="6"></input>
-            <button class="save-setup">Save</button>
+            <label title = "changes the color of your avatar dot and your username in the local chat.">Color</label> #<input name="color" type="text" maxlength="6"></input>
+            <button class="save-setup bottom-button">Save</button>
         </div>
     </form>
 </div>
 
 <!-- Streamer setup options -->
-<button id="show-setup" style="display:none;">Lounge setup</button>
+<button id="show-setup" class="borderedButton top-button" style="display:none;">Lounge setup</button>
 <div id="setup" class="hide setup-form">
     <a href="" class="close-setup">x</a>
     <form>
@@ -94,8 +94,8 @@
             Entering your TMI key enables lounge viewers to view the Twitch chat. <a href="https://twitchapps.com/tmi/" target="_blank">Get one here.</a>
         </p><br />
 
-        <label>Height</label> <input name="height" type="number" min="500" max="5000"></input><br />
-        <label>Width</label> <input name="width" type="number" min="500" max="5000"></input>
+        <p><label>Height</label> <input name="height" type="number" min="500" max="5000"></input></p>
+        <p><label>Width</label> <input name="width" type="number" min="500" max="5000"></input></p>
 
         <button class="save-setup">Save</button>
     </form>

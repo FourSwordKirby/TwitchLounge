@@ -10,7 +10,10 @@ body.body-lounge {
 #floor {
     background-color: red;
     position: fixed;
-    background-image: url("../assets/scrshot.png");
+    background-image: url("../assets/sprites/loungeSprites/floor.png");
+    background-repeat: repeat;
+    box-shadow: 0 0 35px 10px rgba(0, 0, 0, 0.4);
+    border: 1px solid #ffca9a;
 }
 #players {
     position: absolute;
@@ -48,26 +51,12 @@ body.body-lounge {
     z-index: 99;
 }
 
-#zoomer {
+.zoomer {
     position: absolute;
     right: 0;
     z-index: 10;
 }
-
-#instructionText{
-    position: absolute;
-    bottom: 7vh;
-    width:100%;
-    font-size: 14px;
-    z-index: 2;
-    text-shadow: 0 0 10px black;
-}
-
-#temp{
-	/* delete me */
-	top: 100px;
-	left: 200px;
-}
+label.zoomer { top: 15px;}
 
 #player-info{
 	position: absolute;

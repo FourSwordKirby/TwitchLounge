@@ -145,7 +145,7 @@ function handleZoom() {
 
     $(this).blur(); // Remove focus so arrow keys don't change zoom value
 }
-$("#zoomer").change(handleZoom);
+$("input.zoomer").change(handleZoom);
 
 function handleUserSetup() {
     $("#user-setup .not-logged-in").remove();

@@ -193,7 +193,7 @@ socket.on('player: local chat', appendLocalchat);
 function appendLocalchat(res) {
     var sourceUser = res.sourceUser;
     var msg = res.msg;
-    var msgLi = $("<li><b>"+sourceUser.twitch_username + ":</b> " + msg+"</li>");
+    var msgLi = $("<li><b style=\"color:#"+sourceUser.color+"\">"+sourceUser.twitch_username + ":</b> " + msg+"</li>");
 
     // Old code that had message appear near user's avatar.
     // Could be reworked into an emote when chat sent

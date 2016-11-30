@@ -126,31 +126,6 @@ label.zoomer { top: 15px;}
     background: rgb(130, 224, 255);
     min-width: 100px;
 }
-#local-messages { /* local chat message container*/
-    max-height: 200px;
-    overflow-y: scroll;
-    overflow-x: initial;
-}
-#local-messages::-webkit-scrollbar {
-    width: 5px;
-    background-color: rgba(111, 111, 111, 0.5);
-}
-#local-messages::-webkit-scrollbar-thumb {background-color: #797979;}
-
-
-/* Could remove localmsgs stuff elsewhere */
-ul.localmsgs {
-    position: absolute;
-    top: 20px;
-    list-style: none;
-    color: black;
-}
-.localmsgs li { /* Might need to move local messages somewhere else ... but for now it'll be janky */
-    background: white;
-    padding: 5px;
-    width: 150px;
-}
-
 
 /* display the histories of local messages */
 #local-messages-history {
@@ -163,7 +138,11 @@ ul.localmsgs {
     height: 80vh;   
     overflow: auto;
 }
-
+#local-messages-history::-webkit-scrollbar {
+    width: 5px;
+    background-color: rgba(111, 111, 111, 0.5);
+}
+#local-messages-history::-webkit-scrollbar-thumb {background-color: #797979;}
 #local-messages-history li{
     width: 100%;
     background-color: rgba(255,255,255,0.5);
@@ -171,7 +150,6 @@ ul.localmsgs {
     margin-top: 10px;
     list-style: none;
 }
-
 #local-messages-history li:last-of-type { 
     background: rgba(255,255,255,0.2);
     color: rgba(0,0,0,0.6);

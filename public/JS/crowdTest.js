@@ -57,24 +57,30 @@ function receiveTwitchMessage(channel, userstate, message, self) {
         // redundant on purpose
         var userIndex = loungeUsers.indexOf(dummy);
         var nearbyUserIndexes = listeningRanges[userIndex];
-        for (i=0; i<nearbyUserIndexes.length; i++) {
-            var nearbyUser = loungeUsers[nearbyUserIndexes[i]];
-            // found the actual client avatar
-            if(nearbyUser == user)
-            {
-                // create speech bubble
-                var msgLi = $("<li>"+dummy.twitch_username + ": " + message+"</li>");
-                var fadeTime = (message.length/20)*1000; // Assuming people read at an average of 15 characters per second...
-                $("#"+dummy.twitch_username+" .localmsgs").append(msgLi);
-                setTimeout(function(){
-                    msgLi.fadeOut(400, function() {
-                        msgLi.remove();
-                    })
-                }, 1500 + fadeTime);
+        var fadeTime = (message.length/20)*1000; // Assuming people read at an average of 15 characters per second...
+        var repeatMsgRate = 2000 + fadeTime;
+        setInterval(function() {
+            for (i=0; i<nearbyUserIndexes.length; i++) {
+                var nearbyUser = loungeUsers[nearbyUserIndexes[i]];
+                // found the actual client avatar
+                if(nearbyUser == user)
+                {                
+                    var msgLi = $("<li>"+dummy.twitch_username + ": " + message+"</li>");
+                    $("#"+dummy.twitch_username+" .localmsgs").append(msgLi);
+                    setTimeout(function(){
+                        msgLi.fadeOut(400, function() {
+                            msgLi.remove();
+                        })
+                    }, 1500 + fadeTime);
+                }
             }
-        }
+        }, repeatMsgRate);
     }
 }
+    
+function produceSpeech()
+    {
+    }
 
 // Zoom is a global, is taken from clientSocket.js
 function createDummyEl(dummy) { // Element appended when a new player enters

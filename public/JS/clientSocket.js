@@ -193,8 +193,20 @@ socket.on('player: local chat', appendLocalchat);
 function appendLocalchat(res) {
     var sourceUser = res.sourceUser;
     var msg = res.msg;
-    var msgLi = $("<li>"+sourceUser.twitch_username + ": " + msg+"</li>");
-
+    var msgLi = $("<li>"+sourceUser.twitch_username + ": " + twitchEmoji.parse((msg),{emojiSize : 'small'})+"</li>");
+    var emote = twitchEmoji.parse((msg),{emojiSize : 'small'}).match(/<img[^>]+>/);
+    if (emote.length > 0)
+    {
+        var curEmote = $("#"+sourceUser.twitch_id+" li");
+        if(curEmote.length > 0)
+            curEmote[0].remove();
+        var emoteAvatar = $("<li>"+emote[0]+"</li>");
+        $("#"+sourceUser.twitch_id).append(emoteAvatar);
+        setTimeout(function(){
+            emoteAvatar.remove();
+        }, 3000);
+    }
+    
     // Old code that had message appear near user's avatar.
     // Could be reworked into an emote when chat sent
     // var fadeTime = (msg.length/20)*1000; // Assuming people read at an average of 15 characters per second...

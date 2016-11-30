@@ -55,9 +55,10 @@ body.body-lounge {
 .zoomer {
     position: absolute;
     right: 0;
+    top: 5px;
     z-index: 10;
 }
-label.zoomer { top: 15px;}
+label.zoomer { top: 20px;}
 
 #player-info{
 	position: absolute;
@@ -72,7 +73,7 @@ label.zoomer { top: 15px;}
 	margin: 5px;
 	margin-bottom: 2.5px;
 	background: rgba(255,255,255,0.5);
-	border:0;
+	border: 1px grey solid;
 	width: 100% - 5px;
 	height: auto;
 	right: 0;
@@ -211,23 +212,33 @@ ul.localmsgs {
     text-decoration: none;
 }
 button.save-setup {
-    width: 100%;
-    bottom: 0;
+    right: 5px;
+    background: #6441A4;
+    color: white;
+    bottom: 5px;
     position: absolute;
-    left: 0;
-    background: rgb(130, 224, 255);
     border: none;
     padding: 10px;
 }
+
+button.top-button {
+    top: 15px;
+    font-size: 10px;
+    position: absolute;
+    color: rgba(255,255,255,0.5);
+    border-color: rgba(255,255,255,0.5);
+}
+
+button.top-button:hover {
+    color: #6441A4;
+    background-color: white;
+}
+
 /* Streamer Setup CSS*/
 button#show-setup {
-    top: 15px;
-    left: 70px;
-    position: absolute;
+    left: 180px;
 }
 /* User Setup CSS */
 button#show-user-setup {
-    top: 15px;
-    left: 200px;
-    position: absolute;
+    left: 90px;
 }

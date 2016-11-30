@@ -9,6 +9,8 @@ var socket = io(namespace);
 var twitch_id, access_token;
 var user, playerAvatar;
 
+var viewportWidth, viewportHeight; // Of the "left" div where lounge is located
+
 var zoom = 1; // Zoom level, min 1 (100%), goes up to 4 (400%)
 
 $(document).ready(function() {
@@ -16,6 +18,8 @@ $(document).ready(function() {
         socket.emit('player: start', {access_token: access_token, twitch_id: twitch_id})
     } else { lurk(); }
 
+    viewportWidth = $("#left")[0].getBoundingClientRect().width;
+    viewportHeight = $("#left")[0].getBoundingClientRect().height;
 
     $("#show-user-setup").click(function() {
         $("#user-setup").toggleClass("hide");
@@ -80,14 +84,14 @@ function handleMovement() {
         if (velY < speed) velY++;
     }
 
-    // acceleration and friction and zoom
+    // acceleration and friction
     velY *= friction;
     user.y += velY;
     velX *= friction;
     user.x += velX;
 
     //edges detected
-    var m = 5
+    var m = 5;
     if (user.x >= lounge.width - m) {
         user.x = lounge.width - m;
     }else if (user.x <= m) {
@@ -101,6 +105,7 @@ function handleMovement() {
     }
 
     socket.emit('player: move', {x: user.x, y: user.y});
+
 }
 handleMovement();
 
@@ -238,6 +243,7 @@ function moveAllUsers(otherUsers) { // Moves all users to updated positions gott
         $("#"+otherUser.twitch_id).css("left", otherUser.x * zoom);
         $("#"+otherUser.twitch_id).css("top", otherUser.y * zoom);
     })
+    if (user) { centerOnUser(); } // NOTE: Tiny visual bug where centered user position "snaps back" during movement
 }
 
 socket.on('player: add newcomer', function(otherUser) {
@@ -247,6 +253,17 @@ socket.on('player: add newcomer', function(otherUser) {
 socket.on('player: leave', function(otherUser) {
     $("#"+otherUser.twitch_id).remove();
 })
+
+// Handle centering on user
+// Stored width and height of the 'viewing area' to save on recalculations
+$(window).resize(function() { // Reset if the user resizes their window
+    viewportWidth = $("#left")[0].getBoundingClientRect().width;
+    viewportHeight = $("#left")[0].getBoundingClientRect().height;
+})
+function centerOnUser() {
+    $("#floor").css("left", ((viewportWidth / 2.0) - (user.x * zoom) + (15*zoom /2.0) + "px"));
+    $("#floor").css("top", ((viewportHeight / 2.0) - (user.y * zoom) - (15*zoom /2.0) + "px"));
+}
 
 
 
@@ -293,3 +310,4 @@ function createPlayerEl(user) { // Element appended when a new player enters
     }
     return $("<div id=\'"+user.twitch_id+"\' class=\'player\' data-x=\'"+user.x+"\' data-y=\'"+user.y+"\' style=\'left:"+ (user.x*zoom) +"px; top:"+ (user.y*zoom) +"px; background-color: #"+user.color+"\'></div>");
 }
+

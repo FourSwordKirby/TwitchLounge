@@ -23,10 +23,12 @@ class Dummy {
         this.twitch_username = name;
         this.x = Math.random() * lounge.width;
         this.y = Math.random() * lounge.height;
+        this.color = randomColor();
+        this.intervalId = "";
     }
 }
 
-function receiveTwitchMessage(channel, userstate, message, self) {
+function receiveTwitchMessage(channel, userstate, msg, self) {
     var dummy;
     var i;
     var username = userstate['display-name'];
@@ -42,7 +44,10 @@ function receiveTwitchMessage(channel, userstate, message, self) {
     for (i=0; i < loungeUsers.length; i++)
     {
         if (loungeUsers[i].twitch_username == username)
+        {
             dummy = loungeUsers[i];
+            window.clearInterval(dummy.intervalId);
+        }
     }
     // instantiate new avatar if user is new, but cap it at 100 users
     if(dummy == null && loungeUsers.length < 100)
@@ -55,31 +60,53 @@ function receiveTwitchMessage(channel, userstate, message, self) {
     if (dummy != null)
     {
         // redundant on purpose
-        var userIndex = loungeUsers.indexOf(dummy);
-        var nearbyUserIndexes = listeningRanges[userIndex];
-        for (i=0; i<nearbyUserIndexes.length; i++) {
-            var nearbyUser = loungeUsers[nearbyUserIndexes[i]];
-            // found the actual client avatar
-            if(nearbyUser == user)
-            {
-                // create speech bubble
-                var msgLi = $("<li>"+dummy.twitch_username + ": " + message+"</li>");
-                var fadeTime = (message.length/20)*1000; // Assuming people read at an average of 15 characters per second...
-                $("#"+dummy.twitch_username+" .localmsgs").append(msgLi);
-                setTimeout(function(){
-                    msgLi.fadeOut(400, function() {
-                        msgLi.remove();
-                    })
-                }, 1500 + fadeTime);
+        var fadeTime = (msg.length/20)*1000; // Assuming people read at an average of 15 characters per second...
+        var repeatMsgRate = 2000 + fadeTime;
+        dummy.intervalId = setInterval(function() {
+            var userIndex = loungeUsers.indexOf(dummy);
+            var nearbyUserIndexes = listeningRanges[userIndex];
+            for (i=0; i<nearbyUserIndexes.length; i++) {
+                var nearbyUser = loungeUsers[nearbyUserIndexes[i]];
+                // found the actual client avatar
+                if(nearbyUser == user)
+                {
+                    var msgLi = $("<li><b style=\"color:#"+dummy.color+"\">"+dummy.twitch_username + ": </b>" + twitchEmoji.parse((msg),{emojiSize : 'small'})+"</li>");
+                    var emote = twitchEmoji.parse((msg),{emojiSize : 'small'}).match(/<img[^>]+>/);
+
+                    // $("#"+dummy.twitch_username).empty();
+                    // $("#"+dummy.twitch_username).append("<li>...</li>");
+                    if (emote !== null && emote.length > 0)
+                    {
+                        var curEmote = $("#"+dummy.twitch_username+" li");
+                        if(curEmote.length > 0)
+                            curEmote[0].remove();
+                        var emoteAvatar = $("<li>"+emote[0]+"</li>");
+                        $("#"+dummy.twitch_username).append(emoteAvatar);
+                        setTimeout(function(){
+                            emoteAvatar.remove();
+                        }, 3000);
+                    }
+
+
+                    var localChatBox = $("#local-messages-history");
+                    localChatBox.prepend(msgLi);
+                }
             }
-        }
+        }, repeatMsgRate);
+        
+
+
+
     }
 }
+    
+function produceSpeech()
+    {
+    }
 
 // Zoom is a global, is taken from clientSocket.js
 function createDummyEl(dummy) { // Element appended when a new player enters
-    var color = randomColor();
-    return $("<div id=\'"+dummy.twitch_username+"\' class=\'player\' data-x=\'"+dummy.x+"\' data-y=\'"+dummy.y+"\' style=\'left:"+ (dummy.x*zoom) +"px; top:"+ (dummy.y*zoom) +"px; background-color: "+color+"\'><ul class=\'localmsgs\'></ul></div>");
+    return $("<div id=\'"+dummy.twitch_username+"\' class=\'player\' data-x=\'"+dummy.x+"\' data-y=\'"+dummy.y+"\' style=\'left:"+ (dummy.x*zoom) +"px; top:"+ (dummy.y*zoom) +"px; background-color: "+dummy.color+"\'><ul class=\'localmsgs\'></ul></div>");
 }
 
 function getPublicPlayersInfo() {

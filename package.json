@@ -14,6 +14,7 @@
     "mongodb": "^2.2.11",
     "morgan": "^1.7.0",
     "socket.io": "^1.5.1",
-    "tmi.js": "^1.1.2"
+    "tmi.js": "^1.1.2",
+    "twitch-emoji": "^0.2.26"
   }
 }

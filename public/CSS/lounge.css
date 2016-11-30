@@ -17,6 +17,7 @@ body.body-lounge {
 }
 #players {
     position: absolute;
+    list-style-type: none;
 }
 .player { /* Todo: Make this not bad */
     width: 15px;

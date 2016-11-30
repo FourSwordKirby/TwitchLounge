@@ -193,7 +193,22 @@ socket.on('player: local chat', appendLocalchat);
 function appendLocalchat(res) {
     var sourceUser = res.sourceUser;
     var msg = res.msg;
-    var msgLi = $("<li><b style=\"color:#"+sourceUser.color+"\">"+sourceUser.twitch_username + ":</b> " + msg+"</li>");
+
+    // var msgLi = $("<li><b style=\"color:#"+sourceUser.color+"\">"+sourceUser.twitch_username + ":</b> " + msg+"</li>");
+
+    var msgLi = $("<li><b style=\"color:#"+sourceUser.color+"\">"+sourceUser.twitch_username + ": </b>" + twitchEmoji.parse((msg),{emojiSize : 'small'})+"</li>");
+    var emote = twitchEmoji.parse((msg),{emojiSize : 'small'}).match(/<img[^>]+>/);
+    if (emote !== null && emote.length > 0)
+    {
+        var curEmote = $("#"+sourceUser.twitch_id+" li");
+        if(curEmote.length > 0)
+            curEmote[0].remove();
+        var emoteAvatar = $("<li>"+emote[0]+"</li>");
+        $("#"+sourceUser.twitch_id).append(emoteAvatar);
+        setTimeout(function(){
+            emoteAvatar.remove();
+        }, 3000);
+    }
 
     // Old code that had message appear near user's avatar.
     // Could be reworked into an emote when chat sent

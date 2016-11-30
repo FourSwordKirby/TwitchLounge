@@ -193,7 +193,7 @@ socket.on('player: local chat', appendLocalchat);
 function appendLocalchat(res) {
     var sourceUser = res.sourceUser;
     var msg = res.msg;
-    var msgLi = $("<li>"+sourceUser.twitch_username + ": " + twitchEmoji.parse((msg),{emojiSize : 'small'})+"</li>");
+    var msgLi = $("<li><b>"+sourceUser.twitch_username + ":</b>" + twitchEmoji.parse((msg),{emojiSize : 'small'})+"</li>");
     var emote = twitchEmoji.parse((msg),{emojiSize : 'small'}).match(/<img[^>]+>/);
     if (emote.length > 0)
     {
@@ -206,7 +206,7 @@ function appendLocalchat(res) {
             emoteAvatar.remove();
         }, 3000);
     }
-    
+
     // Old code that had message appear near user's avatar.
     // Could be reworked into an emote when chat sent
     // var fadeTime = (msg.length/20)*1000; // Assuming people read at an average of 15 characters per second...
@@ -217,9 +217,9 @@ function appendLocalchat(res) {
     //     })
     // }, 1500 + fadeTime);
 
-    var localChatBox = $("#local-chatroom ul#local-messages");
-    localChatBox.append(msgLi);
-    localChatBox.animate({scrollTop: localChatBox[0].scrollHeight}, 200); // Scroll to bottom
+    var localChatBox = $("#local-messages-history");
+    localChatBox.prepend(msgLi);
+    // localChatBox.animate({scrollTop: localChatBox[0].scrollHeight}, 200); // Scroll to bottom
 }
 
 

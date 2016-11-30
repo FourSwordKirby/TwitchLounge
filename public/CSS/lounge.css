@@ -101,10 +101,6 @@ label.zoomer { top: 15px;}
 #chatroom form input { border: 0; padding: 10px; width: 80%; margin-right: .5%; }
 #chatroom form button { width: 18.5%; background: rgb(130, 224, 255); border: none; padding: 10px; }
 
-#messages { list-style-type: none; margin: 0; padding: 0; }
-#messages li { padding: 5px 10px; }
-#messages li:nth-child(odd) { background: #eee; }
-
 
 /* Local chat */
 #local-chatroom { /* Contaner */
@@ -154,6 +150,32 @@ ul.localmsgs {
     background: white;
     padding: 5px;
     width: 150px;
+}
+
+
+/* display the histories of local messages */
+#local-messages-history {
+    top: 50px;
+    width: 25%;
+    right: 10px;
+    position: absolute;
+    z-index: 10;
+    color: black;
+    height: 80vh;   
+    overflow: auto;
+}
+
+#local-messages-history li{
+    width: 100%;
+    background-color: rgba(255,255,255,0.5);
+    padding: 10px ;
+    margin-top: 10px;
+    list-style: none;
+}
+
+#local-messages-history li:last-of-type { 
+    background: rgba(255,255,255,0.2);
+    color: rgba(0,0,0,0.6);
 }
 
 

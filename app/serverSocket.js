@@ -7,7 +7,7 @@ exports.handleConnections = function(io, loungename) {
 
 // Namespace specific variables
 var loungeUsers = [];
-var listeningRanges = [];
+var listeningRanges = {};
 var refreshIntervalId = "";
 var refreshRate = 50; // milliseconds between interval related calls
 
@@ -50,10 +50,9 @@ nsp.on('connection', function(socket){
     })
 
     socket.on('player: local chat', function(msg) { // Local chat msg goes to nearby ppl only, and yourself
-        var userIndex = loungeUsers.indexOf(user);
-        var nearbyUserIndexes = listeningRanges[userIndex];
-        for (var i=0; i<nearbyUserIndexes.length; i++) {
-            var nearbyUser = loungeUsers[nearbyUserIndexes[i]];
+        var nearbyUserSets = listeningRanges[user.twitch_id]; // Each set is {"twitch_id":..., "idx" : ...}
+        for (var i=0; i<nearbyUserSets.length; i++) {
+            var nearbyUser = loungeUsers[nearbyUserSets[i].idx];
             socket.broadcast.to(nearbyUser.socket).emit('player: local chat', {"sourceUser": user.siojsonify(), "msg" : msg});
         }
         socket.emit('player: local chat', {"sourceUser": user.siojsonify(), "msg" : msg});
@@ -83,7 +82,7 @@ nsp.on('connection', function(socket){
 // --------------------------------------------------------------------------
 // *** Put functions below, could be utility or called by a socket *** //
 
-function getPublicPlayersInfo() {
+function getPublicPlayersInfo() { // Returns array of public user information, e.g. position, avatar, etc
     return loungeUsers.map(function(user) { return user.siojsonify(); });
 }
 
@@ -94,7 +93,7 @@ function manageInterval(nsp) { // Sets up or turns off the interval, which is ho
             listeningRanges = ListeningRange.getListenObjects(loungeUsers, listenRange);
 
             // Push a frame update to everyone in namespace
-            nsp.emit('players: move all', getPublicPlayersInfo());
+            nsp.emit('players: update all', {"allUsers" : getPublicPlayersInfo(), "listeningRange" : listeningRanges});
         }, refreshRate);
     }
     if (loungeUsers.length === 0) { // Turn it off when last user leaves

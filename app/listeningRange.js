@@ -1,14 +1,17 @@
 
-// Returns an array of arrays, with each array containing which user indexes that user
-// is in range of
+// Returns a dictionary of arrays containing tuples, with each array containing which user indexes that user
+// is in range of and the twitch_id of said user
+// EX: listenDict = { 12345 : [ {"twitch_id" : 6789, "idx" : 1} ... ],
+//                    6789 : [ {"twitch_id" : 12345, "idx" : 0} ...], ...  }
 exports.getListenObjects = function(users, listenRange) {
     var sortedUsers = [];
 
     //Initializes our final return, augments the coordinates with their actual positions
-    var listenDict = [];
+    var listenDict = {};
     for (var i = 0; i < users.length; i++) 
     {
-        listenDict.push([]);
+        listenDict[users[i].twitch_id] = [];
+        // listenDict.push([]);
         users[i].idx = i;
         sortedUsers.push(users[i]);
     }
@@ -27,19 +30,21 @@ exports.getListenObjects = function(users, listenRange) {
 
             if(coord2.x <= coord1.x  + listenRange)
             {
-                listenDict[coord1.idx].push(coord2.idx);
-                listenDict[coord2.idx].push(coord1.idx);
+                // Twitch_id => allows quicker visualization of who is nearby
+                // User idx "index" => allows grabing whole user object if needed
+                listenDict[coord1.twitch_id].push({"twitch_id" : coord2.twitch_id, "idx" : coord2.idx});
+                listenDict[coord2.twitch_id].push({"twitch_id" : coord1.twitch_id, "idx" : coord1.idx});
             }
             else
                 break;
         }
     }
 
-    for (var i = 0; i < listenDict.length; i++) 
-    {
-        listenDict[i] = Array.from(new Set(listenDict[i]))
+
+    for (var key in listenDict) {
+        listenDict[key] = Array.from(new Set(listenDict[key]));
     }
-    return listenDict
+    return listenDict;
 }
 
 function getXOverlap(users, listenRange)

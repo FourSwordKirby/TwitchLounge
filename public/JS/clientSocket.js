@@ -8,6 +8,7 @@ var socket = io(namespace);
 // Variables
 var twitch_id, access_token;
 var user, playerAvatar;
+var nearbyUserSets = []; // Array of users who are near this user
 
 var viewportWidth, viewportHeight; // Of the "left" div where lounge is located
 
@@ -31,6 +32,7 @@ socket.on('player: add self', function(row) {
     user = row; // Server sends us our full user obj
     $("#"+user.twitch_id).remove(); // Just in case of refresh duplication
     playerAvatar = createPlayerEl(user);
+    playerAvatar.addClass("player-avatar");
     $("#players").append(playerAvatar);
 
     addPlayerEvents();
@@ -233,6 +235,18 @@ function appendLocalchat(res) {
     }
 }
 
+// socket.on('players: update listening range', updateNearby);
+// function updateNearby(res) { // Visualizes who is nearby for this socket's user
+//     // Unless someone enters RIGHT as someone leaves, this check is faster than checking contents of array
+//     if (nearbyUserSets.length !== res[user.twitch_id].length) {
+//         console.log("CHANGE");
+//         nearbyUserSets = res[user.twitch_id];
+//         $.each(nearbyUserSets, function(index, otherUserSet) { // Show people who are nearby
+//             // $("#"+otherUserSet.twitch_id)
+//         })
+//     }
+// }
+
 
 } // Close addPlayerEvents()
 
@@ -245,7 +259,6 @@ function appendLocalchat(res) {
 function lurk() {
     $("#user-setup .logged-in").remove();
     socket.emit('anon: get all');
-    debugger;
 }
 
 // *** Add your own socket listeners below *** //
@@ -257,16 +270,33 @@ function getAllUsers(otherUsers) {
     })
 }
 
-socket.on('players: move all', moveAllUsers);
-function moveAllUsers(otherUsers) { // Moves all users to updated positions gotten from server
-    $.each(otherUsers, function(index, otherUser) {
+socket.on('players: update all', handleUpdate);
+function handleUpdate(res) {
+    moveAllUsers(res.allUsers);
+    if (user) {
+        centerOnUser(); // NOTE: Tiny visual bug where centered user position "snaps back" during movement
+        updateNearby(res.listeningRange);
+    }
+}
+function moveAllUsers(allUsers) { // Moves all users to updated positions gotten from server
+    $.each(allUsers, function(index, otherUser) {
         $("#"+otherUser.twitch_id).attr("data-x", otherUser.x);
         $("#"+otherUser.twitch_id).attr("data-y", otherUser.y);
 
         $("#"+otherUser.twitch_id).css("left", otherUser.x * zoom);
         $("#"+otherUser.twitch_id).css("top", otherUser.y * zoom);
     })
-    if (user) { centerOnUser(); } // NOTE: Tiny visual bug where centered user position "snaps back" during movement
+}
+function updateNearby(listeningRanges) { // Visualizes who is nearby for this socket's user
+    // Unless someone enters RIGHT as someone leaves, this check is faster than checking contents of array
+    if (nearbyUserSets.length !== listeningRanges[user.twitch_id].length) {
+        console.log("CHANGE");
+        $(".player .player-overlay").removeClass("listening");
+        nearbyUserSets = listeningRanges[user.twitch_id];
+        $.each(nearbyUserSets, function(index, otherUserSet) { // Show people who are nearby
+            $("#"+otherUserSet.twitch_id + " .player-overlay").addClass("listening");
+        })
+    }
 }
 
 socket.on('player: add newcomer', function(otherUser) {
@@ -331,6 +361,9 @@ function createPlayerEl(user) { // Element appended when a new player enters
     if (typeof user.color === "undefined") { // Here temporarily to deal w/ legacy users in DB...
         user.color = randomColor();
     }
-    return $("<div id=\'"+user.twitch_id+"\' class=\'player\' data-x=\'"+user.x+"\' data-y=\'"+user.y+"\' style=\'left:"+ (user.x*zoom) +"px; top:"+ (user.y*zoom) +"px; background-color: #"+user.color+"\'></div>");
+    return $("<div id=\'"+user.twitch_id+"\' class=\'player\' data-x=\'"+user.x+"\' data-y=\'"+user.y+"\' style=\'left:"+ (user.x*zoom) +"px; top:"+ (user.y*zoom) +"px;\'>"+
+                "<div class=\"player-overlay\"></div>" +
+                "<div class=\"player-sprite\" style=\'background-color: #"+user.color+"\'></div>" + 
+                "</div>");
 }
 

@@ -136,6 +136,8 @@ function handleZoom() {
     $(".player").each(function() {
         $(this).css("width", (15 * zoom) + "px");
         $(this).css("height", (15 * zoom) + "px");
+        $(this).css("box-shadow", '0px 0px ' + (25*zoom)+'px '+ (25*zoom) +'px' + '#eeeeee');        
+
 
         var prevx = $(this).attr("data-x");
         var prevy = $(this).attr("data-y");
@@ -198,7 +200,7 @@ function appendLocalchat(res) {
 
     var msgLi = $("<li><b style=\"color:#"+sourceUser.color+"\">"+sourceUser.twitch_username + ": </b>" + twitchEmoji.parse((msg),{emojiSize : 'small'})+"</li>");
     var emote = twitchEmoji.parse((msg),{emojiSize : 'small'}).match(/<img[^>]+>/);
-    if (emote !== null && emote.length > 0)
+    if (emote && (emote.length > 0))
     {
         var curEmote = $("#"+sourceUser.twitch_id+" li");
         if(curEmote.length > 0)
@@ -223,6 +225,12 @@ function appendLocalchat(res) {
     var localChatBox = $("#local-messages-history");
     localChatBox.prepend(msgLi);
     // localChatBox.animate({scrollTop: localChatBox[0].scrollHeight}, 200); // Scroll to bottom
+
+    // remove the last child if the history is more than, say, 500
+    var totalLength = $("#local-messages-history li").length
+    if ( totalLength > 500) {
+        $('#local-messages-history li').last().remove()
+    }
 }
 
 

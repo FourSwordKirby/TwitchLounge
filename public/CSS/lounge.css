@@ -12,7 +12,7 @@ body.body-lounge {
     position: fixed;
     background-image: url("../assets/sprites/loungeSprites/floor.png");
     background-repeat: repeat;
-    box-shadow: 0 0 35px 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 25px 20px rgba(0, 0, 0, 0.4);
     border: 1px solid #ffca9a;
 }
 #players {
@@ -25,7 +25,7 @@ body.body-lounge {
     background-color: gold;
     position:absolute;
     border-radius:30px;
-    box-shadow: 0 0 70px 20px gold;
+    box-shadow: 0 0 70px 20px white;
     image-rendering: pixelated;
 }
 
@@ -98,6 +98,7 @@ label.zoomer { top: 20px;}
 	/*resize: both;*/
 	overflow: auto;
 }
+
 #chatroom form { padding: 3px; position: absolute; bottom: 15px; width: 100%; }
 #chatroom form input { border: 0; padding: 10px; width: 80%; margin-right: .5%; }
 #chatroom form button { width: 18.5%; background: rgb(130, 224, 255); border: none; padding: 10px; }
@@ -107,26 +108,27 @@ label.zoomer { top: 20px;}
 #local-chatroom { /* Contaner */
     position: absolute;
     z-index: 3;
-    bottom: 0;
+    bottom: 5px;
+    padding: 5px;
     width: 100%;
 }
 #local-chatroom form {
     width: 100%;
     display: table;
+    border: 5px solid rgba(0,0,0,0);
 }
 #local-chatroom form input[type="text"] {
     display: table-cell;
     width: 90%;
     padding: 10px;
-    border: none;
 }
 #local-chatroom form input[type="submit"] {
     display: table-cell;
-    width: 10%;
-    border: none;
+    width: 9%;
     padding: 10px;
-    background: rgb(130, 224, 255);
+    background: #6441A4;
     min-width: 100px;
+    color: white;
 }
 
 /* display the histories of local messages */
@@ -137,7 +139,7 @@ label.zoomer { top: 20px;}
     position: absolute;
     z-index: 10;
     color: black;
-    height: 80vh;   
+    height: 75vh;   
     overflow: auto;
 }
 #local-messages-history::-webkit-scrollbar {
@@ -187,7 +189,7 @@ label.zoomer { top: 20px;}
 }
 .setup-form .close-setup {
     float: right;
-    color: #20adc7;
+    color: #6441A4;
     text-decoration: none;
 }
 button.save-setup {
@@ -215,9 +217,13 @@ button.top-button:hover {
 
 /* Streamer Setup CSS*/
 button#show-setup {
-    left: 180px;
+    left: 210px;
 }
 /* User Setup CSS */
 button#show-user-setup {
-    left: 90px;
+    left: 120px;
+}
+/* help button that display little text bubbles */
+button#show-help {
+    left: 89px;
 }

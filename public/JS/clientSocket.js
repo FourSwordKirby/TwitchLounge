@@ -136,6 +136,8 @@ function handleZoom() {
     $(".player").each(function() {
         $(this).css("width", (15 * zoom) + "px");
         $(this).css("height", (15 * zoom) + "px");
+        $(this).css("box-shadow", '0px 0px ' + (25*zoom)+'px '+ (25*zoom) +'px' + '#eeeeee');        
+
 
         var prevx = $(this).attr("data-x");
         var prevy = $(this).attr("data-y");

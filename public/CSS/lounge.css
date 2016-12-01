@@ -98,6 +98,7 @@ label.zoomer { top: 20px;}
 	/*resize: both;*/
 	overflow: auto;
 }
+
 #chatroom form { padding: 3px; position: absolute; bottom: 15px; width: 100%; }
 #chatroom form input { border: 0; padding: 10px; width: 80%; margin-right: .5%; }
 #chatroom form button { width: 18.5%; background: rgb(130, 224, 255); border: none; padding: 10px; }
@@ -107,25 +108,25 @@ label.zoomer { top: 20px;}
 #local-chatroom { /* Contaner */
     position: absolute;
     z-index: 3;
-    bottom: 0;
+    bottom: 5px;
+    padding: 5px;
     width: 100%;
 }
 #local-chatroom form {
     width: 100%;
     display: table;
+    border: 5px solid rgba(0,0,0,0);
 }
 #local-chatroom form input[type="text"] {
     display: table-cell;
     width: 90%;
     padding: 10px;
-    border: none;
 }
 #local-chatroom form input[type="submit"] {
     display: table-cell;
-    width: 10%;
-    border: none;
+    width: 9%;
     padding: 10px;
-    background: rgb(130, 224, 255);
+    background: #6441A4;
     min-width: 100px;
 }
 #local-messages { /* local chat message container*/

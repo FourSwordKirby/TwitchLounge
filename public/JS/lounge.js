@@ -56,6 +56,10 @@ $(document).ready(function() {
         return false;
     })
 
+    $('#show-help').hover(function () {
+        $(".middle-float-window").toggleClass("hide");
+    })
+
 })
 
 // ------------------------

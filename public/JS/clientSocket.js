@@ -195,7 +195,7 @@ function appendLocalchat(res) {
     var msg = res.msg;
     var msgLi = $("<li><b>"+sourceUser.twitch_username + ":</b>" + twitchEmoji.parse((msg),{emojiSize : 'small'})+"</li>");
     var emote = twitchEmoji.parse((msg),{emojiSize : 'small'}).match(/<img[^>]+>/);
-    if (emote.length > 0)
+    if (emote && (emote.length > 0))
     {
         var curEmote = $("#"+sourceUser.twitch_id+" li");
         if(curEmote.length > 0)
@@ -220,6 +220,12 @@ function appendLocalchat(res) {
     var localChatBox = $("#local-messages-history");
     localChatBox.prepend(msgLi);
     // localChatBox.animate({scrollTop: localChatBox[0].scrollHeight}, 200); // Scroll to bottom
+
+    // remove the last child if the history is more than, say, 500
+    var totalLength = $("#local-messages-history li").length
+    if ( totalLength > 500) {
+        $('#local-messages-history li').last().remove()
+    }
 }
 
 

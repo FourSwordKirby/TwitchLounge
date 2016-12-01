@@ -128,6 +128,7 @@ label.zoomer { top: 20px;}
     padding: 10px;
     background: #6441A4;
     min-width: 100px;
+    color: white;
 }
 #local-messages { /* local chat message container*/
     max-height: 200px;
@@ -163,7 +164,7 @@ ul.localmsgs {
     position: absolute;
     z-index: 10;
     color: black;
-    height: 80vh;   
+    height: 75vh;   
     overflow: auto;
 }
 
@@ -194,6 +195,7 @@ ul.localmsgs {
     right: 0;
     height: 200px;
     width: 350px;
+    z-index: 100;
 }
 .setup-form p {
     font-size:11px;
@@ -209,7 +211,7 @@ ul.localmsgs {
 }
 .setup-form .close-setup {
     float: right;
-    color: #20adc7;
+    color: #6441A4;
     text-decoration: none;
 }
 button.save-setup {
@@ -237,9 +239,13 @@ button.top-button:hover {
 
 /* Streamer Setup CSS*/
 button#show-setup {
-    left: 180px;
+    left: 210px;
 }
 /* User Setup CSS */
 button#show-user-setup {
-    left: 90px;
+    left: 120px;
+}
+/* help button that display little text bubbles */
+button#show-help {
+    left: 89px;
 }

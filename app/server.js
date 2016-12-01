@@ -23,18 +23,6 @@ var MongoRoutes = require('./mongoRoutes.js');
 
 // Handle static files
 app.use(express.static('public'))
-// app.use(express.static(__dirname + '/public'));
-
-// ------------------------------------------------------------------
-
-
-// If you want to have the site respond to different URLS, simply follow the pattern above.
-// You can also respond to - GET, PUT, POST, DELETE
-// GET: When the user is requesting information
-// PUT: When the user sends in something to update a file
-// POST: When the user creates some new object in our DB
-// DELETE: When the user attempts to delete some object
-// For now, you can stick with GET
 
 // ------------------------------------------------------------------
 // SOCKET STUFF

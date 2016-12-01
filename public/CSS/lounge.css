@@ -171,6 +171,7 @@ label.zoomer { top: 20px;}
     right: 0;
     height: 200px;
     width: 350px;
+    z-index: 100;
 }
 .setup-form p {
     font-size:11px;

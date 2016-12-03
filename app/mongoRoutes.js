@@ -41,7 +41,7 @@ exports.findUser = function(req, res) {
 exports.quickSaveUser = function(req, res) {
     MongoDB.getUser({"twitch_id" : req.body.twitch_id, "access_token" : req.body.access_token}, function(row) {
         if (row !== null) {
-            MongoDB.updateUser(req.body.twitch_id, {$set: {"color" : req.body.color} });
+            MongoDB.updateUser(req.body.twitch_id, {$set: {"color" : req.body.color, "sprite" : req.body.sprite} });
             res.send({"type" : "Update", "twitch_id" : row.twitch_id});
         } else {
             res.status(500);

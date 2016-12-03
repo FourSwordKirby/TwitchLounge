@@ -232,10 +232,18 @@ function appendLocalchat(res) {
 
     var localChatBox = $("#local-messages-history");
     localChatBox.append(msgLi);
+    
 
     // check if the message is sent out by the user themselves
     if (sourceUser.twitch_id == twitch_id) {
         msgLi.addClass("self-messages");
+    } else {
+        setTimeout(function () {
+        msgLi.css("background-color", "rgba(255,255,255,0)");
+    }, 220);
+        setTimeout(function () {
+        msgLi.css("background-color", "rgba(255,255,255,0.6)");
+    }, 320);
     }
 
     // remove the oldest history if the history is more than, say, 500

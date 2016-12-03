@@ -225,14 +225,20 @@ function appendLocalchat(res) {
     // }, 1500 + fadeTime);
 
     var localChatBox = $("#local-messages-history");
-    localChatBox.prepend(msgLi);
-    // localChatBox.animate({scrollTop: localChatBox[0].scrollHeight}, 200); // Scroll to bottom
+    localChatBox.append(msgLi);
 
-    // remove the last child if the history is more than, say, 500
-    var totalLength = $("#local-messages-history li").length
-    if ( totalLength > 500) {
-        $('#local-messages-history li').last().remove()
+    // check if the message is sent out by the user themselves
+    if (sourceUser.twitch_id == twitch_id) {
+        msgLi.addClass("self-messages");
     }
+
+    // remove the oldest history if the history is more than, say, 500
+    var totalLength = $("#local-messages-history li").length;
+    if ( totalLength > 500) {
+        $('#local-messages-history li').first().remove();
+    }
+
+    localChatBox.animate({scrollTop: localChatBox[0].scrollHeight}, 200); // Scroll to bottom
 }
 
 // socket.on('players: update listening range', updateNearby);

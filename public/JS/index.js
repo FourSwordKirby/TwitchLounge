@@ -25,6 +25,7 @@ $(document).ready(function() {
 
 })
 
+
 function hasAuthenticated() {
     access_token = localStorage.getItem('lounge_token');
     twitch_id = localStorage.getItem('twitch_id');

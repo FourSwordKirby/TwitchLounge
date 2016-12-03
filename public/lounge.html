@@ -36,18 +36,17 @@
     <label class="zoomer">Zoom level</label>
     <input class="zoomer" type="range" max="4" min="1" step="0.1" value="1"></input>
 
-    <ul id="local-messages-history">
-        <li>Welcome! Type in the chat box at the bottom to talk locally.</li>
-    </ul>
-
     <div id="floor">
         <div id="players"></div>
     </div>
 
     <div id="local-chatroom" class="hide">
+        <ul id="local-messages-history">
+            <li>Welcome! Type in the chat box at the bottom to talk locally.</li>
+        </ul>
         <form>
-            <input type="text" name="localchat" autocomplete="off"/>
-            <input type="submit" value="Send to nearby"/>
+            <input type="text" name="localchat" autocomplete="off" placeholder="Press return key to submit..."/>
+            <!-- <input type="submit" value="Send to nearby"/> -->
         </form>
     </div>
 
@@ -61,6 +60,9 @@
     </div>
   </div> <!-- Close right div -->
 
+
+<button id="show-help" class="borderedButton top-button" title = "display help instructions">?</button> 
+<button id="show-fullscreen" class="borderedButton top-button" title = "show fullscreen">fullscreen</button> 
 
 <!-- User setup options -->
 <button id="show-user-setup" class = "borderedButton top-button">User Settings</button>
@@ -100,8 +102,6 @@
         <button class="save-setup">Save</button>
     </form>
 </div>
-
-<button id="show-help" class="borderedButton top-button" title = "display help instructions">?</button> 
 
 <div class ="middle-float-window hide">
     Twitch lounge is just some random sh** we made up during our messing around with twitch chat's visualization. The things on the right is completely twitch, 100% twitch. The things on the left is our visualization that ressembles chat in real life. You can use your arrow keys to move around and bug with people, chaisng each around or even form some strange shapes. 

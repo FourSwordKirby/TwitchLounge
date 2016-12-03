@@ -18,13 +18,24 @@ if (hasAuthenticated()) {
     // Lurk
 }
 
+// Find the right method, call on correct element
+// copied from stackoverflow...
+function launchFullScreen(element) {
+  if(element.requestFullScreen) {
+    element.requestFullScreen();
+  } else if(element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if(element.webkitRequestFullScreen) {
+    element.webkitRequestFullScreen();
+  }
+}
 
 $(document).ready(function() {
 
     // Embed twitch stream
     var options = {
             width: "100%",
-            height: "100%",
+            height: $("#video").height(),
             channel: namespace.slice(1)
     };
     
@@ -59,6 +70,13 @@ $(document).ready(function() {
     $('#show-help').hover(function () {
         $(".middle-float-window").toggleClass("hide");
     })
+
+    $('#show-fullscreen').click(function () {
+        launchFullScreen(document.body);
+        $("#video").height($("#twitch-stream").height());
+        $("#chatroom").height(screen.height - $("#twitch-stream").height());
+    })
+
 
 })
 

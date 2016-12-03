@@ -70,10 +70,10 @@ body.body-lounge {
 
 #logo {
     position: fixed;
-    margin: 8px;
+    /*margin: 8px;*/
     z-index: 99;
-    left: 5px;
-    top: 5px;
+    left: 8px;
+    top: 8px;
 }
 
 .zoomer {
@@ -183,7 +183,7 @@ label.zoomer { top: 20px;}
 #local-messages-history::-webkit-scrollbar-thumb {background-color: #797979;}
 #local-messages-history li{
     width: 100%;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255,255,255,0.6);
     padding: 10px ;
     margin-top: 10px;
     list-style: none;

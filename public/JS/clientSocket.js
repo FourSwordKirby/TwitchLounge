@@ -161,13 +161,19 @@ function handleUserSetup() {
     })
     function quickSaveUser() {
         var color = $("#user-setup input[name=color]").val();
+        //var radioButtons = $(':radio[name=sprite]:checked')
+        //var sprite = radioButtons.index(radioButtons.find(':checked')) + 1;
+        var sprite = $(":radio[name='sprite']")
+                    .index($(":radio[name='sprite']:checked")); 
+        sprite += 1
         $.ajax({
             url: '/db/quickSaveUser',
             type: 'PUT',
             data: {
                 "twitch_id" : user.twitch_id,
                 "access_token" : user.access_token,
-                "color" : color
+                "color" : color,
+                "sprite" : sprite
             },
             success: function(result) {
                 $("#user-setup").addClass("hide");

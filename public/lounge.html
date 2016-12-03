@@ -77,7 +77,24 @@
         </div>
 
         <div class="logged-in">
-            <label title = "changes the color of your avatar dot and your username in the local chat.">Color</label> #<input name="color" type="text" maxlength="6"></input>
+            <label title = "changes the color of your avatar dot and your username in the local chat.">Color</label> #<input name="color" type="text" maxlength="6"></input> <br>
+            <label title = "select your sprite avatar">Avatar</label> <br>
+            <div id="AvatarSelection">
+            </div>
+            <script>
+                var element = document.getElementById("AvatarSelection");
+                for(i = 1; i < 39; i++) {
+                    var button = document.createElement("input");
+                    button.setAttribute("type", "radio");
+                    button.setAttribute("name", "sprite");
+                    var img = document.createElement("img");
+                    img.setAttribute("src", "assets/sprites/userSprites/userSprite_" + i + ".png");
+                    img.setAttribute("height", "15");
+                    img.setAttribute("width", "15");
+                    element.append(button);
+                    element.append(img);           
+                }
+            </script>
             <button class="save-setup bottom-button">Save</button>
         </div>
     </form>

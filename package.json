@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Game like lounge to accompany a twitch stream that builds on chat experience",
   "main": "index.js",
+  "start": "app/server.js"
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -126,12 +126,14 @@ function getLounge() {
         },
         success: function(result) {
             lounge = result;
-            $("#setup input[name=tmi]").val(result.tmi_apikey);
-            $("#setup input[name=width]").val(result.width);
-            $("#setup input[name=height]").val(result.height);
+            $(document).ready(function() {
+                $("#setup input[name=tmi]").val(result.tmi_apikey);
+                $("#setup input[name=width]").val(result.width);
+                $("#setup input[name=height]").val(result.height);
 
-            $("#floor").css("width", result.width);
-            $("#floor").css("height", result.height);
+                $("#floor").css("width", result.width);
+                $("#floor").css("height", result.height);
+            })
         },
         error: function() {
             $("#floor").css("width", 500);

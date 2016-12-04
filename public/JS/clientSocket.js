@@ -138,7 +138,7 @@ function handleZoom() {
     $(".player").each(function() {
         $(this).css("width", (15 * zoom) + "px");
         $(this).css("height", (15 * zoom) + "px");
-        $(this).css("box-shadow", '0px 0px ' + (25*zoom)+'px '+ (25*zoom) +'px' + '#eeeeee');        
+        $(this).css("box-shadow", '0px 0px ' + (25*zoom)+'px '+ (25*zoom) +'px' + '#eeeeee');
 
 
         var prevx = $(this).attr("data-x");
@@ -154,6 +154,7 @@ $("input.zoomer").change(handleZoom);
 function handleUserSetup() {
     $("#user-setup .not-logged-in").remove();
     $("#user-setup input[name=color]").val(user.color);
+    $("#user-setup input[name=sprite][value="+user.sprite+"]").attr('checked', 'checked');
 
     $("#user-setup form").submit(function() {
         quickSaveUser();
@@ -161,11 +162,7 @@ function handleUserSetup() {
     })
     function quickSaveUser() {
         var color = $("#user-setup input[name=color]").val();
-        //var radioButtons = $(':radio[name=sprite]:checked')
-        //var sprite = radioButtons.index(radioButtons.find(':checked')) + 1;
-        var sprite = $(":radio[name='sprite']")
-                    .index($(":radio[name='sprite']:checked")); 
-        sprite += 1
+        var sprite = $("#user-setup input[name=sprite]:checked").val()
         $.ajax({
             url: '/db/quickSaveUser',
             type: 'PUT',
@@ -255,18 +252,6 @@ function appendLocalchat(res) {
     localChatBox.animate({scrollTop: localChatBox[0].scrollHeight}, 200); // Scroll to bottom
 }
 
-// socket.on('players: update listening range', updateNearby);
-// function updateNearby(res) { // Visualizes who is nearby for this socket's user
-//     // Unless someone enters RIGHT as someone leaves, this check is faster than checking contents of array
-//     if (nearbyUserSets.length !== res[user.twitch_id].length) {
-//         console.log("CHANGE");
-//         nearbyUserSets = res[user.twitch_id];
-//         $.each(nearbyUserSets, function(index, otherUserSet) { // Show people who are nearby
-//             // $("#"+otherUserSet.twitch_id)
-//         })
-//     }
-// }
-
 
 } // Close addPlayerEvents()
 
@@ -310,7 +295,6 @@ function moveAllUsers(allUsers) { // Moves all users to updated positions gotten
 function updateNearby(listeningRanges) { // Visualizes who is nearby for this socket's user
     // Unless someone enters RIGHT as someone leaves, this check is faster than checking contents of array
     if (nearbyUserSets.length !== listeningRanges[user.twitch_id].length) {
-        console.log("CHANGE");
         $(".player .player-overlay").removeClass("listening");
         nearbyUserSets = listeningRanges[user.twitch_id];
         $.each(nearbyUserSets, function(index, otherUserSet) { // Show people who are nearby
@@ -358,6 +342,17 @@ function loadStreamerOptions() {
 // ------------------------------------------------------------
 // UTILITY FUNCTIONS
 
+
+function createPlayerEl(user) { // Element appended when a new player enters
+    if (typeof user.color === "undefined") { // Here temporarily to deal w/ legacy users in DB...
+        user.color = randomColor();
+    }
+    return $("<div id=\'"+user.twitch_id+"\' class=\'player\' data-x=\'"+user.x+"\' data-y=\'"+user.y+"\' style=\'left:"+ (user.x*zoom) +"px; top:"+ (user.y*zoom) +"px;\'>"+
+                "<div class=\"player-overlay\"></div>" +
+                "<div class=\"player-sprite\" style=\'filter: "+calculateColorFilter(user.color)+"; background-image: url(\"../assets/sprites/userSprites/userSprite_"+user.sprite+".png\");\'></div>" + 
+                "</div>");
+}
+
 function getUser() {
     return user;
 }
@@ -377,13 +372,63 @@ function randomColor() {
     return 'rgb('+ rgb.join(',') +')';
 }
 
-function createPlayerEl(user) { // Element appended when a new player enters
-    if (typeof user.color === "undefined") { // Here temporarily to deal w/ legacy users in DB...
-        user.color = randomColor();
-    }
-    return $("<div id=\'"+user.twitch_id+"\' class=\'player\' data-x=\'"+user.x+"\' data-y=\'"+user.y+"\' style=\'left:"+ (user.x*zoom) +"px; top:"+ (user.y*zoom) +"px;\'>"+
-                "<div class=\"player-overlay\"></div>" +
-                "<div class=\"player-sprite\" style=\'background-color: #"+user.color+"\'></div>" + 
-                "</div>");
+// Given a user color, calculates the different of hue, saturation, and light between color and sprite base color
+// and returns a string that can be used for the filter param
+function calculateColorFilter(color) {
+    var spriteBase = "f89850"; // Assumes a base color of a reddish orange
+    var spriteHSL = hexToHsl(spriteBase);
+    var targetColorHSL = hexToHsl(color); // User's selected color HSL
+
+    var hueDeg = Math.abs(spriteHSL[0]-targetColorHSL[0]);
+    var saturate = 100 + (spriteHSL[1] - targetColorHSL[1]);
+    var lightness = 100 + (spriteHSL[2] - targetColorHSL[2]);
+    return "hue-rotate("+hueDeg+"deg) saturate("+saturate+"%) brightness("+lightness+"%);"
 }
 
+// Given hex code in a string (with or without #) converts to HSL
+function hexToHsl(hex) {
+    var rgb = hexToRgb(hex);
+    return rgbToHsl(rgb.r, rgb.g, rgb.b);
+
+}
+
+// http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+function rgbToHex(r, g, b) {
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
+// http://stackoverflow.com/questions/2348597/why-doesnt-this-javascript-rgb-to-hsl-code-work/2348659#2348659
+// RGB to hue, saturation, light [hue, sat, light]
+function rgbToHsl(r, g, b){
+    r /= 255, g /= 255, b /= 255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+
+    if(max == min){
+        h = s = 0; // achromatic
+    }else{
+        var d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch(max){
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+    }
+
+    return [Math.floor(h * 360), Math.floor(s * 100), Math.floor(l * 100)];
+}

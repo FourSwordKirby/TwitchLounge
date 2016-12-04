@@ -32,6 +32,7 @@ nsp.on('connection', function(socket){
             if (row !== null) {
                 user = new User(row.twitch_id, row.twitch_username, row.twitch_avatar, row.twitch_bio, row.access_token);
                 user.color = row.color;
+                user.sprite = row.sprite;
                 user.socket = socket.id;
                 // socket.client.id is without the namespace starter....
                 socket.emit('player: add self', user.jsonify()); // Add yourself to your screen

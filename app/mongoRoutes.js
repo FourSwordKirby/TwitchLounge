@@ -29,6 +29,7 @@ exports.findUser = function(req, res) {
         if (row !== null) {
             var user = new User(row.twitch_id, row.twitch_username, row.twitch_avatar, row.twitch_bio, row.access_token);
             user.color = row.color;
+            user.sprite = row.sprite;
             res.json(user.jsonify());
         } else { // No row found, send back error
             res.status(500);

@@ -33,6 +33,9 @@ body.body-lounge {
     position:relative;
     border-radius:30px;
     image-rendering: pixelated;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 .player-overlay { /* Goes over player sprite to have black 20% overlay effects related to listening range */
     border-radius:30px;
@@ -48,7 +51,7 @@ body.body-lounge {
 }
 .player.player-avatar .player-overlay { /* Don't ever have darkening overlay on the player's avatar */
     background-color: rgba(0, 0, 0, 0);
-        box-shadow: 0 0 70px 20px white;
+    box-shadow: 0 0 70px 20px white;
 }
 
 #left{
@@ -208,7 +211,7 @@ label.zoomer { top: 20px;}
     left: 0;
     bottom: 0;
     right: 0;
-    height: 200px;
+    height: 250px;
     width: 350px;
     z-index: 100;
 }
@@ -263,6 +266,15 @@ button#show-user-setup {
 /* help button that display little text bubbles */
 button#show-help {
     left: 89px;
+}
+#user-setup #avatarSelection .sprite-radio {
+    margin-right: 15px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+#user-setup #avatarSelection img {
+    width: 15px;
+    height: 15px;
 }
 
 /* full screen button */

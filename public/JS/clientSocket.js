@@ -113,6 +113,7 @@ handleMovement();
 
 addUserInfo();
 function addUserInfo(){
+    // This function adds a bubble that display username, twitch id, etc
     $("#"+user.twitch_id).hover(function(){
     playerInfoHtml = ("<b>ID: </b> " + user.twitch_id +"<br><b>username: </b>" + user.twitch_username +
         "<br><b>last seen: </b> 5 sec ago<br><b>tags: </b>LOL DotA2 GTAV")

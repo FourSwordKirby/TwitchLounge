@@ -102,7 +102,7 @@ label.zoomer { top: 20px;}
 	background: rgba(255,255,255,0.5);
 	border: 1px grey solid;
 	width: 100% - 5px;
-	height: 40%;
+	height: 50%;
 	right: 0;
 	top: 0;
 	overflow: auto;
@@ -118,7 +118,7 @@ label.zoomer { top: 20px;}
 	background: rgba(255,255,255,0.5);
 	border:0;
 	width: 100% - 5px;
-	height: 60%;
+	height: 50%;
 	/*right: 0;*/
 	bottom: 0;
 	/*resize: both;*/

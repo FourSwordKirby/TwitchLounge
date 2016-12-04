@@ -138,8 +138,10 @@ function handleZoom() {
     $(".player").each(function() {
         $(this).css("width", (15 * zoom) + "px");
         $(this).css("height", (15 * zoom) + "px");
-        $(this).css("box-shadow", '0px 0px ' + (25*zoom)+'px '+ (25*zoom) +'px' + '#eeeeee');
-
+        // $(this).find(".listening").css("box-shadow", '0px 0px ' + (25*zoom)+'px '+ (25*zoom) +'px' + ' rgba(256,256,256,0.6)');
+        if ($(this).hasClass("player-avatar")) {
+            $(this).find(".player-overlay").css("box-shadow", '0px 0px ' + (25*zoom)+'px '+ (25*zoom) +'px' + ' rgba(256,256,256,0.6)');
+        }
 
         var prevx = $(this).attr("data-x");
         var prevy = $(this).attr("data-y");
@@ -344,8 +346,9 @@ function loadStreamerOptions() {
 
 
 function createPlayerEl(user) { // Element appended when a new player enters
-    if (typeof user.color === "undefined") { // Here temporarily to deal w/ legacy users in DB...
-        user.color = randomColor();
+    if (typeof user.color === "undefined" || typeof user.sprite === "undefined") { // Here temporarily to deal w/ legacy users in DB...
+        user.color = "707070";
+        user.sprite = 0;
     }
     return $("<div id=\'"+user.twitch_id+"\' class=\'player\' data-x=\'"+user.x+"\' data-y=\'"+user.y+"\' style=\'left:"+ (user.x*zoom) +"px; top:"+ (user.y*zoom) +"px;\'>"+
                 "<div class=\"player-overlay\"></div>" +

@@ -44,7 +44,7 @@ $(document).ready(function() {
     player.setVolume(0);
     
     var chatFrame = document.createElement('iframe');
-    chatFrame.setAttribute("src", "http://www.twitch.tv/" + namespace.slice(1) + "/chat");
+    chatFrame.setAttribute("src", "https://www.twitch.tv/" + namespace.slice(1) + "/chat");
     chatFrame.setAttribute("id", "chat_embed");
     chatFrame.setAttribute("frameborder", "0");
     chatFrame.style.height = "99%";

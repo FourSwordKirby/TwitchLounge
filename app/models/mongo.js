@@ -5,8 +5,8 @@ var ObjectId = require('mongodb').ObjectID;
 var mongoDB; // The database
 
 var url = 'mongodb://127.0.0.1:27017/lounge'; // Default to localhost connection
-if (process.env.MONGOLAB_URI) {
-    url = process.env.MONGOLAB_URI;
+if (process.env.PORT) {
+    url = "mongodb://heroku_pk134lvl:amdr2f04nfafg40dodk8kglj0n@ds119718.mlab.com:19718/heroku_pk134lvl/lounge"
 }
 
 // Opens connection to database

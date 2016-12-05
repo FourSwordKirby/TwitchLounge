@@ -59,3 +59,26 @@ Serverside- DEBUG=* node yourfile.js
 
 http://justintv.github.io/twitch-js-sdk/#section-3-2
 >>>>>>> mongo
+
+# Production
+https://devcenter.heroku.com/articles/getting-started-with-nodejs#prepare-the-app
+
+Deployed to Heroku. Initial setup:
+1) heroku login
+2) heroku create
+3) heroku addons:add mongolab
+4) heroku ps:scale web=1
+5) heroku open
+
+Heroku Mongo DB: heroku config | grep MONGODB_URI
+Heroku port: process.env.PORT
+
+Here are a few commands I found myself using often to redeploy:
+git push heroku master
+heroku logs --tail
+
+
+
+
+
+_twitch Angelaheroku config | grep MONGODB_URI

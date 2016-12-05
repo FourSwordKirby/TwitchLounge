@@ -62,8 +62,12 @@ app.use(function (req, res, next) {
     res.status(404).send('404: Sorry cant find that!')
 })
 
-// This literally starts the server
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+// This literally starts the server. 3000 for development
+http.listen(process.env.PORT || 3000, function(){
+    if (process.env.PORT) {
+        console.log('listening on #:'+process.env.PORT);
+    } else {
+        console.log('listening on *:3000');
+    }
 });
 

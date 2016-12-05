@@ -15,7 +15,7 @@ $(document).ready(function() {
                 $("#first-time").addClass('hide');
                 $("#second-visit").removeClass('hide');
                 $("span#twitch-username").html(data.twitch_username);
-                $("#second-visit .purpleButton").attr("href", "/"+data.twitch_username);
+                $("#setup-lounge-button").attr("href", "/"+data.twitch_username);
             },
             error: showFirstTime()
         })

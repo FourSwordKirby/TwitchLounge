@@ -183,7 +183,7 @@ label.zoomer { top: 20px;}
     color: black;
     height: 60vh;   
     overflow: auto;
-    -webkit-mask-image: -webkit-gradient(linear, left 80%, left top, from(rgba(0,0,0,1)), to(rgba(0,0,0,0.3)));
+    -webkit-mask-image: -webkit-gradient(linear, left 80%, left top, from(rgba(0,0,0,.3)), to(rgba(0,0,0,1)));
 
 }
 #local-messages-history::-webkit-scrollbar {
@@ -199,7 +199,7 @@ label.zoomer { top: 20px;}
     list-style: none;
 }
 #local-messages-history li:first-of-type { 
-    background: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,1);
     color: rgba(0,0,0,0.8);
 }
 

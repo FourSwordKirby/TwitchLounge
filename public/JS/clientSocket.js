@@ -232,7 +232,7 @@ function appendLocalchat(res) {
     // }, 1500 + fadeTime);
 
     var localChatBox = $("#local-messages-history");
-    localChatBox.append(msgLi);
+    localChatBox.prepend(msgLi);
     
 
     // check if the message is sent out by the user themselves
@@ -250,10 +250,10 @@ function appendLocalchat(res) {
     // remove the oldest history if the history is more than, say, 500
     var totalLength = $("#local-messages-history li").length;
     if ( totalLength > 500) {
-        $('#local-messages-history li').first().remove();
+        $('#local-messages-history li').last().remove();
     }
 
-    localChatBox.animate({scrollTop: localChatBox[0].scrollHeight}, 200); // Scroll to bottom
+    localChatBox.animate({scrollTop: 0}, 200); // Scroll to bottom
 }
 
 

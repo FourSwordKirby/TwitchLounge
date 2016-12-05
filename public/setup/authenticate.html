@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Authenticating...</title>
-        <script src="assets/jquery-1.11.1.js"></script>
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
         <script src="https://ttv-api.s3.amazonaws.com/twitch.min.js"></script>
     </head>
 
@@ -13,7 +13,15 @@
 
 
     <script>
-    Twitch.init({clientId: 'oqg26g9cdo8gkqy7puez3370gudujjk'}, function(error, status) {
+
+    var clientId;
+    if (window.location.hostname === "localhost") {
+        clientId = "oqg26g9cdo8gkqy7puez3370gudujjk";
+    } else {
+        clientId = "o3e1g0l03l181jx7b5ww5fs166a5xwg";
+    }
+
+    Twitch.init({clientId: clientId}, function(error, status) {
         var token = Twitch.getToken();
         Twitch.api({method: '/user'}, function(err, result) {
             $.ajax({

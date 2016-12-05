@@ -12,34 +12,15 @@ After installing, install NPM (Node package manager).
 Then, to install the modules, run the following:
 npm install
 
+Next, install mongo DB. This is a simple database that lets us save stuff.
+http://treehouse.github.io/installation-guides/mac/mongo-mac.html
+
 I would also recommend the following b/c they make development easier:
 * npm install -g node-inspector (then you can run node-debug server.js and use a browser for debugging. Use 'debugger')
 * npm install -g nodemon (small changes on server code will automatically restart server)
 
-<<<<<<< HEAD
 Finally, ask me for the keys.json file.
 It should run.
-
-
-
-
-
-
-# How to Run
-In your command line, run
-
-	node app/server.js
-
-Then in your browser, type 
-	http://localhost:3000/
-
-This will bring your to the main "page" of the site. 
-You can test multiple people using the site through an incognito window
-=======
-Next, install mongo DB. This is a simple database that lets us save stuff.
-http://treehouse.github.io/installation-guides/mac/mongo-mac.html
-
-Finally, ask me for the keys.json file. Put it in the root.
 
 # To Run
 
@@ -58,24 +39,23 @@ Clientside- localStorage.debug = '*';
 Serverside- DEBUG=* node yourfile.js
 
 http://justintv.github.io/twitch-js-sdk/#section-3-2
->>>>>>> mongo
 
 # Production
 https://devcenter.heroku.com/articles/getting-started-with-nodejs#prepare-the-app
 
 Deployed to Heroku. Initial setup:
-1) heroku login
-2) heroku create
-3) heroku addons:add mongolab
-4) heroku ps:scale web=1
-5) heroku open
+1. heroku login
+2. heroku create
+3. heroku addons:add mongolab
+4. heroku ps:scale web=1
+5. heroku open
 
 Heroku Mongo DB: heroku config | grep MONGODB_URI
 Heroku port: process.env.PORT
 
 Here are a few commands I found myself using often to redeploy:
-git push heroku master
-heroku logs --tail
+* git push heroku master
+* heroku logs --tail
 
 
 

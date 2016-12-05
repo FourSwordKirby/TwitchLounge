@@ -35,10 +35,19 @@ function hasAuthenticated() {
 function showFirstTime() {
     $("#first-time").removeClass("hide");
 
-    Twitch.init({ clientId: 'oqg26g9cdo8gkqy7puez3370gudujjk'}, function(err, status) { console.log('Loaded Twitch SDK') });
+    var clientId, redirect_uri;
+    if (window.location.hostname === "localhost") {
+        clientId = "oqg26g9cdo8gkqy7puez3370gudujjk";
+        redirect_uri = "http://localhost:3000/setup/authenticate";
+    } else {
+        clientId = "o3e1g0l03l181jx7b5ww5fs166a5xwg";
+        redirect_uri = "https://obscure-oasis-50526.herokuapp.com/setup/authenticate";
+    }
+
+    Twitch.init({ clientId: clientId}, function(err, status) { console.log('Loaded Twitch SDK') });
     $('#twitch-auth').click(function() {
         Twitch.login({
-            redirect_uri:'http://localhost:3000/setup/authenticate',
+            redirect_uri: redirect_uri,
             scope: ['user_read', 'channel_read']
         });
     })

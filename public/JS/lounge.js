@@ -18,17 +18,34 @@ if (hasAuthenticated()) {
     // Lurk
 }
 
-// Find the right method, call on correct element
-// copied from stackoverflow...
-function launchFullScreen(element) {
-  if(element.requestFullScreen) {
-    element.requestFullScreen();
-  } else if(element.mozRequestFullScreen) {
-    element.mozRequestFullScreen();
-  } else if(element.webkitRequestFullScreen) {
-    element.webkitRequestFullScreen();
+// http://stackoverflow.com/questions/21280966/toggle-fullscreen-exit
+function toggleFullScreen() {
+  if (!document.fullscreenElement &&    // alternative standard method
+      !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement ) {  // current working methods
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    } else if (document.documentElement.msRequestFullscreen) {
+      document.documentElement.msRequestFullscreen();
+    } else if (document.documentElement.mozRequestFullScreen) {
+      document.documentElement.mozRequestFullScreen();
+    } else if (document.documentElement.webkitRequestFullscreen) {
+      document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
   }
 }
+
+var fullScreen = false;
+
 
 $(document).ready(function() {
 
@@ -72,9 +89,17 @@ $(document).ready(function() {
     })
 
     $('#show-fullscreen').click(function () {
-        launchFullScreen(document.body);
+        toggleFullScreen();
+        fullScreen = !fullScreen;
         $("#video").height($("#twitch-stream").height());
-        $("#chatroom").height(screen.height - $("#twitch-stream").height());
+        if (fullScreen) {
+            $("#chatroom").height(screen.height - $("#twitch-stream").height());
+            $("body").height(screen.height);
+        } else {
+            $("body").css("height", "100vh");
+            $("#chatroom").css("height","50vh"); // hard coded for now.
+            // $("#chatroom").css("height",$(window).height() - $("#twitch-stream").height());
+        }
     })
 
 

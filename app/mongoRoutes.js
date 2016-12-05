@@ -3,6 +3,10 @@ var MongoDB = require('./models/mongo.js');
 var User = require('./models/user.js');
 var Lounge = require('./models/lounge.js');
 
+exports.testConnection = function() {
+    MongoDB.testConnect();
+}
+
 // Assumes twitch user OBJ in req as user. Used when first authenticating
 exports.saveUser = function(req, res) {
     if (typeof req.body.user._id === "undefined") {

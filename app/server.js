@@ -52,6 +52,7 @@ app.get('/setup/authenticate', function (req, res) {
 
 // ------------------------------------------------------------------
 // Mongo Database
+MongoRoutes.testConnection();
 app.put('/db/saveUser', MongoRoutes.saveUser);
 app.get('/db/findUser', MongoRoutes.findUser);
 app.put('/db/quickSaveUser', MongoRoutes.quickSaveUser);

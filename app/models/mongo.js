@@ -5,8 +5,8 @@ var ObjectId = require('mongodb').ObjectID;
 var mongoDB; // The database
 
 var url = 'mongodb://127.0.0.1:27017/lounge'; // Default to localhost connection
-if (process.env.PORT) {
-    url = 'mongodb://heroku_pk134lvl:amdr2f04nfafg40dodk8kglj0n@ds119718.mlab.com:19718/heroku_pk134lvl';
+if (process.env.MONGOLAB_URI) {
+    url = process.env.MONGOLAB_URI;
 }
 
 // Opens connection to database
@@ -19,10 +19,10 @@ function connect(queryFunction) {
 
 // Test database connection
 exports.testConnect = function() {
-    console.log("MongoDB: " + url);
+    console.log("Using MongoDB: " + url);
     MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
-        console.log("Connected correctly to server.");
+        console.log("MongoDB: Connected correctly to database server.");
         db.close();
     });
 }

@@ -142,6 +142,7 @@ function handleZoom() {
         // $(this).find(".listening").css("box-shadow", '0px 0px ' + (25*zoom)+'px '+ (25*zoom) +'px' + ' rgba(256,256,256,0.6)');
         if ($(this).hasClass("player-avatar")) {
             $(this).find(".player-overlay").css("box-shadow", '0px 0px ' + (25*zoom)+'px '+ (25*zoom) +'px' + ' rgba(256,256,256,0.6)');
+            $(this).find(".player-overlay").css("outline-offset", 25*zoom);
         }
 
         var prevx = $(this).attr("data-x");

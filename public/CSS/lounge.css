@@ -32,7 +32,9 @@ body{
     height: 100%;
     background-color: gold;
     position:relative;
-    border-radius:30px;
+    border-radius:100px;
+
+
     image-rendering: pixelated;
     background-position: center;
     background-size: contain;
@@ -45,6 +47,10 @@ body{
     width: 100%;
     height: 100%;
     z-index: 10;
+     outline-style: solid;
+    outline-color: #d8d7ad;
+    outline-offset:25px;
+    outline-width: 1px;
 }
 .player-overlay.listening { /* If player close enough to someone, this listening class overrides the black overlay */
     background-color: rgba(0, 0, 0, 0);

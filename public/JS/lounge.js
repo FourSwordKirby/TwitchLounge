@@ -55,16 +55,21 @@ $(document).ready(function() {
             height: $("#video").height(),
             channel: namespace.slice(1)
     };
-    
     // Commented out for now just because it causes our debug log to be noisy af
     var player = new Twitch.Player("twitch-stream", options);
     player.setVolume(0);
+
+    // dynamically resize video player height
+    window.onresize = function (){
+        var player = $("iframe[src*='https://player.twitch.tv/?channel=" + namespace.slice(1) + "']");
+        player[0].setAttribute("height", $("#video").height());
+    }
     
     var chatFrame = document.createElement('iframe');
     chatFrame.setAttribute("src", "https://www.twitch.tv/" + namespace.slice(1) + "/chat");
     chatFrame.setAttribute("id", "chat_embed");
     chatFrame.setAttribute("frameborder", "0");
-    chatFrame.style.height = "99%";
+    chatFrame.style.height = "100%";
     chatFrame.style.width = "100%";        
     
     //Embed twitch chat

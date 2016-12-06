@@ -112,7 +112,7 @@ label.zoomer { top: 20px;}
 	height: 50%;
 	right: 0;
 	top: 0;
-	overflow: auto;
+	overflow: visible;
 	box-sizing: border-box;
 }
 
@@ -129,7 +129,7 @@ label.zoomer { top: 20px;}
 	/*right: 0;*/
 	bottom: 0;
 	/*resize: both;*/
-	overflow: auto;
+	overflow: visible;
     left: 0;
 }
 

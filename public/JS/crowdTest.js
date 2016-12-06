@@ -1,4 +1,4 @@
-var testing = false;
+var testing = true;
 
 if (testing)
 {
@@ -70,7 +70,10 @@ function receiveTwitchMessage(channel, userstate, msg, self) {
                 // found the actual client avatar
                 if(nearbyUser == user)
                 {
-                    var msgLi = $("<li><b style=\"color:#"+dummy.color+"\">"+dummy.twitch_username + ": </b>" + twitchEmoji.parse((msg),{emojiSize : 'small'})+"</li>");
+                    $("#"+dummy.twitch_username).addClass('animated bounce').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                        $("#"+dummy.twitch_username).removeClass('animated bounce');
+                    });    
+                    var msgLi = $("<li><b style=\"color: "+dummy.color+"\">"+dummy.twitch_username + ": </b>" + twitchEmoji.parse((msg),{emojiSize : 'small'})+"</li>");
                     var emote = twitchEmoji.parse((msg),{emojiSize : 'small'}).match(/<img[^>]+>/);
 
                     // $("#"+dummy.twitch_username).empty();

@@ -15,8 +15,8 @@ class User {
         this.twitch_bio = twitch_bio;
         this.access_token = access_token;
 
-        this.x = 0; // Default position to 0
-        this.y = 0;
+        this.x =250; // Default position to 0
+        this.y = 250;
         this.socket = ""; // Socket ID used to target events to user
         this.color = "#707070"; // Color code, defaults to grey
         this.sprite = "0"

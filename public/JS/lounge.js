@@ -18,6 +18,8 @@ if (hasAuthenticated()) {
     // Lurk
 }
 
+var fullScreenNofificationSent = false
+
 // http://stackoverflow.com/questions/21280966/toggle-fullscreen-exit
 function toggleFullScreen() {
   if (!document.fullscreenElement &&    // alternative standard method
@@ -31,6 +33,14 @@ function toggleFullScreen() {
     } else if (document.documentElement.webkitRequestFullscreen) {
       document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
     }
+
+    if (!fullScreenNofificationSent) {
+        $("#local-messages-history").prepend('<li>Please use the fullscreen button at the top to exit full screen. Do not use the Esc key.</li>');
+        fullScreenNofificationSent = true;
+    }
+
+    $("#chatroom").height(screen.height - $("#twitch-stream").height());
+    $("body").height(screen.height);
   } else {
     if (document.exitFullscreen) {
       document.exitFullscreen();
@@ -41,10 +51,11 @@ function toggleFullScreen() {
     } else if (document.webkitExitFullscreen) {
       document.webkitExitFullscreen();
     }
+    $("body").css("height", "100vh");
+    $("#chatroom").css("height","50vh"); // hard coded for now.
+    // $("#chatroom").css("height",$(window).height() - $("#twitch-stream").height());
   }
 }
-
-var fullScreen = false;
 
 
 $(document).ready(function() {
@@ -95,16 +106,7 @@ $(document).ready(function() {
 
     $('#show-fullscreen').click(function () {
         toggleFullScreen();
-        fullScreen = !fullScreen;
         $("#video").height($("#twitch-stream").height());
-        if (fullScreen) {
-            $("#chatroom").height(screen.height - $("#twitch-stream").height());
-            $("body").height(screen.height);
-        } else {
-            $("body").css("height", "100vh");
-            $("#chatroom").css("height","50vh"); // hard coded for now.
-            // $("#chatroom").css("height",$(window).height() - $("#twitch-stream").height());
-        }
     })
 
 

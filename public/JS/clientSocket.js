@@ -212,7 +212,7 @@ function appendLocalchat(res) {
         var curEmote = $("#"+sourceUser.twitch_id+" li");
         if(curEmote.length > 0)
             curEmote[0].remove();
-        var emoteAvatar = $("<li>"+emote[0]+"</li>");
+        var emoteAvatar = $("<li class=\"msg-emoticon\">"+emote[0]+"</li>");
         $("#"+sourceUser.twitch_id).append(emoteAvatar);
         setTimeout(function(){
             emoteAvatar.remove();
@@ -358,6 +358,9 @@ function hasAuthenticated() {
     return access_token != null && twitch_id != null;
 }
 
+// ------------------------------------------------------------
+// COLOR RELATED FUNCTIONS
+
 // TODO: In future maybe people just choose and save a custom color for their dot or something...
 function randomColor() {
     var rgb = [];
@@ -427,3 +430,5 @@ function rgbToHsl(r, g, b){
 
     return [Math.floor(h * 360), Math.floor(s * 100), Math.floor(l * 100)];
 }
+// ------------------------------------------------------------
+

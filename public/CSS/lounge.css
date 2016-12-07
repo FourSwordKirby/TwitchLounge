@@ -6,6 +6,10 @@ body{
 	font: 13px Helvetica, Arial; 
 	color: white;
 	background-color: #222;
+    height: 100vh;
+    width: 100vw;
+    background-image: url("../assets/sprites/loungeSprites/grids.png");
+    background-repeat: repeat;
 }
 
 #floor {
@@ -119,6 +123,7 @@ label.zoomer { top: 20px;}
 	top: 0;
 	overflow: visible;
 	box-sizing: border-box;
+    z-index: 99;
 }
 
 
@@ -136,6 +141,7 @@ label.zoomer { top: 20px;}
 	/*resize: both;*/
 	overflow: visible;
     left: 0;
+    z-index: 99;
 }
 
 /* Local chat */

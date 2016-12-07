@@ -166,6 +166,10 @@ function handleUserSetup() {
     })
     function quickSaveUser() {
         var color = $("#user-setup input[name=color]").val();
+        if (!isValidColor(color)){
+            alert("That's no hex code! Try again");
+            return false;
+        }
         var sprite = $("#user-setup input[name=sprite]:checked").val()
         $.ajax({
             url: '/db/quickSaveUser',
@@ -184,6 +188,10 @@ function handleUserSetup() {
             error: function() { alert("Error saving player"); }
         })
     }
+    function isValidColor(str) {
+        return str.match(/^[a-f0-9]{6}$/i) !== null;
+    }
+
 }
 handleUserSetup();
 

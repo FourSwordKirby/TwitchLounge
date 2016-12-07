@@ -204,17 +204,15 @@ socket.on('player: local chat', appendLocalchat);
 function appendLocalchat(res) {
     var sourceUser = res.sourceUser;
     var msg = res.msg;
-        
-    // var msgLi = $("<li><b style=\"color:#"+sourceUser.color+"\">"+sourceUser.twitch_username + ":</b> " + msg+"</li>");
 
-    var msgLi = $("<li><b style=\"color:#"+sourceUser.color+"\">"+sourceUser.twitch_username + ": </b>" + twitchEmoji.parse((msg),{emojiSize : 'small'})+"</li>");
+    var msgLi = $("<li style=\"border:2px solid #"+sourceUser.color+";\"><b style=\"color:#"+sourceUser.color+"\">"+sourceUser.twitch_username + ": </b><span class=\"msg-body\">" + twitchEmoji.parse((msg),{emojiSize : 'small'})+"</span><div class=\"msg-bg\"></div></li>");
     var emote = twitchEmoji.parse((msg),{emojiSize : 'small'}).match(/<img[^>]+>/);
     if (emote && (emote.length > 0))
     {
         var curEmote = $("#"+sourceUser.twitch_id+" li");
         if(curEmote.length > 0)
             curEmote[0].remove();
-        var emoteAvatar = $("<li>"+emote[0]+"</li>");
+        var emoteAvatar = $("<li class=\"msg-emoticon\">"+emote[0]+"</li>");
         $("#"+sourceUser.twitch_id).append(emoteAvatar);
         setTimeout(function(){
             emoteAvatar.remove();
@@ -224,17 +222,7 @@ function appendLocalchat(res) {
     //shake while talking
     $("#"+sourceUser.twitch_id).addClass('animated bounce').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
         $("#"+sourceUser.twitch_id).removeClass('animated bounce');
-    });    
-
-    // Old code that had message appear near user's avatar.
-    // Could be reworked into an emote when chat sent
-    // var fadeTime = (msg.length/20)*1000; // Assuming people read at an average of 15 characters per second...
-    // $("#"+sourceUser.twitch_id+" .localmsgs").append(msgLi);
-    // setTimeout(function(){
-    //     msgLi.fadeOut(400, function() {
-    //         msgLi.remove();
-    //     })
-    // }, 1500 + fadeTime);
+    });
 
     var localChatBox = $("#local-messages-history");
     localChatBox.prepend(msgLi);
@@ -244,12 +232,9 @@ function appendLocalchat(res) {
     if (sourceUser.twitch_id == twitch_id) {
         msgLi.addClass("self-messages");
     } else {
-        setTimeout(function () {
-        msgLi.css("background-color", "rgba(255,255,255,0)");
-    }, 220);
-        setTimeout(function () {
-        msgLi.css("background-color", "rgba(255,255,255,0.6)");
-    }, 320);
+        msgLi.find(".msg-bg").animate({
+            opacity: 0.8
+        }, 800);
     }
 
     // remove the oldest history if the history is more than, say, 500
@@ -373,6 +358,9 @@ function hasAuthenticated() {
     return access_token != null && twitch_id != null;
 }
 
+// ------------------------------------------------------------
+// COLOR RELATED FUNCTIONS
+
 // TODO: In future maybe people just choose and save a custom color for their dot or something...
 function randomColor() {
     var rgb = [];
@@ -442,3 +430,5 @@ function rgbToHsl(r, g, b){
 
     return [Math.floor(h * 360), Math.floor(s * 100), Math.floor(l * 100)];
 }
+// ------------------------------------------------------------
+

@@ -16,6 +16,8 @@ $(document).ready(function() {
                 $("#second-visit").removeClass('hide');
                 $("span#twitch-username").html(data.twitch_username);
                 $("#setup-lounge-button").attr("href", "/"+data.twitch_username);
+
+                $("#log-out-button").click(logout);
             },
             error: showFirstTime()
         })
@@ -51,4 +53,10 @@ function showFirstTime() {
             scope: ['user_read', 'channel_read']
         });
     })
+}
+
+function logout() {
+    localStorage.removeItem('lounge_token');
+    localStorage.removeItem('twitch_id');
+    window.location.replace("/");
 }

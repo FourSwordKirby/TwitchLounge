@@ -66,7 +66,6 @@ $(document).ready(function() {
             height: $("#video").height(),
             channel: namespace.slice(1)
     };
-    // Commented out for now just because it causes our debug log to be noisy af
     var player = new Twitch.Player("twitch-stream", options);
     player.setVolume(0);
 
@@ -75,13 +74,21 @@ $(document).ready(function() {
         var player = $("iframe[src*='https://player.twitch.tv/?channel=" + namespace.slice(1) + "']");
         player[0].setAttribute("height", $("#video").height());
     }
-    
+
     var chatFrame = document.createElement('iframe');
     chatFrame.setAttribute("src", "https://www.twitch.tv/" + namespace.slice(1) + "/chat");
     chatFrame.setAttribute("id", "chat_embed");
     chatFrame.setAttribute("frameborder", "0");
     chatFrame.style.height = "100%";
-    chatFrame.style.width = "100%";        
+    chatFrame.style.width = "100%";
+
+    // Twitch chat loading in takes awhile. To make transition smoother, added a loading screen
+    // Upon twitch chat finishing, fadeout loading screen
+    chatFrame.onload = function() {
+        $('#loading-screen').addClass('animated fadeOut').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+            $("#loading-screen").remove();
+        });
+    };
     
     //Embed twitch chat
     document.getElementById("chatroom").appendChild(chatFrame);
@@ -173,10 +180,3 @@ function getLounge() {
     })
 }
 
-// Twitch.api({method: 'streams/' + data.twitch_username}, function(error, stream) {
-//     if (stream.stream) {
-//         $("body").append("<p>STREAMER!</p>");
-//     } else {
-//         $("body").append("<p>WATCHER!</p>");
-//     }
-// })

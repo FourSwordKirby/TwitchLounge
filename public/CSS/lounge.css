@@ -336,3 +336,31 @@ button#show-fullscreen {
     /*position: absolute;*/
     color: white;
 }
+
+#loading-screen {
+    background-color: #6441A4;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 200;
+}
+#loading-screen div {
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    color: #9f74d9;
+    font-size: 15px;
+}
+#loading-screen img {
+    margin-bottom: 10px;
+    width: 75px;
+    -moz-animation-duration: 2s;
+    -webkit-animation-duration: 2s;
+    animation-duration: 2s;
+}

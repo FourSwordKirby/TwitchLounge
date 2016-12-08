@@ -35,7 +35,7 @@ function toggleFullScreen() {
     }
 
     if (!fullScreenNofificationSent) {
-        $("#local-messages-history").prepend('<li>Please use the fullscreen button at the top to exit full screen. Do not use the Esc key.</li>');
+        $("#local-messages-history").prepend('<li><span class=\"msg-body\">Please use the fullscreen button at the top to exit full screen. Do not use the Esc key.</span><div class=\"msg-bg\"></div></li>');
         fullScreenNofificationSent = true;
     }
 

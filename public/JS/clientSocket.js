@@ -339,7 +339,8 @@ function createPlayerEl(user) { // Element appended when a new player enters
         user.color = "707070";
         user.sprite = 0;
     }
-    var playerEl = $("<div id=\'"+user.twitch_id+"\' class=\'player\' data-x=\'"+user.x+"\' data-y=\'"+user.y+"\' style=\'left:"+ (user.x*zoom) +"px; top:"+ (user.y*zoom) +"px;\'>"+
+    var playerEl = $("<div id=\'"+user.twitch_id+"\' class=\'player\' data-x=\'"+user.x+"\' data-y=\'"+user.y+"\' style=\'left:"+ (user.x*zoom) +"px; top:"+ (user.y*zoom) +"px; width: "+
+                + (15 * zoom) +"px; height: "+(15 * zoom)+"px;\'>"+
                 "<div class=\"player-overlay\"></div>" +
                 "<div class=\"player-sprite\" style=\'filter: "+calculateColorFilter(user.color)+"; background-image: url(\"../assets/sprites/userSprites/userSprite_"+user.sprite+".png\");\'></div>" + 
                 "<div class=\"player-info hide\"><img src=\""+user.twitch_avatar+"\" /><span>"+user.twitch_username+"</span><p>"+user.twitch_bio.substring(0,40)+"</p></div>" +

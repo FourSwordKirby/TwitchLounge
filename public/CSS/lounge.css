@@ -213,6 +213,7 @@ label.zoomer { top: 20px;}
     margin-top: 10px;
     list-style: none;
     position: relative;
+    background-color: rgba(255,255,255,0.8);
 }
 #local-messages-history li b, #local-messages-history li span.msg-body { /* username in msg, and msg body*/
     z-index: 10;

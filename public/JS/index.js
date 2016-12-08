@@ -43,7 +43,7 @@ function showFirstTime() {
         redirect_uri = "http://localhost:3000/setup/authenticate";
     } else {
         clientId = "o3e1g0l03l181jx7b5ww5fs166a5xwg";
-        redirect_uri = "https://obscure-oasis-50526.herokuapp.com/setup/authenticate";
+        redirect_uri = "https://twitch-lounge.herokuapp.com/setup/authenticate";
     }
 
     Twitch.init({ clientId: clientId}, function(err, status) { console.log('Loaded Twitch SDK') });

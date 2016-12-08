@@ -3,12 +3,12 @@
 
 
 body{ 
-	font: 13px Helvetica, Arial; 
-	color: white;
-	background-color: #222;
+    font: 13px Helvetica, Arial; 
+    color: white;
+    background-color: #222;
     height: 100vh;
     width: 100vw;
-    /*background-image: url("../assets/sprites/loungeSprites/grids.png");*/
+    background-image: url("../assets/sprites/loungeSprites/grids.png");
     background-repeat: repeat;
 }
 
@@ -74,20 +74,20 @@ body{
 }
 
 #left{
-	position: fixed;
-	width: 60vw;
-	height: 100vh;
-	margin: 0;
-	left: 0;
-	top: 0;
+    position: fixed;
+    width: 60vw;
+    height: 100vh;
+    margin: 0;
+    left: 0;
+    top: 0;
 }
 
 #right{
-	position: fixed;
-	width: 40%;
-	height: 100%;
-	right: 0;
-	top:0;
+    position: fixed;
+    width: 40%;
+    height: 100%;
+    right: 0;
+    top:0;
 }
 
 #logo {
@@ -107,42 +107,42 @@ body{
 label.zoomer { top: 20px;}
 
 #player-info{
-	position: absolute;
-	background-color: rgba(255,255,255,0.2);
-	border: 0;
-	padding: 10px;
-	z-index: 98;
+    position: absolute;
+    background-color: rgba(255,255,255,0.2);
+    border: 0;
+    padding: 10px;
+    z-index: 98;
 }
 
 #video{
-	position: relative;
-	margin: 5px;
-	margin-bottom: 2.5px;
-	background: rgba(255,255,255,0.5);
-	border: 1px grey solid;
-	width: 100% - 5px;
-	height: 50%;
-	right: 0;
-	top: 0;
-	overflow: visible;
-	box-sizing: border-box;
+    position: relative;
+    margin: 5px;
+    margin-bottom: 2.5px;
+    background: rgba(255,255,255,0.5);
+    border: 1px grey solid;
+    width: 100% - 5px;
+    height: 50%;
+    right: 0;
+    top: 0;
+    overflow: visible;
+    box-sizing: border-box;
     z-index: 99;
 }
 
 
 /* Twitch all chat */
 #chatroom{
-	position: relative;
-	margin: 5px;
-	margin-top: 2.5px;
-	background: rgba(255,255,255,0.5);
-	border:0;
-	width: 100% - 5px;
-	height: 50%;
-	/*right: 0;*/
-	bottom: 0;
-	/*resize: both;*/
-	overflow: visible;
+    position: relative;
+    margin: 5px;
+    margin-top: 2.5px;
+    background: rgba(255,255,255,0.5);
+    border:0;
+    width: 100% - 5px;
+    height: 50%;
+    /*right: 0;*/
+    bottom: 0;
+    /*resize: both;*/
+    overflow: visible;
     left: 0;
     z-index: 99;
 }

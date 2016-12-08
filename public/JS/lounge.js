@@ -109,7 +109,7 @@ $(document).ready(function() {
     })
 
     $('#show-help').hover(function () {
-        $(".middle-float-window").toggleClass("hide");
+        $(".hidden-instruction").toggleClass("hide");
     })
 
     $('#show-fullscreen').click(function () {

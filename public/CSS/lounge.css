@@ -241,7 +241,7 @@ label.zoomer { top: 20px;}
     left: 0;
     bottom: 0;
     right: 0;
-    height: 250px;
+    height: 300px;
     width: 350px;
     z-index: 100;
 }
@@ -313,29 +313,36 @@ button#show-fullscreen {
 }
 
 .middle-float-window{
-    border: 2px solid white;
     position: absolute;
-    background-color: rgba(255,255,255,0.6);
     padding: 15px;
     font-size: 15px;
-    color: black;
     margin: auto;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
-    height: 200px;
+    height: 250px;
     width: 350px;
     z-index: 99;
 }
 
-#hidden-instruction{
-    /*margin: auto;*/
-/*    width: 50%;
-    height: 50%;*/
-    top: 0;
-    /*position: absolute;*/
-    color: white;
+.hidden-instruction{
+    position: absolute;
+    color: black;
+    z-index: 100;
+    color: black;
+    border: 2px solid white;
+    background-color: rgba(255,255,255,0.6);
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    /*margin-right: -50%;*/
+    padding: 5px;
+    transform: translate(-50%, -50%);
+}
+
+#video-help{
+    text-align: center;
 }
 
 #loading-screen {

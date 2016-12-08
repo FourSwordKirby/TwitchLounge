@@ -111,23 +111,6 @@ function handleMovement() {
 }
 handleMovement();
 
-addUserInfo();
-function addUserInfo(){
-    // This function adds a bubble that display username, twitch id, etc
-    $("#"+user.twitch_id).hover(function(){
-    playerInfoHtml = ("<b>ID: </b> " + user.twitch_id +"<br><b>username: </b>" + user.twitch_username +
-        "<br><b>last seen: </b> 5 sec ago<br><b>tags: </b>LOL DotA2 GTAV")
-    $("#player-info").html(playerInfoHtml);
-    $("#player-info").css({
-        left: user.x + 25,
-        top:  user.y
-    });
-
-        $("#player-info").show();
-    }, function(){
-        $("#player-info").hide();
-    });
-}
 
 function handleZoom() {
     zoom = parseFloat($(this).val());
@@ -351,11 +334,21 @@ function createPlayerEl(user) { // Element appended when a new player enters
         user.color = "707070";
         user.sprite = 0;
     }
-     return $("<div id=\'"+user.twitch_id+"\' class=\'player\' data-x=\'"+user.x+"\' data-y=\'"+user.y+"\' style=\'left:"+ (user.x*zoom) +"px; top:"+ (user.y*zoom) +"px;\'>"+
+    var playerEl = $("<div id=\'"+user.twitch_id+"\' class=\'player\' data-x=\'"+user.x+"\' data-y=\'"+user.y+"\' style=\'left:"+ (user.x*zoom) +"px; top:"+ (user.y*zoom) +"px;\'>"+
                 "<div class=\"player-overlay\"></div>" +
                 "<div class=\"player-sprite\" style=\'filter: "+calculateColorFilter(user.color)+"; background-image: url(\"../assets/sprites/userSprites/userSprite_"+user.sprite+".png\");\'></div>" + 
+                "<div class=\"player-info hide\"><img src=\""+user.twitch_avatar+"\" /><span>"+user.twitch_username+"</span><p>"+user.twitch_bio.substring(0,40)+"</p></div>" +
                 "</div>");
+    // On hover of a player, show detailed info
+    playerEl.hover(function() {
+        playerEl.find(".player-info").removeClass("hide");
+    }, function() {
+        playerEl.find(".player-info").addClass("hide");
+    })
+    return playerEl;
 }
+
+
 
 function getUser() {
     return user;

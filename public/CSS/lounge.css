@@ -64,8 +64,17 @@ body{
     background-color: rgba(0, 0, 0, 0);
     box-shadow: 0 0 62.5px 62.5px rgba(256,256,256,.6);
     /*outline-style: solid;*/
-
-
+}
+.player-info {
+    position: absolute;
+    background-color: rgba(255,255,255,0.2);
+    border: 0;
+    padding: 10px;
+    z-index: 98;
+}
+.player-info img {
+    width: 50px;
+    height: 50px;
 }
 
 .msg-emoticon {
@@ -105,14 +114,6 @@ body{
     z-index: 10;
 }
 label.zoomer { top: 20px;}
-
-#player-info{
-    position: absolute;
-    background-color: rgba(255,255,255,0.2);
-    border: 0;
-    padding: 10px;
-    z-index: 98;
-}
 
 #video{
     position: relative;

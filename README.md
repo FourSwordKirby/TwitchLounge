@@ -58,7 +58,3 @@ Here are a few commands I found myself using often to redeploy:
 * heroku logs --tail
 
 
-
-
-
-_twitch Angelaheroku config | grep MONGODB_URI

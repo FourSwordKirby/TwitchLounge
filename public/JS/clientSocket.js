@@ -1,3 +1,6 @@
+
+// Loaded on any lounge page
+
 // ------------------------------------------------------------
 // INITIALIZATION AND GLOBALS
 
@@ -7,7 +10,8 @@ var socket = io(namespace);
 
 // Variables
 var twitch_id, access_token;
-var user, playerAvatar;
+var user; // User object from the DB, many vars based on twtich
+var playerAvatar; // HTML element for this socket, user
 var nearbyUserSets = []; // Array of users who are near this user
 
 var viewportWidth, viewportHeight; // Of the "left" div where lounge is located
@@ -138,6 +142,7 @@ function handleZoom() {
     $(this).blur(); // Remove focus so arrow keys don't change zoom value
 }
 $("input.zoomer").change(handleZoom);
+
 
 function handleUserSetup() {
     $("#user-setup .not-logged-in").remove();
@@ -363,15 +368,6 @@ function hasAuthenticated() {
 // ------------------------------------------------------------
 // COLOR RELATED FUNCTIONS
 
-// TODO: In future maybe people just choose and save a custom color for their dot or something...
-function randomColor() {
-    var rgb = [];
-    for(var i = 0; i < 3; i++) {
-        rgb.push(Math.floor(Math.random() * 255));
-    }
-    return 'rgb('+ rgb.join(',') +')';
-}
-
 // Given a user color, calculates the different of hue, saturation, and light between color and sprite base color
 // and returns a string that can be used for the filter param
 function calculateColorFilter(color) {
@@ -432,5 +428,14 @@ function rgbToHsl(r, g, b){
 
     return [Math.floor(h * 360), Math.floor(s * 100), Math.floor(l * 100)];
 }
+
+function randomColor() {
+    var rgb = [];
+    for(var i = 0; i < 3; i++) {
+        rgb.push(Math.floor(Math.random() * 255));
+    }
+    return 'rgb('+ rgb.join(',') +')';
+}
+
 // ------------------------------------------------------------
 

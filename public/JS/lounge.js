@@ -1,4 +1,5 @@
-// TODO: authenticate user for twitch requests.
+
+// Loaded on any lounge page
 
 var access_token, twitch_id;
 var namespace = window.location.pathname;

@@ -144,6 +144,7 @@ function handleZoom() {
             $(this).find(".player-overlay").css("box-shadow", '0px 0px ' + (25*zoom)+'px '+ (25*zoom) +'px' + ' rgba(256,256,256,0.6)');
             $(this).find(".player-overlay").css("outline-offset", 25*zoom);
         }
+        console.log(25*zoom);
 
         var prevx = $(this).attr("data-x");
         var prevy = $(this).attr("data-y");
@@ -320,8 +321,8 @@ $(window).resize(function() { // Reset if the user resizes their window
     viewportHeight = $("#left")[0].getBoundingClientRect().height;
 })
 function centerOnUser() {
-    $("#floor").css("left", ((viewportWidth / 2.0) - (user.x * zoom) + (15*zoom /2.0) + "px"));
-    $("#floor").css("top", ((viewportHeight / 2.0) - (user.y * zoom) - (15*zoom /2.0) + "px"));
+    $("#floor").css("left", ((viewportWidth / 2.0) - (user.x * zoom) + (15*1 /2.0) + "px"));
+    $("#floor").css("top", ((viewportHeight / 2.0) - (user.y * zoom) - (15*1 /2.0) + "px"));
 }
 
 

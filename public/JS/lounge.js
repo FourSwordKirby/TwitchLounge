@@ -5,7 +5,7 @@ var namespace = window.location.pathname;
 
 // lounge replaced when lounge loads, but set width and height to prevent errors with initial edge detection
 var lounge = {"width" : 500, "height" : 500};
-
+var zoom= 2.5;
 Twitch.init({ clientId: 'oqg26g9cdo8gkqy7puez3370gudujjk'}, function(err, status) { console.log('the library is now loaded') });
 
 getLounge();
@@ -108,8 +108,6 @@ $(document).ready(function() {
         toggleFullScreen();
         $("#video").height($("#twitch-stream").height());
     })
-
-
 })
 
 // ------------------------
@@ -163,13 +161,14 @@ function getLounge() {
                 $("#setup input[name=width]").val(result.width);
                 $("#setup input[name=height]").val(result.height);
 
-                $("#floor").css("width", result.width);
-                $("#floor").css("height", result.height);
+                $("#floor").css("width", result.width*zoom);
+                $("#floor").css("height", result.height*zoom);
+
             })
         },
         error: function() {
-            $("#floor").css("width", 500);
-            $("#floor").css("height", 500);
+            $("#floor").css("width", (500*zoom)+ " px");
+            $("#floor").css("height", (500*zoom)+ " px");
         }
     })
 }

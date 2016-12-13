@@ -374,3 +374,18 @@ button#show-fullscreen {
     -webkit-animation-duration: 2s;
     animation-duration: 2s;
 }
+
+/* http://thecodeplayer.com/walkthrough/ripple-click-effect-google-material-design */
+/*a ripple effect when click on the player*/
+.ink {
+    display: block; position: absolute;
+    background: rgba(255,255,255,0.5);
+    border-radius: 100%;
+    transform: scale(0);
+}
+/*animation effect*/
+.ink.animate {animation: ripple 0.8s linear;}
+@keyframes ripple {
+    65% {opacity: 0.6; transform: scale(1);}
+    100% {opacity: 0; transform: scale(1);}
+}

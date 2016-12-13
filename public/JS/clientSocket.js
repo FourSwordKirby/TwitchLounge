@@ -351,6 +351,30 @@ function createPlayerEl(user) { // Element appended when a new player enters
     }, function() {
         playerEl.find(".player-info").addClass("hide");
     })
+
+    // http://thecodeplayer.com/walkthrough/ripple-click-effect-google-material-design
+    var parent, ink, d, x, y;
+    playerEl.click(function(e){
+        parent = $(this).parent();
+        //create .ink element if it doesn't exist
+        if(parent.find(".ink").length == 0)
+            parent.prepend("<span class='ink'></span>");
+            
+        ink = parent.find(".ink");
+        //in case of quick double clicks stop the previous animation
+        ink.removeClass("animate");
+        
+        //set size of .ink
+        d = 50 * zoom;
+        ink.css({height: d, width: d});
+        
+        //get click coordinates
+        x = playerEl.position().left + playerEl.width()/2 - ink.width()/2;
+        y = playerEl.position().top + playerEl.height()/2 - ink.height()/2;
+        
+        //set the position and add class .animate
+        ink.css({top: y+'px', left: x+'px'}).addClass("animate");
+    })
     return playerEl;
 }
 
